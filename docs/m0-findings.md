@@ -1,5 +1,24 @@
 # M0 findings
 
+**M0 status: closed (2026-10-27).** Summary against the README §15 scope:
+
+| M0 scope item | Result |
+|---|---|
+| Floci + hello-world Lambda via Terraform | Done (E2) |
+| Lambda → Lambda invoke; Secrets Manager read | Done (E4) |
+| IAM/network enforcement check | Done (E5): IAM enforced with enforcement on; network not |
+| `pydantic-monty` in the Lambda image | Done (E3a) |
+| Baseline latency of sandbox overhead | Done (E2–E4), targets in `docs/slos.md` |
+| Bedrock via Floci (added to scope) | Done (E1) |
+| Monty external functions, resource limits, Python features, `ty` stubs | **Moved to M3**: lower risk after E3a; the checks become the permanent escape and limit tests |
+| Ollama tool calling + Monty-compatible code on sample tasks | **Deferred to the end** of the project, with all LLM work |
+
+Exit criteria: this document written; `docs/slos.md` written; plan adjusted (above);
+README §11 risks updated.
+
+All experiment code was removed after each experiment; it remains in git history
+(commits `95d26d9`, `77ff9e8`, `7eb7305`).
+
 Results of the Milestone 0 experiments (README §15). Each section: the question, what we
 did, what we found, and what it means for the design. Numbers are from the reference
 machine: Ryzen 7 9800X3D, 31 GB RAM, RX 9070 XT (16 GB), Windows 11, Docker Desktop
@@ -110,7 +129,7 @@ is dominated by Floci's invoke path, not Monty.
 **Question:** Can code inside one Floci Lambda invoke another Lambda (README §11 risk 3),
 can that Lambda read Secrets Manager, and what does the hop cost?
 
-**What we did:** Two `TEMP(M0)` Lambdas with least-privilege roles:
+**What we did:** Two temporary Lambdas with least-privilege roles:
 `openrx-e4-runner` (may only `lambda:InvokeFunction` the bridge) and `openrx-e4-bridge`
 (may only `secretsmanager:GetSecretValue` on `openrx/openfda_api_key`). A dummy value was
 set with `aws secretsmanager put-secret-value`, outside Terraform. The bridge returns

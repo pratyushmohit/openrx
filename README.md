@@ -84,7 +84,7 @@ Priorities: **P0** = must have for v1 (no launch without it), **P1** = should ha
 | NFR-1 | P0 | Tool-definition footprint (both tool descriptions + `instructions`) ≤ **1,500 tokens**. Enforced by a test. |
 | NFR-2 | P0 | Sandbox escape suite (§6.5) passes **100%**. Enforced by a test in CI. |
 | NFR-3 | P0 | No secrets in the repo, sandbox, logs, or eval outputs. |
-| NFR-4 | P0 | Latency SLOs in §6.4 met on the reference machine (to be calibrated after M0). |
+| NFR-4 | P0 | Latency SLOs in §6.4 met on the reference machine (calibrated after M0 in `docs/slos.md`). |
 | NFR-5 | P0 | Eval runs reproducible: same fixtures + same model + temperature 0 → success rate varies ≤ ±5 pts across runs. |
 | NFR-6 | P1 | Infra fully defined in Terraform. `make up && make deploy` from a clean checkout works. |
 | NFR-7 | P1 | Structured logs + per-call metrics for every tool call and LLM call (§10). |
@@ -146,7 +146,7 @@ Measured on the reference machine (document its CPU/RAM/GPU), in **replay mode**
 | Lambda cold start (first call after deploy/idle) | Report | Report | Report |
 | Full task end to end with local model | Report | ≤ 90 s **(provisional)** | Report |
 
-All targets **(provisional)** until M0 measures Floci and Monty overhead on the reference machine. For full tasks, report model time and tool time separately, so it's clear whether the model or OpenRx is slow.
+After M0, sandbox and bridge overhead targets are confirmed and the others stay provisional; `docs/slos.md` is the source of truth, with the measured baselines. For full tasks, report model time and tool time separately, so it's clear whether the model or OpenRx is slow.
 
 ### 6.5 Security evals
 
@@ -314,12 +314,12 @@ Hand-built LangGraph graph → MCP via `langchain-mcp-adapters` → `ChatOllama`
 
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
-| Monty's Python subset is too limited for the model's typical code | Med | High | M0 feature check; describe the subset in tool descriptions; add helper external functions (e.g. `parse_date`) for gaps |
-| `pydantic-monty` doesn't run in the Floci Lambda image (arch/glibc) | Med | High | M0 spike; fallback: run Lambda as a container image (running Monty on the host is ruled out by D-005) |
-| Floci doesn't support Lambda-to-Lambda invoke from inside a container | Med | High | M0 spike; fallback: bridge as a host-side HTTP service on the Docker network |
-| Local models write poor code or ignore conventions | High | Med | Pick the model in M0 using sample tasks; iterate on tool descriptions; report per-model results honestly |
+| Monty's Python subset is too limited for the model's typical code | Med | High | Feature check moved from M0 to M3 (runner build); describe the subset in tool descriptions; add helper external functions (e.g. `parse_date`) for gaps |
+| ~~`pydantic-monty` doesn't run in the Floci Lambda image (arch/glibc)~~ | Retired | — | M0 E3a: runs, ~30 ms added to a cold start. Zips built inside the Lambda image (D-006) |
+| ~~Floci doesn't support Lambda-to-Lambda invoke from inside a container~~ | Retired | — | M0 E4: works, 4.2 ms p50 per hop |
+| Local models write poor code or ignore conventions | High | Med | Not tested in M0 (LLM work deferred to the end); pick the model using sample tasks; iterate on tool descriptions; report per-model results honestly |
 | Public APIs change or rate-limit during eval | Med | Med | Record/replay fixtures; live runs reported separately |
-| Floci security not enforced → false sense of security | High | Med | Monty as the enforced boundary; label each guarantee observed vs by design |
+| Floci security not enforced → false sense of security | Med | Med | M0 E5: IAM is enforced with enforcement on (D-007); VPC/network is not. Monty as the enforced boundary; §7.2 labels each guarantee observed vs by design |
 | Scope creep | High | Med | P0/P1/P2 discipline; nothing P2 starts before all P0s pass |
 
 ## 12. Eval harness
@@ -393,11 +393,11 @@ A milestone is done only when its exit criteria pass.
 
 ## 16. Open questions
 
-1. Async external functions vs a start/resume loop for `request()` dispatch (decide after M0).
-2. Missing Python features (e.g. `json`, `datetime`): add helper external functions, or tell the model to avoid them?
+1. Async external functions vs a start/resume loop for `request()` dispatch (moved to M3: both exist in Monty 1.4, decide while building the runner).
+2. Missing Python features (e.g. `json`, `datetime`): add helper external functions, or tell the model to avoid them? (Moved to M3.)
 3. How fixtures reach the bridge Lambda in replay mode (package, S3 on Floci, or mount).
 4. Whether the MCP server invokes runners via boto3 directly (proposed) or via API Gateway.
-5. Which two Ollama models fit the reference machine.
+5. Which two Ollama models fit the reference machine. (Deferred to the end; qwen3.5 runs fully on the GPU, E1.)
 6. Judge model for LLM-as-judge scoring, and how to keep it fixed across runs.
 
 ## 17. Glossary
