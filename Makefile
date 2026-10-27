@@ -18,7 +18,7 @@ export AWS_ENDPOINT_URL ?= http://localhost:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help up up-ui down logs ps smoke-bedrock tf-init tf-plan tf-apply tf-destroy
+.PHONY: help up up-ui down logs ps tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -44,9 +44,6 @@ logs: ## Follow Floci logs
 
 ps: ## Show container status
 	docker compose --profile ui ps
-
-smoke-bedrock: ## Send one Bedrock Converse call through Floci to Ollama
-	aws bedrock-runtime converse --model-id openrx-local --messages file://scripts/smoke-messages.json --query "{answer: output.message.content[0].text, usage: usage}"
 
 tf-init: ## Download the Terraform providers
 	$(TF) init
