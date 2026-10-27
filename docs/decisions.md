@@ -62,3 +62,27 @@ and it continuously proves that the infra can be built from scratch (README NFR-
 Applying on Floci takes seconds, so nothing is lost. Note: the Floci image declares
 `/app/data` as a volume, so `make up` passes `--renew-anon-volumes`; without it compose
 reuses the old container's volume on recreate.
+
+---
+
+## D-004: Give Floci the Docker socket to run Lambdas
+
+**Date:** 2026-10-27 · **Status:** Accepted
+
+**Context:** Floci runs each Lambda in a real Docker container, which it starts itself.
+That requires access to Docker's control socket (`/var/run/docker.sock`).
+
+**Options:**
+1. Mount the Docker socket into the Floci container (Floci's default executor).
+2. Floci's Kubernetes executor (each Lambda as a pod).
+3. Run Monty in-process, without Lambda.
+
+**Decision:** Option 1, plus a fixed Docker network named `openrx` that Floci attaches
+Lambda containers to (`FLOCI_SERVICES_LAMBDA_DOCKER_NETWORK`), and `FLOCI_HOSTNAME=floci`
+so those containers can call back to Floci.
+
+**Why:** Simplest setup that keeps real per-invocation container isolation. The cost:
+anything holding the socket effectively controls Docker on this machine. Acceptable for
+a local emulator we run ourselves from a pinned image; not something to copy to shared
+or production hosts. Kubernetes would be heavy for a laptop; in-process loses the
+process boundary that the design relies on (README §7.2, layer 2).

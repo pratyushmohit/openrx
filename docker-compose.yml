@@ -12,10 +12,23 @@ services:
       FLOCI_SERVICES_BEDROCK_RUNTIME_BACKEND: proxy
       FLOCI_SERVICES_BEDROCK_RUNTIME_PROXY_URL: http://host.docker.internal:11434/v1
       FLOCI_SERVICES_BEDROCK_RUNTIME_PROXY_DEFAULT_MODEL: ${OLLAMA_MODEL:-qwen3.5:latest}
+      # Lambda: Floci runs each function in its own Docker container. Those
+      # containers join the "openrx" network and reach Floci (to fetch events
+      # and post results) by the hostname "floci".
+      FLOCI_HOSTNAME: floci
+      FLOCI_SERVICES_LAMBDA_DOCKER_NETWORK: openrx
     extra_hosts:
       # Docker Desktop defines host.docker.internal already; this makes it work
       # on plain Linux Docker too.
       - "host.docker.internal:host-gateway"
+    volumes:
+      # Docker's control socket, so Floci can start Lambda containers.
+      # Security: whoever holds this socket controls Docker on this machine.
+      # Acceptable for a local emulator we run ourselves; never do this with
+      # an untrusted image.
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - openrx
     # No data volume on purpose: Floci keeps state in memory, so recreating
     # the container starts from an empty AWS account. See `make up`.
 
@@ -31,3 +44,11 @@ services:
       FLOCI_ENDPOINT: http://floci:4566
     depends_on:
       - floci
+    networks:
+      - openrx
+
+networks:
+  openrx:
+    # Fixed name (compose would otherwise call it "openrx_default") because
+    # Floci needs the exact name to attach Lambda containers to it.
+    name: openrx

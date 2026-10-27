@@ -9,5 +9,10 @@ terraform {
       # .terraform.lock.hcl.
       version = "~> 6.70"
     }
+    # Builds Lambda zip files from source folders.
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.7"
+    }
   }
 }

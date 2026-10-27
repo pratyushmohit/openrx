@@ -13,3 +13,5 @@ wheels/
 .terraform/
 *.tfstate
 *.tfstate.*
+# Lambda zips built by Terraform
+infra/envs/floci/build/

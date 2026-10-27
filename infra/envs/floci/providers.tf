@@ -17,7 +17,10 @@ provider "aws" {
   # missing from this list would silently go to real AWS (and fail on the
   # dummy credentials). Add services as we start using them.
   endpoints {
+    iam            = var.floci_endpoint
+    lambda         = var.floci_endpoint
     secretsmanager = var.floci_endpoint
+    sts            = var.floci_endpoint
   }
 
   default_tags {
