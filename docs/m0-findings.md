@@ -143,3 +143,45 @@ invokes of the bridge from inside its container.
 **Implication:** No fallback needed: the bridge stays a Lambda. A warm `request()` hop
 costs ~4 ms of the ≤ 30 ms bridge-overhead budget (README §6.4), leaving room for
 validation and record/replay. Bridge cold starts (~330 ms) are worth keeping warm.
+
+---
+
+## E5: Does Floci enforce IAM?
+
+**Date:** 2026-10-27
+
+**Question:** If the runner tries things its role does not allow, does Floci block them?
+(README §7.2: "observed on Floci" vs "by design on real AWS".)
+
+**What we did:** Reused the E4 Lambdas. The runner (role: may only invoke the bridge)
+attempted five AWS actions and one network call, first with Floci's default settings,
+then with `FLOCI_SERVICES_IAM_ENFORCEMENT_ENABLED=true`. Each run from a clean Floci.
+
+**Found:**
+- Floci gives each Lambda temporary credentials for its own role
+  (`assumed-role/openrx-e4-runner`), like real AWS.
+
+| Runner attempts | Role allows? | Enforcement off (default) | Enforcement on |
+|---|---|---|---|
+| Invoke the bridge | Yes | allowed | allowed |
+| Read the openFDA secret | No | **allowed** | denied (`AccessDeniedException`) |
+| Invoke another function (itself) | No | **allowed** | denied |
+| List all functions | No | **allowed** | denied |
+| List all secrets | No | **allowed** | denied |
+| HTTPS to `api.fda.gov` (network, not IAM) | n/a | **allowed** | **allowed** |
+
+- **Floci quirk:** with enforcement on, the bridge's *permitted* read was denied when it
+  asked for the secret by **name**. Its policy names the secret's full ARN (which ends
+  in a random suffix, e.g. `openfda_api_key-AbC123`). Asking by full ARN works. Real AWS
+  matches the policy against the full ARN however the secret is named, so this is a
+  Floci deviation. Re-checked the runner by ARN too: still denied, so its denials are
+  real enforcement, not this quirk.
+- Floci's issue tracker lists known enforcement gaps (some actions not mapped and
+  therefore allowed; resource policies such as Lambda and Secrets Manager policies
+  stored but not evaluated). Identity policies, which is what we use, are evaluated.
+- Terraform and the AWS CLI on the host (`test`/`test` credentials) keep full access
+  with enforcement on.
+
+**Implication:** Keep enforcement on (D-007). IAM (layer 3) is enforced locally; VPC
+(layer 4) is not, since Lambda containers on Floci can reach the internet. Code should
+reference secrets by ARN, which is also more precise on real AWS.

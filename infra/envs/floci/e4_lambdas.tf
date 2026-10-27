@@ -1,4 +1,4 @@
-# TEMP(M0): E4 experiment, a runner Lambda invoking a bridge Lambda that reads
+# TEMP(M0): E4/E5 experiments, a runner Lambda invoking a bridge Lambda that reads
 # Secrets Manager (docs/m0-findings.md, E4). Delete this file and
 # lambdas/e4_runner, lambdas/e4_bridge once the real Lambdas exist (M3).
 # Build first: `make build LAMBDA=e4_runner` and `make build LAMBDA=e4_bridge`.
@@ -45,7 +45,7 @@ resource "aws_lambda_function" "e4_bridge" {
   memory_size      = 256
 
   environment {
-    variables = { OPENFDA_SECRET_ID = aws_secretsmanager_secret.openfda_api_key.name }
+    variables = { OPENFDA_SECRET_ID = aws_secretsmanager_secret.openfda_api_key.arn }
   }
 }
 
@@ -80,6 +80,10 @@ resource "aws_lambda_function" "e4_runner" {
   memory_size      = 256
 
   environment {
-    variables = { BRIDGE_FUNCTION = aws_lambda_function.e4_bridge.function_name }
+    variables = {
+      BRIDGE_FUNCTION = aws_lambda_function.e4_bridge.function_name
+      # E5 only: lets the runner *try* to read the secret, which its role forbids.
+      OPENFDA_SECRET_ID = aws_secretsmanager_secret.openfda_api_key.arn
+    }
   }
 }

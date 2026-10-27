@@ -142,3 +142,27 @@ work but add an image registry to the setup; zips are enough at 18.8 MB.
 
 **Cost:** builds need Docker and take ~40 s (pip download). The image is referenced by
 tag `python:3.13`, not digest; pin the digest if builds ever differ between machines.
+
+---
+
+## D-007: Run Floci with IAM enforcement on; reference secrets by ARN
+
+**Date:** 2026-10-27 · **Status:** Accepted
+
+**Context:** By default Floci allows every call regardless of IAM policies. E5 showed that
+with `FLOCI_SERVICES_IAM_ENFORCEMENT_ENABLED=true` it denies what a role does not allow.
+It also showed a Floci quirk: a permitted secret read is denied when the secret is
+requested by name instead of by full ARN.
+
+**Decision:**
+1. Enforcement is always on (`docker-compose.yml`), not an opt-in toggle.
+2. Code and configuration refer to secrets by their full ARN.
+
+**Why:** With enforcement off, a missing or wrong permission would only fail on real
+AWS, the most expensive place to find it, and the least-privilege design (README §7.2,
+layer 3) would never be tested locally. Referencing secrets by ARN avoids the Floci quirk
+and is unambiguous on real AWS too.
+
+**Cost:** IAM mistakes fail locally instead of silently working, which is the point.
+Floci's known enforcement gaps mean "allowed on Floci" still isn't proof of
+"denied on AWS"; the real-AWS check stays in FR-21.

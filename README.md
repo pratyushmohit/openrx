@@ -202,7 +202,16 @@ All targets **(provisional)** until M0 measures Floci and Monty overhead on the 
 3. **IAM + Secrets Manager (credential level):** only the bridge role can read secrets.
 4. **VPC (network level; real AWS only):** runners in private subnets with no NAT/IGW, only a Lambda VPC endpoint. Defined in Terraform behind `real_aws`.
 
-**Honest limitation:** Floci emulates AWS APIs, not AWS security enforcement, so layers 3–4 may not be enforced locally. Layer 1 is, which is a key reason for choosing Monty. The README must say this plainly.
+**Honest limitation:** Floci emulates AWS, but not every security control. Measured in M0 (`docs/m0-findings.md`, E5), with Floci's IAM enforcement turned on (D-007):
+
+| Layer | Guarantee | On Floci (observed) | On real AWS |
+|---|---|---|---|
+| 1. Monty | Model code has no network, files, env vars or imports beyond our functions | Enforced | Enforced |
+| 2. Lambda | Each run in its own container, separate from the MCP server | Enforced (real Docker containers) | Enforced |
+| 3. IAM | Runner may only invoke the bridge; only the bridge may read the secret | Enforced (forbidden calls get `AccessDeniedException`), with known Floci gaps (some actions unchecked, resource policies not evaluated) | Enforced, by design |
+| 4. VPC | Runner containers cannot reach the internet | **Not enforced:** Lambda containers have normal internet access | Enforced, by design (private subnet, no NAT) |
+
+So locally, an escape from Monty (layer 1) would still be contained by layers 2–3, but not 4.
 
 ## 8. Detailed design
 
