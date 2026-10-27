@@ -198,7 +198,7 @@ All targets **(provisional)** until M0 measures Floci and Monty overhead on the 
 ### 7.2 Defence in depth
 
 1. **Monty (language level; enforced everywhere, including Floci):** no filesystem, network, env vars, subprocesses, or side-effecting imports. Only our external functions exist. Per-run limits on time, memory, allocations, and recursion depth.
-2. **Lambda (process level):** each run in its own invocation, so a sandbox crash can't take down the MCP server. Lambda timeout and memory as outer limits.
+2. **Lambda (process level):** each run in its own invocation and container, so a sandbox crash can't take down the MCP server, and an escape from Monty itself lands in a throwaway container with no host files, no secrets, and only the permission to invoke the bridge. Lambda timeout and memory as outer limits. Monty also runs code in its own worker processes, but those would run as the host user; Lambda is what contains an interpreter escape. Model code runs **only** in Lambda, never on the host (D-005).
 3. **IAM + Secrets Manager (credential level):** only the bridge role can read secrets.
 4. **VPC (network level; real AWS only):** runners in private subnets with no NAT/IGW, only a Lambda VPC endpoint. Defined in Terraform behind `real_aws`.
 
@@ -271,7 +271,7 @@ endpoints:
 
 - `search-runner`: catalog bundled in; no AWS permissions.
 - `execute-runner`: IAM allows only `lambda:InvokeFunction` on the bridge.
-- Shared runner library (also runnable locally without Lambda, for tests): optional `ty` type check → fresh Monty interpreter with resource limits → external-function dispatch (async functions or start/resume; decide after M0) → capture stdout → serialise → truncate → return.
+- Shared runner library, executed only inside the runner Lambdas (D-005): optional `ty` type check → fresh Monty interpreter with resource limits → external-function dispatch (async functions or start/resume; decide after M0) → capture stdout → serialise → truncate → return.
 - Package `pydantic-monty` for the Floci Lambda image's OS/architecture.
 
 ### 8.6 Bridge Lambda
@@ -288,7 +288,7 @@ Hand-built LangGraph graph → MCP via `langchain-mcp-adapters` → `ChatOllama`
 |---|---|---|---|
 | Tool design | 2 tools (search + execute) | One tool per endpoint; single `code` tool with the full typed API in its description | Footprint stays constant as the catalog grows; the full API in one description still bloats context |
 | Sandbox | Monty inside Lambda | Restricted CPython (`exec` with stripped builtins); Docker `--network none`; Pyodide/WASM; Daytona/E2B/Modal | Restricted CPython is notoriously escapable. Docker is heavier and slower to start. Pyodide is slow to start. Managed sandboxes cost money, need egress, and default to "allow everything". Monty is deny-by-default with microsecond startup; Lambda adds process isolation plus AWS learning. Trade-off: Monty supports only a Python subset. |
-| Execution host | Lambda on Floci | In-process in the MCP server | In-process is simpler, but a Monty crash would take down the server, and there's no IAM/Secrets story |
+| Execution host | Lambda on Floci, only (no local backend) | In-process in the MCP server; Monty's worker processes on the host; both behind a runner interface | Monty's workers already survive crashes, but they run as the host user with its files, env and network. Lambda contains an interpreter escape and gives the IAM/Secrets story. A local backend for tests would mean model code can run on the host, so there is none (D-005). |
 | Credentials | Separate bridge Lambda | Keys passed into the runner | Keeps credentials out of the sandbox by design |
 | Agent framework | LangGraph (hand-built) | `create_react_agent`, PydanticAI, OpenAI Agents SDK, raw loop | Industry-relevant skill; a hand-built graph gives precise metric hooks |
 | LLM | Local Ollama | Free-tier cloud APIs, paid frontier APIs | Zero cost; also tests whether the pattern helps small models |
@@ -306,7 +306,7 @@ Hand-built LangGraph graph → MCP via `langchain-mcp-adapters` → `ChatOllama`
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
 | Monty's Python subset is too limited for the model's typical code | Med | High | M0 feature check; describe the subset in tool descriptions; add helper external functions (e.g. `parse_date`) for gaps |
-| `pydantic-monty` doesn't run in the Floci Lambda image (arch/glibc) | Med | High | M0 spike; fallback: run Lambda as a container image, or run Monty in-process behind the runner interface |
+| `pydantic-monty` doesn't run in the Floci Lambda image (arch/glibc) | Med | High | M0 spike; fallback: run Lambda as a container image (running Monty on the host is ruled out by D-005) |
 | Floci doesn't support Lambda-to-Lambda invoke from inside a container | Med | High | M0 spike; fallback: bridge as a host-side HTTP service on the Docker network |
 | Local models write poor code or ignore conventions | High | Med | Pick the model in M0 using sample tasks; iterate on tool descriptions; report per-model results honestly |
 | Public APIs change or rate-limit during eval | Med | Med | Record/replay fixtures; live runs reported separately |

@@ -86,3 +86,32 @@ anything holding the socket effectively controls Docker on this machine. Accepta
 a local emulator we run ourselves from a pinned image; not something to copy to shared
 or production hosts. Kubernetes would be heavy for a laptop; in-process loses the
 process boundary that the design relies on (README §7.2, layer 2).
+
+---
+
+## D-005: Model-written code runs only in Lambda
+
+**Date:** 2026-10-27 · **Status:** Accepted
+
+**Context:** Monty 1.4 runs code in its own pool of worker processes, with crash
+recovery and time/memory/recursion limits. That raised the question of whether Lambda
+is still needed, or whether to offer two runner backends (Monty on the host for tests
+and fast development, Lambda for deployment).
+
+**Options:**
+1. Lambda only.
+2. Runner interface with a host backend and a Lambda backend.
+3. Host only; drop Lambda.
+
+**Decision:** Option 1. There is no code path that runs model-written code on the host,
+including in tests.
+
+**Why:** Monty's workers protect against buggy code, but not against a bug in Monty
+itself; its docs say a worker "can never be made fully crash-proof" against adversarial
+input. A host worker runs as the user, with the user's files, environment variables and
+network. Inside Lambda, an escape lands in a throwaway container whose only AWS
+permission is invoking the bridge. A host backend "just for tests" is still a path where
+model code runs on the host, so it is left out entirely.
+
+**Cost:** anything that executes sandboxed code (experiments, tests, evals) needs Floci
+running and pays Lambda's overhead (measured in E2: 274 ms cold, ~48 ms warm p50).
