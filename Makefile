@@ -18,7 +18,7 @@ export AWS_ENDPOINT_URL ?= http://localhost:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help up up-ui down logs ps tf-init tf-plan tf-apply tf-destroy invoke-hello
+.PHONY: help up up-ui down logs ps tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -56,8 +56,3 @@ tf-apply: ## Create/update resources in Floci
 
 tf-destroy: ## Delete all Terraform-managed resources from Floci
 	$(TF) destroy -auto-approve
-
-# TEMP(M0): remove with infra/envs/floci/hello_lambda.tf.
-invoke-hello: ## Invoke the hello Lambda and print its response
-	aws lambda invoke --function-name openrx-hello --cli-binary-format raw-in-base64-out --payload '{"ping": "pong"}' build-hello-out.json > /dev/null
-	@cat build-hello-out.json && echo && rm -f build-hello-out.json

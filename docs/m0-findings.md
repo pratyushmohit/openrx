@@ -38,8 +38,8 @@ end of the project (thinking, model choice, `num_ctx`).
 
 **Question:** Can Terraform deploy a `python3.13` Lambda to Floci, and does Floci run it?
 
-**What we did:** Hello-world Lambda (`lambdas/hello`, `infra/envs/floci/hello_lambda.tf`,
-both `TEMP(M0)`), zipped by the `archive` provider, IAM role with no permissions.
+**What we did:** Hello-world Lambda, zipped by the `archive` provider, IAM role with no
+permissions. The experiment code was removed afterwards; see commit `95d26d9`.
 Floci was given the Docker socket and a fixed `openrx` network. Timings measured with
 boto3 from the host (200 warm calls), excluding AWS CLI startup.
 
