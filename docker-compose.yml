@@ -1,0 +1,33 @@
+# Local AWS emulator for OpenRx. Start with `docker compose up -d`.
+services:
+  floci:
+    # Pinned version (not :latest) so everyone gets the same emulator behaviour.
+    image: floci/floci:2.3.0
+    ports:
+      - "4566:4566"
+    environment:
+      # Bedrock Runtime: forward Converse calls to Ollama on the host instead
+      # of returning a canned stub reply. Floci runs in a container, so the
+      # host's Ollama is reachable at host.docker.internal, not localhost.
+      FLOCI_SERVICES_BEDROCK_RUNTIME_BACKEND: proxy
+      FLOCI_SERVICES_BEDROCK_RUNTIME_PROXY_URL: http://host.docker.internal:11434/v1
+      FLOCI_SERVICES_BEDROCK_RUNTIME_PROXY_DEFAULT_MODEL: ${OLLAMA_MODEL:-qwen3.5:latest}
+    extra_hosts:
+      # Docker Desktop defines host.docker.internal already; this makes it work
+      # on plain Linux Docker too.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data:/app/data
+
+  # Optional web console for browsing emulated resources (http://localhost:4500).
+  # Off by default; start it with `docker compose --profile ui up -d`.
+  floci-ui:
+    image: floci/floci-ui:0.7.0
+    profiles: ["ui"]
+    ports:
+      - "4500:4500"
+    environment:
+      # Containers on the same compose network reach each other by service name.
+      FLOCI_ENDPOINT: http://floci:4566
+    depends_on:
+      - floci
