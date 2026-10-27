@@ -16,8 +16,8 @@ services:
       # Docker Desktop defines host.docker.internal already; this makes it work
       # on plain Linux Docker too.
       - "host.docker.internal:host-gateway"
-    volumes:
-      - ./data:/app/data
+    # No data volume on purpose: Floci keeps state in memory, so recreating
+    # the container starts from an empty AWS account. See `make up`.
 
   # Optional web console for browsing emulated resources (http://localhost:4500).
   # Off by default; start it with `docker compose --profile ui up -d`.
