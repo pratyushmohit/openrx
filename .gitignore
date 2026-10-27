@@ -15,3 +15,8 @@ wheels/
 *.tfstate.*
 # Lambda zips built by Terraform
 infra/envs/floci/build/
+
+# Test coverage data
+.coverage
+.coverage.*
+htmlcov/

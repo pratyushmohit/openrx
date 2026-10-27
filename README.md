@@ -365,15 +365,20 @@ openrx eval report
 ## 14. Repo structure
 
 ```
-openrx/
-  mcp_server/   catalog/   runner/   bridge/   agent/   evals/   observability/
-lambdas/        search_runner/  execute_runner/  bridge/
-catalog/        openfda.yaml  clinicaltrials.yaml  pubmed.yaml  rxnorm.yaml  dailymed.yaml
+src/openrx/     the Python package (src layout, D-008)
+  cli.py        `openrx` command
+  catalog/      schema, loader, catalog_* functions
+    sources/    openfda.yaml  clinicaltrials.yaml  pubmed.yaml  rxnorm.yaml  dailymed.yaml
+  mcp_server/   runner/   bridge/   agent/   evals/   observability/
+lambdas/        search_runner/  execute_runner/  bridge/   (thin entry points into openrx)
 infra/          modules/{lambda,iam,secrets,vpc}  envs/{floci,aws}
 evals/          tasks.yaml  reference/  fixtures/
+scripts/        build_lambda.sh
 results/  tests/  docs/{decisions.md, slos.md, m0-findings.md}
-docker-compose.yml  Makefile  README.md  REQUIREMENTS.md  pyproject.toml  .env.example
+docker-compose.yml  Makefile  README.md  pyproject.toml  .env.example
 ```
+
+The catalog YAML lives inside the package so it is bundled with the code into the runner and bridge Lambdas, which both need it.
 
 ## 15. Milestones and exit criteria
 

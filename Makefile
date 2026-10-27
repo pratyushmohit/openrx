@@ -20,10 +20,22 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint typecheck test up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
+
+check: lint typecheck test ## Run all code checks (what CI will run)
+
+lint: ## Lint and check formatting with ruff
+	uv run ruff check .
+	uv run ruff format --check .
+
+typecheck: ## Static type check with pyright
+	uv run pyright
+
+test: ## Run unit tests with coverage
+	uv run pytest --cov --cov-report=term-missing
 
 # Floci keeps state in memory, so recreating the container wipes every AWS
 # resource. Terraform's state must be wiped too, or it would believe the old

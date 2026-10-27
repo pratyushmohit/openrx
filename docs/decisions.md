@@ -166,3 +166,31 @@ and is unambiguous on real AWS too.
 **Cost:** IAM mistakes fail locally instead of silently working, which is the point.
 Floci's known enforcement gaps mean "allowed on Floci" still isn't proof of
 "denied on AWS"; the real-AWS check stays in FR-21.
+
+---
+
+## D-008: `src` layout, with the catalog YAML inside the package
+
+**Date:** 2026-10-27 · **Status:** Accepted
+
+**Context:** The first application code (M1) needs a home, and the catalog YAML files
+must reach the runner and bridge Lambdas.
+
+**Options:**
+1. Flat layout: `openrx/` at the repo root; catalog in a top-level `catalog/`.
+2. `src` layout: `src/openrx/`; catalog in `src/openrx/catalog/sources/`.
+
+**Decision:** Option 2, built with uv's `uv_build` backend.
+
+**Why:**
+- With a flat layout Python imports `openrx/` straight from the working directory, so
+  tests can pass even when packaging is broken (missing files, missing package data).
+  With `src/`, code is importable only once installed, so those mistakes show up at
+  once.
+- The repo holds a lot that is not package code (`infra/`, `lambdas/`, `docs/`,
+  `scripts/`, eval data); `src/` makes the boundary explicit.
+- Lambda builds can `pip install` the package and get exactly the packaged code. With
+  the YAML as package data, the catalog travels with it; no separate copy step to forget.
+
+**Cost:** one extra folder level, and editing the catalog means going into
+`src/openrx/catalog/sources/` rather than a top-level folder.
