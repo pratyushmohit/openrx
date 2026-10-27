@@ -216,7 +216,7 @@ All targets **(provisional)** until M0 measures Floci and Monty overhead on the 
 | Code sandbox | Pydantic Monty (`pydantic-monty`), inside the runner Lambdas |
 | Agent | LangGraph (hand-built graph) + `langchain-mcp-adapters` |
 | LLM | Local Ollama via `langchain-ollama` (`ChatOllama`); model from config |
-| AWS emulation | Floci (`floci/floci`, `http://localhost:4566`) |
+| AWS emulation | Floci (`floci/floci`, `http://127.0.0.1:4566`; not `localhost`, which adds ~43 ms per request on Windows, see E4) |
 | AWS SDK | `boto3`, `endpoint_url` from `AWS_ENDPOINT_URL`, dummy creds |
 | Infra-as-code | Terraform, `hashicorp/aws` provider with endpoints overridden to Floci, dummy creds, `skip_credentials_validation` / `skip_requesting_account_id` / `skip_metadata_api_check`. Modules shared between `envs/floci` and `envs/aws`. Local state for v1. Lambda zips built in the Makefile, including the Monty wheel for the right architecture. |
 | HTTP (bridge) | `httpx`, retries with backoff, timeouts |

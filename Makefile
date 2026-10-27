@@ -14,7 +14,9 @@ endif
 export AWS_ACCESS_KEY_ID ?= test
 export AWS_SECRET_ACCESS_KEY ?= test
 export AWS_DEFAULT_REGION ?= us-east-1
-export AWS_ENDPOINT_URL ?= http://localhost:4566
+# 127.0.0.1, not localhost: on Windows + Docker Desktop, "localhost" adds a fixed
+# ~43 ms to every request (docs/m0-findings.md, E4).
+export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 

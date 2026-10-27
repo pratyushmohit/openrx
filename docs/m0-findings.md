@@ -55,13 +55,12 @@ boto3 from the host (200 warm calls), excluding AWS CLI startup.
 | Cold start, image cached (new container) | 274 ms |
 | Warm, p50 / p95 / p99 (n=200) | 48.0 / 49.5 / 52.2 ms |
 
-- Warm calls are oddly flat around 48 ms (one single warm call took 25 ms). The
-  constant floor suggests a fixed delay somewhere (e.g. Floci's Runtime API polling or
-  TCP delayed ACK), not work. Investigate in the latency experiment.
+- Warm calls are oddly flat around 48 ms (one single warm call took 25 ms).
+  **Resolved in E4:** the floor comes from calling Floci via `localhost` on Windows,
+  not from Lambda. Via `127.0.0.1` warm calls take ~5 ms.
 
-**Implication:** A 48 ms warm floor uses about half of the "sandbox overhead p50
-≤ 100 ms" budget (README §6.4) before Monty even starts. Pre-pull the Lambda image in
-`make up` or the docs so the first call isn't 20 s.
+**Implication:** Pre-pull the Lambda image in `make up` or the docs so the first call
+isn't 20 s.
 
 ---
 
@@ -96,9 +95,51 @@ removed afterwards; see commit `77ff9e8`.
   version). Since `make up` starts clean, the first call after each deploy pays it.
 - Monty adds ~30 ms to a cold start (hello Lambda: 274 ms).
 - The 48 ms warm floor (E2) is the same with Monty. Monty's own work is under 1 ms, so
-  the floor is in the invoke path. One warm call took 6.9 ms, which suggests the real
-  cost is small and something adds a fixed ~40 ms (TCP delayed ACK is a classic cause
-  of exactly 40 ms). Investigate in the latency experiment.
+  the floor is in the invoke path. **Resolved in E4:** it is the `localhost` lookup on
+  Windows, not Lambda or Monty.
 
 **Implication:** Packaging is solved and reusable for the real runners. Overhead budget
 is dominated by Floci's invoke path, not Monty.
+
+---
+
+## E4: Runner Lambda invokes bridge Lambda; bridge reads Secrets Manager
+
+**Date:** 2026-10-27
+
+**Question:** Can code inside one Floci Lambda invoke another Lambda (README §11 risk 3),
+can that Lambda read Secrets Manager, and what does the hop cost?
+
+**What we did:** Two `TEMP(M0)` Lambdas with least-privilege roles:
+`openrx-e4-runner` (may only `lambda:InvokeFunction` the bridge) and `openrx-e4-bridge`
+(may only `secretsmanager:GetSecretValue` on `openrx/openfda_api_key`). A dummy value was
+set with `aws secretsmanager put-secret-value`, outside Terraform. The bridge returns
+only whether it got a value and its length, never the value. The runner timed its own
+invokes of the bridge from inside its container.
+
+**Found:**
+- Works. Floci injects `AWS_ENDPOINT_URL=http://floci:4566` into Lambda containers, and
+  the boto3 bundled in the runtime (1.42.97) uses it automatically; no endpoint code in
+  the handler.
+- The bridge read the secret (`secret_found: true`, length 20), cached per container.
+
+| Runner → bridge hop (measured inside the runner) | Time |
+|---|---|
+| Warm, p50 / p95 / p99 (n=200) | 4.2 / 4.9 / 5.3 ms |
+| Bridge cold (new container + first Secrets Manager read) | ~330 ms |
+
+- **The 48 ms floor from E2/E3a is `localhost` on Windows.** `localhost` resolves to
+  `::1` (IPv6) first, and Docker Desktop's IPv6 port forwarding adds ~43 ms per request:
+
+  | Host → Floci endpoint | Warm invoke p50 |
+  |---|---|
+  | `http://localhost:4566` | 48.0 ms |
+  | `http://[::1]:4566` | 48.0 ms |
+  | `http://127.0.0.1:4566` | 5.2 ms |
+
+  The project now uses `127.0.0.1` (Makefile, Terraform, README). Container-to-container
+  traffic on the `openrx` network was never affected.
+
+**Implication:** No fallback needed: the bridge stays a Lambda. A warm `request()` hop
+costs ~4 ms of the ≤ 30 ms bridge-overhead budget (README §6.4), leaving room for
+validation and record/replay. Bridge cold starts (~330 ms) are worth keeping warm.
