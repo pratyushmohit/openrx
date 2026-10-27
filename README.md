@@ -161,6 +161,8 @@ After M0, sandbox and bridge overhead targets are confirmed and the others stay 
 
 ## 7. Architecture overview
 
+Diagrams of the components and trust zones, the path of one `execute` call, and build vs run time: [`docs/architecture.md`](docs/architecture.md).
+
 ```
  MCP client (LangGraph agent + Ollama, Claude Desktop, ...)
         │  sees: server "openrx", instructions, 2 tools
