@@ -1,0 +1,400 @@
+{
+  "request": {
+    "url": "https://api.fda.gov/drug/event.json",
+    "params": {
+      "search": "patient.drug.openfda.generic_name:\"metformin\" AND serious:1",
+      "limit": 2
+    }
+  },
+  "captured_at": "2026-10-27",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200
+  },
+  "response": {
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise re…",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2026-07-30",
+      "results": {
+        "skip": 0,
+        "limit": 2,
+        "total": 293750
+      }
+    },
+    "results": [
+      {
+        "safetyreportversion": "6",
+        "safetyreportid": "10003336",
+        "primarysourcecountry": "US",
+        "occurcountry": "US",
+        "transmissiondateformat": "102",
+        "transmissiondate": "20150528",
+        "reporttype": "1",
+        "serious": "1",
+        "seriousnessdeath": "1",
+        "seriousnesshospitalization": "1",
+        "seriousnessother": "1",
+        "receivedateformat": "102",
+        "receivedate": "20140312",
+        "receiptdateformat": "102",
+        "receiptdate": "20141105",
+        "fulfillexpeditecriteria": "1",
+        "companynumb": "US-MERCK-1403USA005334",
+        "duplicate": "1",
+        "reportduplicate": {
+          "duplicatesource": "MERCK",
+          "duplicatenumb": "US-MERCK-1403USA005334"
+        },
+        "primarysource": {
+          "reportercountry": "US",
+          "qualification": "5"
+        },
+        "sender": {
+          "sendertype": "2",
+          "senderorganization": "FDA-Public Use"
+        },
+        "receiver": {
+          "receivertype": "6",
+          "receiverorganization": "FDA"
+        },
+        "patient": {
+          "patientweight": "97.96",
+          "patientsex": "1",
+          "reaction": [
+            {
+              "reactionmeddraversionpt": "18.0",
+              "reactionmeddrapt": "Metastases to spine",
+              "reactionoutcome": "6"
+            },
+            {
+              "reactionmeddraversionpt": "18.0",
+              "reactionmeddrapt": "Anxiety",
+              "reactionoutcome": "6"
+            }
+          ],
+          "drug": [
+            {
+              "drugcharacterization": "1",
+              "medicinalproduct": "JANUMET",
+              "drugauthorizationnumb": "022044",
+              "drugdosagetext": "50/1000 MG",
+              "drugdosageform": "FILM-COATED TABLET",
+              "drugadministrationroute": "048",
+              "drugindication": "TYPE 2 DIABETES MELLITUS",
+              "drugstartdateformat": "610",
+              "drugstartdate": "201107",
+              "drugenddateformat": "102",
+              "drugenddate": "20120808",
+              "actiondrug": "4",
+              "activesubstance": {
+                "activesubstancename": "METFORMIN HYDROCHLORIDE\\SITAGLIPTIN PHOSPHATE"
+              },
+              "openfda": {
+                "application_number": [
+                  "NDA022044",
+                  "NDA202270"
+                ],
+                "brand_name": [
+                  "JANUMET",
+                  "JANUMET XR"
+                ],
+                "generic_name": [
+                  "SITAGLIPTIN AND METFORMIN HYDROCHLORIDE"
+                ],
+                "manufacturer_name": [
+                  "Merck Sharp & Dohme LLC"
+                ],
+                "product_ndc": [
+                  "0006-0575",
+                  "0006-0577"
+                ],
+                "product_type": [
+                  "HUMAN PRESCRIPTION DRUG"
+                ],
+                "route": [
+                  "ORAL"
+                ],
+                "substance_name": [
+                  "SITAGLIPTIN PHOSPHATE",
+                  "METFORMIN HYDROCHLORIDE"
+                ],
+                "rxcui": [
+                  "861771",
+                  "861821"
+                ],
+                "spl_id": [
+                  "61bde692-38c6-42dc-aaac-503cc7e1d8f8",
+                  "44f3c6c6-160a-4cc8-8961-b4f7200b5ce5"
+                ],
+                "spl_set_id": [
+                  "d19c7ed0-ad5c-426e-b2df-722508f97d67",
+                  "64beb3d2-3aeb-4cd5-ba11-dacf6c9a5b50"
+                ],
+                "package_ndc": [
+                  "0006-0575-82",
+                  "0006-0575-61"
+                ],
+                "unii": [
+                  "786Z46389E",
+                  "TS63EW8X6F"
+                ]
+              }
+            },
+            {
+              "drugcharacterization": "1",
+              "medicinalproduct": "JANUVIA",
+              "drugdosagetext": "UNK",
+              "drugdosageform": "FILM-COATED TABLET",
+              "drugadministrationroute": "048",
+              "drugstartdateformat": "610",
+              "drugstartdate": "201107",
+              "drugenddateformat": "610",
+              "drugenddate": "201207",
+              "actiondrug": "4",
+              "activesubstance": {
+                "activesubstancename": "SITAGLIPTIN PHOSPHATE"
+              },
+              "openfda": {
+                "application_number": [
+                  "NDA021995"
+                ],
+                "brand_name": [
+                  "JANUVIA"
+                ],
+                "generic_name": [
+                  "SITAGLIPTIN"
+                ],
+                "manufacturer_name": [
+                  "Merck Sharp & Dohme LLC"
+                ],
+                "product_ndc": [
+                  "0006-0112",
+                  "0006-0221"
+                ],
+                "product_type": [
+                  "HUMAN PRESCRIPTION DRUG"
+                ],
+                "route": [
+                  "ORAL"
+                ],
+                "substance_name": [
+                  "SITAGLIPTIN PHOSPHATE"
+                ],
+                "rxcui": [
+                  "665036",
+                  "665040"
+                ],
+                "spl_id": [
+                  "71d449de-955b-4711-9a44-1e1f66e2e9eb"
+                ],
+                "spl_set_id": [
+                  "f85a48d0-0407-4c50-b0fa-7673a160bf01"
+                ],
+                "package_ndc": [
+                  "0006-0221-01",
+                  "0006-0221-28"
+                ],
+                "unii": [
+                  "TS63EW8X6F"
+                ]
+              }
+            }
+          ],
+          "summary": {
+            "narrativeincludeclinical": "CASE EVENT DATE: 201112"
+          }
+        }
+      },
+      {
+        "safetyreportversion": "1",
+        "safetyreportid": "10003642",
+        "primarysourcecountry": "US",
+        "occurcountry": "US",
+        "transmissiondateformat": "102",
+        "transmissiondate": "20141002",
+        "reporttype": "2",
+        "serious": "1",
+        "seriousnessother": "1",
+        "receivedateformat": "102",
+        "receivedate": "20140312",
+        "receiptdateformat": "102",
+        "receiptdate": "20140312",
+        "fulfillexpeditecriteria": "1",
+        "companynumb": "US-PFIZER INC-2014058887",
+        "duplicate": "1",
+        "reportduplicate": {
+          "duplicatesource": "PFIZER",
+          "duplicatenumb": "US-PFIZER INC-2014058887"
+        },
+        "primarysource": {
+          "reportercountry": "US",
+          "qualification": "1"
+        },
+        "sender": {
+          "sendertype": "2",
+          "senderorganization": "FDA-Public Use"
+        },
+        "receiver": {
+          "receivertype": "6",
+          "receiverorganization": "FDA"
+        },
+        "patient": {
+          "patientonsetage": "66",
+          "patientonsetageunit": "801",
+          "patientweight": "81.41",
+          "patientsex": "2",
+          "reaction": [
+            {
+              "reactionmeddraversionpt": "17.0",
+              "reactionmeddrapt": "Osteomyelitis",
+              "reactionoutcome": "1"
+            }
+          ],
+          "drug": [
+            {
+              "drugcharacterization": "1",
+              "medicinalproduct": "TOFACITINIB CITRATE",
+              "drugauthorizationnumb": "203214",
+              "drugstructuredosagenumb": "10",
+              "drugstructuredosageunit": "003",
+              "drugseparatedosagenumb": "2",
+              "drugintervaldosageunitnumb": "1",
+              "drugintervaldosagedefinition": "804",
+              "drugcumulativedosagenumb": "14380",
+              "drugcumulativedosageunit": "003",
+              "drugdosagetext": "10 MG, 2X/DAY",
+              "drugdosageform": "TABLET",
+              "drugadministrationroute": "048",
+              "drugindication": "RHEUMATOID ARTHRITIS",
+              "drugstartdateformat": "102",
+              "drugstartdate": "20110712",
+              "drugenddateformat": "102",
+              "drugenddate": "20120730",
+              "actiondrug": "1",
+              "openfda": {
+                "application_number": [
+                  "ANDA209633",
+                  "ANDA220972"
+                ],
+                "brand_name": [
+                  "TOFACITINIB",
+                  "TOFACITINIB CITRATE"
+                ],
+                "generic_name": [
+                  "TOFACITINIB CITRATE"
+                ],
+                "manufacturer_name": [
+                  "Breckenridge Pharmaceutical, Inc.",
+                  "ScieGen Pharmaceuticals, INC."
+                ],
+                "product_ndc": [
+                  "51991-329",
+                  "51991-963"
+                ],
+                "product_type": [
+                  "HUMAN PRESCRIPTION DRUG"
+                ],
+                "route": [
+                  "ORAL"
+                ],
+                "substance_name": [
+                  "TOFACITINIB CITRATE"
+                ],
+                "rxcui": [
+                  "1357541",
+                  "2048566"
+                ],
+                "spl_id": [
+                  "3e3b82fa-49eb-44e5-9489-1e7ea559e9eb",
+                  "1be25def-3272-4a8f-b320-7001581feadf"
+                ],
+                "spl_set_id": [
+                  "c963c610-52e5-43ab-aac6-3f7e5341b764",
+                  "11d08738-efa3-4474-8eda-812bc04adfbb"
+                ],
+                "package_ndc": [
+                  "51991-329-77",
+                  "51991-329-06"
+                ],
+                "unii": [
+                  "O1FF4DIV0D"
+                ]
+              }
+            },
+            {
+              "drugcharacterization": "1",
+              "medicinalproduct": "TOFACITINIB CITRATE",
+              "drugauthorizationnumb": "203214",
+              "drugstructuredosagenumb": "10",
+              "drugstructuredosageunit": "003",
+              "drugseparatedosagenumb": "2",
+              "drugintervaldosageunitnumb": "1",
+              "drugintervaldosagedefinition": "804",
+              "drugcumulativedosagenumb": "14380",
+              "drugcumulativedosageunit": "003",
+              "drugdosagetext": "10 MG, 2X/DAY",
+              "drugdosageform": "TABLET",
+              "drugadministrationroute": "048",
+              "drugstartdateformat": "102",
+              "drugstartdate": "20120917",
+              "drugenddateformat": "102",
+              "drugenddate": "20130816",
+              "actiondrug": "1",
+              "openfda": {
+                "application_number": [
+                  "ANDA209633",
+                  "ANDA220972"
+                ],
+                "brand_name": [
+                  "TOFACITINIB",
+                  "TOFACITINIB CITRATE"
+                ],
+                "generic_name": [
+                  "TOFACITINIB CITRATE"
+                ],
+                "manufacturer_name": [
+                  "Breckenridge Pharmaceutical, Inc.",
+                  "ScieGen Pharmaceuticals, INC."
+                ],
+                "product_ndc": [
+                  "51991-329",
+                  "51991-963"
+                ],
+                "product_type": [
+                  "HUMAN PRESCRIPTION DRUG"
+                ],
+                "route": [
+                  "ORAL"
+                ],
+                "substance_name": [
+                  "TOFACITINIB CITRATE"
+                ],
+                "rxcui": [
+                  "1357541",
+                  "2048566"
+                ],
+                "spl_id": [
+                  "3e3b82fa-49eb-44e5-9489-1e7ea559e9eb",
+                  "1be25def-3272-4a8f-b320-7001581feadf"
+                ],
+                "spl_set_id": [
+                  "c963c610-52e5-43ab-aac6-3f7e5341b764",
+                  "11d08738-efa3-4474-8eda-812bc04adfbb"
+                ],
+                "package_ndc": [
+                  "51991-329-77",
+                  "51991-329-06"
+                ],
+                "unii": [
+                  "O1FF4DIV0D"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

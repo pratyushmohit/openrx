@@ -194,3 +194,33 @@ must reach the runner and bridge Lambdas.
 
 **Cost:** one extra folder level, and editing the catalog means going into
 `src/openrx/catalog/sources/` rather than a top-level folder.
+
+---
+
+## D-009: Example responses live in their own generated files
+
+**Date:** 2026-10-27 · **Status:** Accepted
+
+**Context:** Every catalog endpoint needs a real, trimmed example response (M1 exit
+criterion), captured from the live API by a command. Writing them into the
+hand-written YAML would mean a tool rewriting files people edit.
+
+**Options:**
+1. Examples inside each source's YAML, rewritten with `ruamel.yaml` to keep comments,
+   anchors and layout.
+2. One generated JSON file per endpoint: `examples/<source>/<endpoint>.json`.
+
+**Decision:** Option 2. YAML may not contain `example_response`; the loader attaches it
+from the example file, so the rest of the code still sees `endpoint.example_response`.
+Each endpoint declares `example_params`, the exact request that produced its example,
+and each example file records that request and the capture date.
+
+**Why:** Hand-written and generated content don't share a file. The tool never touches
+YAML that people wrote; refreshing examples shows up as changes to example files only,
+so config changes stay small and visible in review; examples can be deleted and
+regenerated freely; no extra dependency. The same reason generated lockfiles are kept
+apart from what people write.
+
+**Cost:** a source is now one YAML plus one JSON per endpoint. `catalog lint` covers the
+gap: it requires an example for every endpoint and flags example files whose endpoint or
+source no longer exists.

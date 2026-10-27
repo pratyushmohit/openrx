@@ -1,0 +1,328 @@
+{
+  "request": {
+    "url": "https://api.fda.gov/drug/label.json",
+    "params": {
+      "search": "_exists_:boxed_warning AND openfda.generic_name:\"warfarin\"",
+      "limit": 2
+    }
+  },
+  "captured_at": "2026-10-27",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200
+  },
+  "response": {
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise re…",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2026-10-26",
+      "results": {
+        "skip": 0,
+        "limit": 2,
+        "total": 72
+      }
+    },
+    "results": [
+      {
+        "spl_product_data_elements": [
+          "Warfarin Sodium Warfarin Sodium WARFARIN SODIUM WARFARIN SILICON DIOXIDE CROSCARMELLOSE SODIUM LACTOSE MONOHYDRATE MAGNESIUM STEARATE MICROCRYSTALLINE CELLULOSE FD&C RED NO. 40 TV;1;1712 capsule-shape…"
+        ],
+        "boxed_warning": [
+          "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding [see Warnings and Precautions ( 5.1 )] . Perform regular monitoring of INR in all treated patients [see Dosage and Administrati…"
+        ],
+        "indications_and_usage": [
+          "1 INDICATIONS AND USAGE Warfarin sodium tablets are indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboemboli…"
+        ],
+        "dosage_and_administration": [
+          "2 DOSAGE AND ADMINISTRATION Individualize dosing regimen for each patient, and adjust based on INR response. ( 2.1 , 2.2 ) Knowledge of genotype can inform initial dose selection. ( 2.3 ) Monitoring: …"
+        ],
+        "dosage_and_administration_table": [
+          "<table width=\"800px\" cellpadding=\"5\"><caption>Table 1: Three Ranges of Expected Maintenance Warfarin Sodium Tablets Daily Doses Based on CYP2C9 and VKORC1 Genotypes<sup>&#x2020;</sup></caption><col/><…"
+        ],
+        "dosage_forms_and_strengths": [
+          "3 DOSAGE FORMS AND STRENGTHS Warfarin sodium tablets USP, 1 mg are available as pink, capsule-shaped, biconvex scored tablets, debossed with TV/1 on the scored side and 1712 on the other side. Warfari…"
+        ],
+        "contraindications": [
+          "4 CONTRAINDICATIONS Warfarin sodium is contraindicated in: Pregnancy Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high…"
+        ],
+        "warnings_and_cautions": [
+          "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alt…"
+        ],
+        "adverse_reactions": [
+          "6 ADVERSE REACTIONS The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning, Warnings and Precaution…"
+        ],
+        "drug_interactions": [
+          "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult label…"
+        ],
+        "drug_interactions_table": [
+          "<table width=\"800px\" cellspacing=\"0\" cellpadding=\"5\"><col width=\"77px\"/><col/><col/><tbody><tr><td colspan=\"3\" styleCode=\" Botrule Toprule Lrule Rrule\"><paragraph><content styleCode=\"bold\">Table 2: Ex…",
+          "<table width=\"800px\" cellspacing=\"0\" cellpadding=\"5\"><col/><col/><tbody><tr><td colspan=\"2\" styleCode=\" Botrule\"><paragraph><content styleCode=\"bold\">Table 3: Drugs that Can Increase the Risk of Bleed…"
+        ],
+        "use_in_specific_populations": [
+          "8 USE IN SPECIFIC POPULATIONS Pregnant women with mechanical heart valves: Warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 8.1 ) Lactation: Monitor breastfeeding …"
+        ],
+        "pregnancy": [
+          "8.1 Pregnancy Risk Summary Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the…"
+        ],
+        "pediatric_use": [
+          "8.4 Pediatric Use Adequate and well-controlled studies with warfarin sodium have not been conducted in any pediatric population, and the optimum dosing, safety, and efficacy in pediatric patients is u…"
+        ],
+        "geriatric_use": [
+          "8.5 Geriatric Use Of the total number of patients receiving warfarin sodium in controlled clinical trials for which data were available for analysis, 1885 patients (24.4%) were 65 years and older, whi…"
+        ],
+        "overdosage": [
+          "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from s…"
+        ],
+        "description": [
+          "11 DESCRIPTION Warfarin sodium tablets, USP contain warfarin sodium, an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(α-acet…"
+        ],
+        "clinical_pharmacology": [
+          "12 CLINICAL PHARMACOLOGY 12.1 Mechanism of Action Warfarin acts by inhibiting the synthesis of vitamin K-dependent clotting factors, which include Factors II, VII, IX, and X, and the anticoagulant pro…"
+        ],
+        "mechanism_of_action": [
+          "12.1 Mechanism of Action Warfarin acts by inhibiting the synthesis of vitamin K-dependent clotting factors, which include Factors II, VII, IX, and X, and the anticoagulant proteins C and S. Vitamin K …"
+        ],
+        "pharmacodynamics": [
+          "12.2 Pharmacodynamics An anticoagulation effect generally occurs within 24 hours after warfarin administration. However, peak anticoagulant effect may be delayed 72 to 96 hours. The duration of action…"
+        ],
+        "pharmacokinetics": [
+          "12.3 Pharmacokinetics Warfarin sodium is a racemic mixture of the R - and S -enantiomers of warfarin. The S -enantiomer exhibits 2 to 5 times more anticoagulant activity than the R -enantiomer in huma…"
+        ],
+        "nonclinical_toxicology": [
+          "13 NONCLINICAL TOXICOLOGY 13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility Carcinogenicity, mutagenicity, or fertility studies have not been performed with warfarin."
+        ],
+        "carcinogenesis_and_mutagenesis_and_impairment_of_fertility": [
+          "13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility Carcinogenicity, mutagenicity, or fertility studies have not been performed with warfarin."
+        ],
+        "clinical_studies": [
+          "14 CLINICAL STUDIES 14.1 Atrial Fibrillation In five prospective, randomized, controlled clinical trials involving 3711 patients with non-rheumatic AF, warfarin significantly reduced the risk of syste…"
+        ],
+        "clinical_studies_table": [
+          "<table cellspacing=\"0\" cellpadding=\"0\"><col/><col/><col/><col/><col/><col/><col/><col/><col/><tbody><tr><td align=\"center\" colspan=\"9\" styleCode=\" Botrule\"><paragraph><content styleCode=\"bold\">Table 4…",
+          "<table width=\"800px\" cellspacing=\"0\" cellpadding=\"5\"><col/><col/><col/><col/><tbody><tr><td align=\"center\" colspan=\"4\"><paragraph><content styleCode=\"bold\">Table 5: Prospective, Randomized, Open-Label…"
+        ],
+        "references": [
+          "15 REFERENCES OSHA Hazardous Drugs. OSHA. http://www.osha.gov/SLTC/hazardousdrugs/index.html."
+        ],
+        "how_supplied": [
+          "16 HOW SUPPLIED/STORAGE AND HANDLING Warfarin sodium tablets USP, 1 mg are available as pink, capsule-shaped, biconvex scored tablets, debossed with TV/1 on the scored side and 1712 on the other side …"
+        ],
+        "information_for_patients": [
+          "17 PATIENT COUNSELING INFORMATION Advise the patient to read the FDA-approved patient labeling (Medication Guide). Instructions for Patients Advise patients to: Strictly adhere to the prescribed dosag…"
+        ],
+        "spl_medguide": [
+          "MEDICATION GUIDE Warfarin (war' far in) Sodium (soe' dee um) Tablets What is the most important information I should know about warfarin sodium tablets? Warfarin sodium tablets can cause bleeding whic…"
+        ],
+        "spl_medguide_table": [
+          "<table width=\"1001.91px\"><col/><col/><tbody><tr><td align=\"center\" valign=\"top\" colspan=\"2\" styleCode=\" Toprule Lrule Rrule\"><content styleCode=\"bold\"><content styleCode=\"bold\">Warfarin </content></co…"
+        ],
+        "package_label_principal_display_panel": [
+          "Package/Label Display Panel NDC 0093-1712-01 Warfarin Sodium Tablets, USP 1 mg HIGHLY POTENT ANTICOAGULANT WARNING: Serious bleeding results from overdosage. Do not use or dispense before reading dire…",
+          "Package/Label Display Panel NDC 0093-1713-01 Warfarin Sodium Tablets, USP 2 mg HIGHLY POTENT ANTICOAGULANT WARNING: Serious bleeding results from overdosage. Do not use or dispense before reading dire…"
+        ],
+        "set_id": "0cbce382-9c88-4f58-ae0f-532a841e8f95",
+        "id": "b8c33971-54b3-4971-bf7f-1bec66999a29",
+        "effective_time": "20250617",
+        "version": "20",
+        "openfda": {
+          "application_number": [
+            "ANDA040616"
+          ],
+          "brand_name": [
+            "Warfarin Sodium"
+          ],
+          "generic_name": [
+            "WARFARIN SODIUM"
+          ],
+          "manufacturer_name": [
+            "Teva Pharmaceuticals USA, Inc."
+          ],
+          "product_ndc": [
+            "0093-1712",
+            "0093-1713"
+          ],
+          "product_type": [
+            "HUMAN PRESCRIPTION DRUG"
+          ],
+          "route": [
+            "ORAL"
+          ],
+          "substance_name": [
+            "WARFARIN SODIUM"
+          ],
+          "rxcui": [
+            "855288",
+            "855296"
+          ],
+          "spl_id": [
+            "b8c33971-54b3-4971-bf7f-1bec66999a29"
+          ],
+          "spl_set_id": [
+            "0cbce382-9c88-4f58-ae0f-532a841e8f95"
+          ],
+          "package_ndc": [
+            "0093-1712-01",
+            "0093-1712-10"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "upc": [
+            "0300931721013",
+            "0300931713018"
+          ],
+          "unii": [
+            "6153CWM0CL"
+          ]
+        }
+      },
+      {
+        "spl_product_data_elements": [
+          "Warfarin Sodium Warfarin Sodium CROSCARMELLOSE SODIUM LACTOSE MONOHYDRATE SILICON DIOXIDE MAGNESIUM STEARATE MICROCRYSTALLINE CELLULOSE FD&C BLUE NO. 2--ALUMINUM LAKE FD&C RED NO. 40 WARFARIN SODIUM W…"
+        ],
+        "boxed_warning": [
+          "WARNING: BLEEDING RISK Warfarin sodium can cause major or fatal bleeding [see Warnings and Precautions ( 5.1 )] . Perform regular monitoring of INR in all treated patients [see Dosage and Administrati…"
+        ],
+        "indications_and_usage": [
+          "1 INDICATIONS AND USAGE Warfarin sodium tablets are indicated for: Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE). Prophylaxis and treatment of thromboemboli…"
+        ],
+        "dosage_and_administration": [
+          "2 DOSAGE AND ADMINISTRATION Individualize dosing regimen for each patient, and adjust based on INR response. ( 2.1 , 2.2 ) Knowledge of genotype can inform initial dose selection. ( 2.3 ) Monitoring: …"
+        ],
+        "dosage_and_administration_table": [
+          "<table width=\"800px\" cellpadding=\"5\"><caption>Table 1: Three Ranges of Expected Maintenance Warfarin Sodium Tablets Daily Doses Based on CYP2C9 and VKORC1 Genotypes <sup>&#x2020;</sup></caption><col/>…"
+        ],
+        "dosage_forms_and_strengths": [
+          "3 DOSAGE FORMS AND STRENGTHS Warfarin sodium tablets USP, 2 mg are available as lavender, capsule-shaped, biconvex scored tablets, debossed with TV/2 on the scored side and 1713 on the other side. Sco…"
+        ],
+        "contraindications": [
+          "4 CONTRAINDICATIONS Warfarin sodium is contraindicated in: Pregnancy Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high…"
+        ],
+        "warnings_and_cautions": [
+          "5 WARNINGS AND PRECAUTIONS Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alt…"
+        ],
+        "adverse_reactions": [
+          "6 ADVERSE REACTIONS The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling: Hemorrhage [see Boxed Warning, Warnings and Precaution…"
+        ],
+        "drug_interactions": [
+          "7 DRUG INTERACTIONS Concomitant use of drugs that increase bleeding risk, antibiotics, antifungals, botanical (herbal) products, and inhibitors and inducers of CYP2C9, 1A2, or 3A4. ( 7 ) Consult label…"
+        ],
+        "drug_interactions_table": [
+          "<table width=\"800px\" cellspacing=\"0\" cellpadding=\"5\"><col width=\"77px\"/><col/><col/><tbody><tr><td colspan=\"3\" styleCode=\" Botrule Toprule Lrule Rrule\"><paragraph><content styleCode=\"bold\">Table 2: Ex…",
+          "<table width=\"800px\" cellspacing=\"0\" cellpadding=\"5\"><col/><col/><tbody><tr><td colspan=\"2\" styleCode=\" Botrule\"><paragraph><content styleCode=\"bold\">Table 3: Drugs that Can Increase the Risk of Bleed…"
+        ],
+        "use_in_specific_populations": [
+          "8 USE IN SPECIFIC POPULATIONS Pregnant women with mechanical heart valves: Warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. ( 8.1 ) Lactation: Monitor breastfeeding …"
+        ],
+        "pregnancy": [
+          "8.1 Pregnancy Risk Summary Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the…"
+        ],
+        "pediatric_use": [
+          "8.4 Pediatric Use Adequate and well-controlled studies with warfarin sodium have not been conducted in any pediatric population, and the optimum dosing, safety, and efficacy in pediatric patients is u…"
+        ],
+        "geriatric_use": [
+          "8.5 Geriatric Use Of the total number of patients receiving warfarin sodium in controlled clinical trials for which data were available for analysis, 1885 patients (24.4%) were 65 years and older, whi…"
+        ],
+        "overdosage": [
+          "10 OVERDOSAGE 10.1 Signs and Symptoms Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from s…"
+        ],
+        "description": [
+          "11 DESCRIPTION Warfarin sodium tablets, USP contain warfarin sodium, an anticoagulant that acts by inhibiting vitamin K-dependent coagulation factors. The chemical name of warfarin sodium is 3-(α-acet…"
+        ],
+        "clinical_pharmacology": [
+          "12 CLINICAL PHARMACOLOGY 12.1 Mechanism of Action Warfarin acts by inhibiting the synthesis of vitamin K-dependent clotting factors, which include Factors II, VII, IX, and X, and the anticoagulant pro…"
+        ],
+        "mechanism_of_action": [
+          "12.1 Mechanism of Action Warfarin acts by inhibiting the synthesis of vitamin K-dependent clotting factors, which include Factors II, VII, IX, and X, and the anticoagulant proteins C and S. Vitamin K …"
+        ],
+        "pharmacodynamics": [
+          "12.2 Pharmacodynamics An anticoagulation effect generally occurs within 24 hours after warfarin administration. However, peak anticoagulant effect may be delayed 72 to 96 hours. The duration of action…"
+        ],
+        "pharmacokinetics": [
+          "12.3 Pharmacokinetics Warfarin sodium is a racemic mixture of the R - and S -enantiomers of warfarin. The S -enantiomer exhibits 2 to 5 times more anticoagulant activity than the R -enantiomer in huma…"
+        ],
+        "nonclinical_toxicology": [
+          "13 NONCLINICAL TOXICOLOGY 13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility Carcinogenicity, mutagenicity, or fertility studies have not been performed with warfarin."
+        ],
+        "carcinogenesis_and_mutagenesis_and_impairment_of_fertility": [
+          "13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility Carcinogenicity, mutagenicity, or fertility studies have not been performed with warfarin."
+        ],
+        "clinical_studies": [
+          "14 CLINICAL STUDIES 14.1 Atrial Fibrillation In five prospective, randomized, controlled clinical trials involving 3711 patients with non-rheumatic AF, warfarin significantly reduced the risk of syste…"
+        ],
+        "clinical_studies_table": [
+          "<table cellspacing=\"0\" cellpadding=\"0\"><col/><col/><col/><col/><col/><col/><col/><col/><col/><tbody><tr><td align=\"center\" colspan=\"9\" styleCode=\" Botrule\"><paragraph><content styleCode=\"bold\">Table 4…",
+          "<table width=\"800px\" cellspacing=\"0\" cellpadding=\"5\"><col/><col/><col/><col/><tbody><tr><td align=\"center\" colspan=\"4\"><paragraph><content styleCode=\"bold\">Table 5: Prospective, Randomized, Open-Label…"
+        ],
+        "references": [
+          "15 REFERENCES OSHA Hazardous Drugs. OSHA. http://www.osha.gov/SLTC/hazardousdrugs/index.html."
+        ],
+        "how_supplied": [
+          "16 HOW SUPPLIED/STORAGE AND HANDLING Warfarin sodium tablets USP, 2 mg are available as lavender, capsule-shaped, biconvex scored tablets, debossed with TV/2 on the scored side and 1713 on the other s…"
+        ],
+        "information_for_patients": [
+          "17 PATIENT COUNSELING INFORMATION Advise the patient to read the FDA-approved patient labeling (Medication Guide). Instructions for Patients Advise patients to: Strictly adhere to the prescribed dosag…"
+        ],
+        "spl_medguide": [
+          "MEDICATION GUIDE Warfarin (war' far in) Sodium (soe' dee um) Tablets What is the most important information I should know about warfarin sodium tablets? Warfarin sodium tablets can cause bleeding whic…"
+        ],
+        "spl_medguide_table": [
+          "<table width=\"1001.91px\"><colgroup><col/><col/></colgroup><tbody><tr><td align=\"center\" colspan=\"2\" styleCode=\"Toprule Lrule Rrule\" valign=\"top\"><content styleCode=\"bold\"><content styleCode=\"bold\">War…"
+        ],
+        "package_label_principal_display_panel": [
+          "DRUG: Warfarin Sodium GENERIC: Warfarin Sodium DOSAGE: TABLET ADMINSTRATION: ORAL NDC: 70518-0255-0 NDC: 70518-0255-1 COLOR: purple SHAPE: OVAL SCORE: Two even pieces SIZE: 11 mm IMPRINT: TV;2;1713 PA…"
+        ],
+        "set_id": "1244c338-9140-425a-bf2a-9da6b4ac0287",
+        "id": "55027266-c106-cf08-e063-6394a90ab4bf",
+        "effective_time": "20260624",
+        "version": "22",
+        "openfda": {
+          "application_number": [
+            "ANDA040616"
+          ],
+          "brand_name": [
+            "Warfarin Sodium"
+          ],
+          "generic_name": [
+            "WARFARIN SODIUM"
+          ],
+          "manufacturer_name": [
+            "REMEDYREPACK INC."
+          ],
+          "product_ndc": [
+            "70518-0255"
+          ],
+          "product_type": [
+            "HUMAN PRESCRIPTION DRUG"
+          ],
+          "route": [
+            "ORAL"
+          ],
+          "substance_name": [
+            "WARFARIN SODIUM"
+          ],
+          "rxcui": [
+            "855302"
+          ],
+          "spl_id": [
+            "55027266-c106-cf08-e063-6394a90ab4bf"
+          ],
+          "spl_set_id": [
+            "1244c338-9140-425a-bf2a-9da6b4ac0287"
+          ],
+          "package_ndc": [
+            "70518-0255-0",
+            "70518-0255-1"
+          ],
+          "original_packager_product_ndc": [
+            "0093-1713"
+          ],
+          "unii": [
+            "6153CWM0CL"
+          ]
+        }
+      }
+    ]
+  }
+}

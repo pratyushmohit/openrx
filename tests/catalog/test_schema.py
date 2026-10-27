@@ -196,3 +196,20 @@ def test_rate_limit_must_be_positive(rate):
 def test_unknown_auth_type_is_rejected():
     auth = {"type": "header", "name": "X-Key", "secret": "s"}
     assert_invalid(Source, source(auth=auth), "auth")
+
+
+# --- example_params -------------------------------------------------------------
+
+
+def test_example_params_must_use_declared_params():
+    data = endpoint(example_params={"nctId": "NCT1", "fromat": "json"})
+    assert_invalid(Endpoint, data, "undeclared parameters: ['fromat']")
+
+
+def test_example_params_must_include_required_params():
+    assert_invalid(Endpoint, endpoint(example_params={"format": "json"}), "missing required")
+
+
+def test_example_params_are_optional_and_default_to_empty():
+    assert Endpoint.model_validate(endpoint()).example_params == {}
+    assert Endpoint.model_validate(endpoint(example_params={"nctId": "NCT1"})).example_params

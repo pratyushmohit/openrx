@@ -1,0 +1,105 @@
+{
+  "request": {
+    "url": "https://api.fda.gov/drug/shortages.json",
+    "params": {
+      "search": "status:\"Current\"",
+      "limit": 2
+    }
+  },
+  "captured_at": "2026-10-27",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200
+  },
+  "response": {
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise re…",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2026-10-27",
+      "results": {
+        "skip": 0,
+        "limit": 2,
+        "total": 1142
+      }
+    },
+    "results": [
+      {
+        "update_type": "Reverified",
+        "initial_posting_date": "07/14/2023",
+        "package_ndc": "47781-565-01",
+        "generic_name": "Lisdexamfetamine Dimesylate Capsule",
+        "contact_info": "844-842-8672 and email: CustomerService-US@alvogen.com",
+        "availability": "Available",
+        "openfda": {
+          "application_number": [
+            "ANDA214547"
+          ],
+          "brand_name": [
+            "LISDEXAMFETAMINE DIMESYLATE"
+          ],
+          "generic_name": [
+            "LISDEXAMFETAMINE DIMESYLATE"
+          ],
+          "manufacturer_name": [
+            "Alvogen Inc."
+          ],
+          "product_ndc": [
+            "47781-565",
+            "47781-562"
+          ],
+          "product_type": [
+            "HUMAN PRESCRIPTION DRUG"
+          ],
+          "route": [
+            "ORAL"
+          ],
+          "substance_name": [
+            "LISDEXAMFETAMINE DIMESYLATE"
+          ],
+          "rxcui": [
+            "854830",
+            "854834"
+          ],
+          "spl_id": [
+            "db02ec6b-f17f-ab22-b671-e1ddb90e017c"
+          ],
+          "spl_set_id": [
+            "7f2dd6ee-3363-c87c-9693-ed838942556c"
+          ],
+          "package_ndc": [
+            "47781-562-01",
+            "47781-563-01"
+          ],
+          "unii": [
+            "SJT761GEGS"
+          ]
+        },
+        "update_date": "10/16/2026",
+        "therapeutic_category": [
+          "Psychiatry"
+        ],
+        "dosage_form": "Capsule",
+        "presentation": "Lisdexamfetamine Dimesylate, Capsule, 40 mg (NDC 47781-565-01)",
+        "company_name": "Alvogen",
+        "status": "Current"
+      },
+      {
+        "presentation": "Dopamine Hydrochloride In Dextrose 5% In Plastic Container, Injection, 400 mg/250 mL (1.6 mg/1 mL) (NDC 0409-0042-12)",
+        "update_type": "Reverified",
+        "initial_posting_date": "11/06/2017",
+        "package_ndc": "0409-0042-12",
+        "generic_name": "Dopamine Hydrochloride Injection",
+        "company_name": "Hospira, Inc., a Pfizer Company",
+        "contact_info": "844-646-4398",
+        "availability": "Available",
+        "update_date": "10/21/2026",
+        "therapeutic_category": [
+          "Cardiovascular"
+        ],
+        "status": "Current",
+        "dosage_form": "Injection"
+      }
+    ]
+  }
+}

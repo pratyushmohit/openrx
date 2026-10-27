@@ -1,0 +1,137 @@
+{
+  "request": {
+    "url": "https://api.fda.gov/drug/enforcement.json",
+    "params": {
+      "search": "classification:\"Class I\" AND report_date:[20250101 TO 20251231]",
+      "limit": 2
+    }
+  },
+  "captured_at": "2026-10-27",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200
+  },
+  "response": {
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise re…",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2026-10-21",
+      "results": {
+        "skip": 0,
+        "limit": 2,
+        "total": 49
+      }
+    },
+    "results": [
+      {
+        "status": "Ongoing",
+        "city": "Malvern",
+        "state": "PA",
+        "country": "United States",
+        "classification": "Class I",
+        "openfda": {
+          "application_number": [
+            "ANDA077171"
+          ],
+          "brand_name": [
+            "CLONAZEPAM"
+          ],
+          "generic_name": [
+            "CLONAZEPAM"
+          ],
+          "manufacturer_name": [
+            "Par Health USA, LLC"
+          ],
+          "product_ndc": [
+            "49884-306",
+            "49884-307"
+          ],
+          "product_type": [
+            "HUMAN PRESCRIPTION DRUG"
+          ],
+          "route": [
+            "ORAL"
+          ],
+          "substance_name": [
+            "CLONAZEPAM"
+          ],
+          "rxcui": [
+            "349194",
+            "349195"
+          ],
+          "spl_id": [
+            "cb847105-dbbe-4e7a-ab2b-ad0731638ce6"
+          ],
+          "spl_set_id": [
+            "1aef0069-80ea-483d-ac70-c8d485462c5b"
+          ],
+          "package_ndc": [
+            "49884-306-02",
+            "49884-307-02"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "nui": [
+            "N0000175694",
+            "M0002356"
+          ],
+          "pharm_class_epc": [
+            "Benzodiazepine [EPC]"
+          ],
+          "pharm_class_cs": [
+            "Benzodiazepines [CS]"
+          ],
+          "unii": [
+            "5PE9FDE8GB"
+          ]
+        },
+        "product_type": "Drugs",
+        "event_id": "95778",
+        "recalling_firm": "Endo USA, Inc.",
+        "address_1": "1400 Atwater Dr",
+        "address_2": "",
+        "postal_code": "19355-8701",
+        "voluntary_mandated": "Voluntary: Firm initiated",
+        "initial_firm_notification": "Press Release",
+        "distribution_pattern": "Nationwide in the USA",
+        "recall_number": "D-0179-2025",
+        "product_description": "Clonazepam Orally Disintegrating Tablets, USP, 0.125 mg, C-IV, Rx Only, 60 tablets per carton (10 blister cards containing 6 tablets each), Distributed by: PAR Pharmaceutical, Chestnut Ridge, NY 10977…",
+        "product_quantity": "8,029 cartons",
+        "reason_for_recall": "Labeling: Label Error on Declared Strength; Some cartons were incorrectly labeled. The blister strips inside the product carton reflect the correct strength.",
+        "recall_initiation_date": "20241118",
+        "center_classification_date": "20250103",
+        "report_date": "20250115",
+        "code_info": "Lot #: 550174101, Exp. 01/31/2027.",
+        "more_code_info": ""
+      },
+      {
+        "status": "Completed",
+        "city": "Nogales",
+        "state": "AZ",
+        "country": "United States",
+        "classification": "Class I",
+        "openfda": {},
+        "product_type": "Drugs",
+        "event_id": "96914",
+        "recalling_firm": "Umary-USA.com",
+        "address_1": "243 W Crawford St",
+        "address_2": "STE 40026",
+        "postal_code": "85621-3208",
+        "voluntary_mandated": "Voluntary: Firm initiated",
+        "initial_firm_notification": "Press Release",
+        "distribution_pattern": "U.S. Nationwide via internet.",
+        "recall_number": "D-0492-2025",
+        "product_description": "UNAVY ACIDO HIALURONICO, Conenido: 30 capletas de 850mg, distribuido por: EREN NATURAL S.A. DE C.V, Zappan, Jal. C.P, UPC 7 503046 054295",
+        "product_quantity": "1,342 30-count bottles",
+        "reason_for_recall": "Marketed without approved NDA/ANDA- Laboratory analysis found product to be tainted with undeclared ingredients: Dexamethasone, Diclofenac and Omeprazole.",
+        "recall_initiation_date": "20250521",
+        "center_classification_date": "20250624",
+        "report_date": "20250625",
+        "code_info": "All Lots; All Expiration Dates.",
+        "more_code_info": ""
+      }
+    ]
+  }
+}

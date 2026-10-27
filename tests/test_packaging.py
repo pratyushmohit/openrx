@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).parents[1]
 
 
-def test_wheel_contains_the_catalog_yaml(tmp_path):
+def test_wheel_contains_the_catalog_and_examples(tmp_path):
     # D-008: the catalog ships inside the package, so the Lambdas get it for free.
     # Build the real wheel and look inside, rather than trusting the source tree.
     uv = shutil.which("uv")
@@ -20,3 +20,10 @@ def test_wheel_contains_the_catalog_yaml(tmp_path):
     assert shipped, "no catalog files in the source tree"
     for name in shipped:
         assert f"openrx/catalog/sources/{name}" in names
+
+    examples = {
+        p.relative_to(ROOT / "src").as_posix()
+        for p in (ROOT / "src/openrx/catalog/examples").rglob("*.json")
+    }
+    assert examples, "no example files in the source tree"
+    assert examples <= names

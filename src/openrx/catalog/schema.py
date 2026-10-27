@@ -71,7 +71,10 @@ class Endpoint(_Strict):
     description: str = Field(min_length=1)
     params: tuple[Param, ...] = ()
     response_notes: str = ""
-    # Optional in the schema so entries can be drafted; `catalog lint` requires it.
+    # The request `catalog capture-examples` sends to record example_response.
+    example_params: dict[str, str | int | float | bool] = Field(default_factory=dict)
+    # Not written in YAML: the loader attaches it from examples/<source>/<id>.json
+    # (D-009). Optional so endpoints can be drafted; `catalog lint` requires it.
     example_response: Any = None
 
     @field_validator("path")
@@ -105,6 +108,12 @@ class Endpoint(_Strict):
             raise ValueError(f"path placeholders without a path parameter: {missing}")
         if unused := sorted(path_params - set(placeholders)):
             raise ValueError(f"path parameters not used in the path: {unused}")
+
+        if unknown := sorted(set(self.example_params) - set(names)):
+            raise ValueError(f"example_params uses undeclared parameters: {unknown}")
+        required = {p.name for p in self.params if p.required}
+        if self.example_params and (absent := sorted(required - set(self.example_params))):
+            raise ValueError(f"example_params is missing required parameters: {absent}")
         return self
 
 

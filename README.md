@@ -250,26 +250,29 @@ Notes: NLM retired the RxNav drug-interaction API in 2024. Use the `drug_interac
 
 ### 8.3 Catalog
 
-One file per source in `catalog/`, one unified schema:
+One hand-written YAML file per source in `src/openrx/catalog/sources/`, validated by `schema.py`, plus one generated example response per endpoint in `src/openrx/catalog/examples/<source>/<endpoint>.json` (D-009):
 
 ```yaml
-source: openfda
+id: openfda
+name: openFDA
 base_url: https://api.fda.gov
-auth: {type: query_param, name: api_key, secret: openfda_api_key, optional: true}
+auth: {type: query_param, name: api_key, secret: openrx/openfda_api_key, optional: true}
 rate_limit: {per_second: 4}
-guide: |   # query syntax notes: search=field:value+AND+..., count=, limit/skip
+guide: |   # query syntax for the model: field:"value" AND ..., count, limit/skip
 endpoints:
   - id: drug_event
     path: /drug/event.json
-    method: GET
+    method: GET            # the only method allowed
     description: FAERS adverse event reports
     params: [{name: search, type: string, description: ..., example: ...}]
+    example_params: {search: 'patient.drug.openfda.generic_name:"metformin"', limit: 2}
     response_notes: key fields and shapes
-    example_response: <trimmed real response>
 ```
 
+`openrx catalog capture-examples <source>` sends each endpoint's `example_params` request to the live API and writes the trimmed response to its example file; `openrx catalog lint` checks the YAML, requires an example for every endpoint, and flags leftover example files.
+
 - The catalog is the single source of truth: catalog functions read it, and the bridge validates against it.
-- ClinicalTrials.gov is generated from its OpenAPI spec by a converter. The others are hand-written, with a script that captures and trims example responses.
+- ClinicalTrials.gov is generated from its OpenAPI spec by a converter. The others are hand-written.
 
 ### 8.4 MCP tools
 

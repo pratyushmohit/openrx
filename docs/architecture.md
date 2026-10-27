@@ -98,7 +98,7 @@ fixtures instead of calling the APIs, so evals are reproducible.
 
 ## 3. Build time and run time
 
-The catalog YAML is committed and reviewed like code. It travels inside the package
+The catalog YAML and its captured example responses (D-009) are committed and reviewed like code. It travels inside the package
 into each Lambda zip (D-008) and is validated by `schema.py` every time a Lambda starts.
 Nothing is regenerated at run time.
 
@@ -106,7 +106,7 @@ Nothing is regenerated at run time.
 flowchart LR
   subgraph build["Build time · once per change"]
     direction LR
-    src["src/openrx + catalog YAML<br/>in git, reviewed"] --> mk["make build LAMBDA=…<br/>inside python3.13 Lambda image"]
+    src["src/openrx + catalog YAML<br/>+ captured examples<br/>in git, reviewed"] --> mk["make build LAMBDA=…<br/>inside python3.13 Lambda image"]
     mk --> zip["Lambda zip<br/>18.8 MB · monty binary 755"]
     zip --> tf["make tf-apply<br/>Terraform → Floci"]
   end

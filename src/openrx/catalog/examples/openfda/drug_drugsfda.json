@@ -1,0 +1,171 @@
+{
+  "request": {
+    "url": "https://api.fda.gov/drug/drugsfda.json",
+    "params": {
+      "search": "openfda.generic_name:\"semaglutide\"",
+      "limit": 2
+    }
+  },
+  "captured_at": "2026-10-27",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200
+  },
+  "response": {
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise re…",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2026-10-26",
+      "results": {
+        "skip": 0,
+        "limit": 2,
+        "total": 1
+      }
+    },
+    "results": [
+      {
+        "submissions": [
+          {
+            "submission_type": "SUPPL",
+            "submission_number": "29",
+            "submission_status": "AP",
+            "submission_status_date": "20251017",
+            "review_priority": "STANDARD",
+            "submission_class_code": "LABELING",
+            "submission_class_code_description": "Labeling",
+            "application_docs": [
+              {
+                "id": "83832",
+                "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/213051s024,s028s029lbl.pdf",
+                "date": "20251020",
+                "type": "Label"
+              },
+              {
+                "id": "83857",
+                "url": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2025/213051Orig1s024,s028,s029ltr.pdf",
+                "date": "20251021",
+                "type": "Letter"
+              }
+            ]
+          },
+          {
+            "submission_type": "SUPPL",
+            "submission_number": "1",
+            "submission_status": "AP",
+            "submission_status_date": "20200116",
+            "review_priority": "STANDARD",
+            "submission_class_code": "LABELING",
+            "submission_class_code_description": "Labeling",
+            "application_docs": [
+              {
+                "id": "61591",
+                "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/213182s000,213051s001lbl.pdf",
+                "date": "20200117",
+                "type": "Label"
+              },
+              {
+                "id": "61603",
+                "url": "http://www.accessdata.fda.gov/drugsatfda_docs/appletter/2020/213182Orig1s000, 213051Orig1s001ltr.pdf",
+                "date": "20200117",
+                "type": "Letter"
+              }
+            ]
+          }
+        ],
+        "application_number": "NDA213051",
+        "sponsor_name": "NOVO",
+        "openfda": {
+          "application_number": [
+            "NDA213051"
+          ],
+          "brand_name": [
+            "OZEMPIC",
+            "RYBELSUS"
+          ],
+          "generic_name": [
+            "ORAL SEMAGLUTIDE"
+          ],
+          "manufacturer_name": [
+            "Novo Nordisk Pharmaceutical Industries, LP"
+          ],
+          "product_ndc": [
+            "0169-1704",
+            "0169-1715"
+          ],
+          "product_type": [
+            "HUMAN PRESCRIPTION DRUG"
+          ],
+          "route": [
+            "ORAL"
+          ],
+          "substance_name": [
+            "SEMAGLUTIDE"
+          ],
+          "rxcui": [
+            "2200644",
+            "2200650"
+          ],
+          "spl_id": [
+            "6834044a-22f1-4f35-b846-b3448ee84c16"
+          ],
+          "spl_set_id": [
+            "27f15fac-7d98-4114-a2ec-92494a91da98"
+          ],
+          "package_ndc": [
+            "0169-1715-30",
+            "0169-1715-90"
+          ],
+          "nui": [
+            "N0000178480",
+            "M0160181"
+          ],
+          "pharm_class_epc": [
+            "GLP-1 Receptor Agonist [EPC]"
+          ],
+          "pharm_class_cs": [
+            "Glucagon-Like Peptide 1 [CS]"
+          ],
+          "pharm_class_moa": [
+            "Glucagon-like Peptide-1 (GLP-1) Agonists [MoA]"
+          ],
+          "unii": [
+            "53AXN4NNHX"
+          ]
+        },
+        "products": [
+          {
+            "product_number": "006",
+            "reference_drug": "Yes",
+            "brand_name": "OZEMPIC",
+            "active_ingredients": [
+              {
+                "name": "SEMAGLUTIDE",
+                "strength": "9MG"
+              }
+            ],
+            "reference_standard": "Yes",
+            "dosage_form": "TABLET",
+            "route": "ORAL",
+            "marketing_status": "Prescription"
+          },
+          {
+            "product_number": "004",
+            "reference_drug": "Yes",
+            "brand_name": "OZEMPIC",
+            "active_ingredients": [
+              {
+                "name": "SEMAGLUTIDE",
+                "strength": "1.5MG"
+              }
+            ],
+            "reference_standard": "Yes",
+            "dosage_form": "TABLET",
+            "route": "ORAL",
+            "marketing_status": "Prescription"
+          }
+        ]
+      }
+    ]
+  }
+}

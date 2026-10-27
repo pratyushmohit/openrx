@@ -1,0 +1,148 @@
+{
+  "request": {
+    "url": "https://api.fda.gov/drug/ndc.json",
+    "params": {
+      "search": "generic_name:\"metformin\"",
+      "limit": 2
+    }
+  },
+  "captured_at": "2026-10-27",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200
+  },
+  "response": {
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise re…",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2026-10-26",
+      "results": {
+        "skip": 0,
+        "limit": 2,
+        "total": 741
+      }
+    },
+    "results": [
+      {
+        "product_ndc": "33342-240",
+        "generic_name": "Metformin hydrochloride",
+        "labeler_name": "Macleods Pharmaceuticals Limited",
+        "brand_name": "Metformin hydrochloride",
+        "active_ingredients": [
+          {
+            "name": "METFORMIN HYDROCHLORIDE",
+            "strength": "750 mg/1"
+          }
+        ],
+        "finished": true,
+        "packaging": [
+          {
+            "package_ndc": "33342-240-11",
+            "description": "100 TABLET, EXTENDED RELEASE in 1 BOTTLE (33342-240-11)",
+            "marketing_start_date": "20161208",
+            "sample": false
+          }
+        ],
+        "listing_expiration_date": "20261231",
+        "openfda": {
+          "manufacturer_name": [
+            "Macleods Pharmaceuticals Limited"
+          ],
+          "rxcui": [
+            "860975",
+            "860981"
+          ],
+          "spl_set_id": [
+            "623b3bc6-1b07-4a04-bc7a-7fc695adf063"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "unii": [
+            "786Z46389E"
+          ]
+        },
+        "marketing_category": "ANDA",
+        "dosage_form": "TABLET, EXTENDED RELEASE",
+        "spl_id": "3ce6010c-10dd-4e6f-9517-d71c0489a7c5",
+        "product_type": "HUMAN PRESCRIPTION DRUG",
+        "route": [
+          "ORAL"
+        ],
+        "marketing_start_date": "20161208",
+        "product_id": "33342-240_3ce6010c-10dd-4e6f-9517-d71c0489a7c5",
+        "application_number": "ANDA206955",
+        "brand_name_base": "Metformin hydrochloride",
+        "pharm_class": [
+          "Biguanide [EPC]",
+          "Biguanides [CS]"
+        ]
+      },
+      {
+        "product_ndc": "65841-810",
+        "generic_name": "METFORMIN HYDROCHLORIDE",
+        "labeler_name": "Zydus Lifesciences Limited",
+        "brand_name": "METFORMIN HYDROCHLORIDE",
+        "active_ingredients": [
+          {
+            "name": "METFORMIN HYDROCHLORIDE",
+            "strength": "850 mg/1"
+          }
+        ],
+        "finished": true,
+        "packaging": [
+          {
+            "package_ndc": "65841-810-01",
+            "description": "100 TABLET, FILM COATED in 1 BOTTLE (65841-810-01)",
+            "marketing_start_date": "20141209",
+            "sample": false
+          },
+          {
+            "package_ndc": "65841-810-05",
+            "description": "500 TABLET, FILM COATED in 1 BOTTLE (65841-810-05)",
+            "marketing_start_date": "20141209",
+            "sample": false
+          }
+        ],
+        "listing_expiration_date": "20271231",
+        "openfda": {
+          "manufacturer_name": [
+            "Zydus Lifesciences Limited"
+          ],
+          "rxcui": [
+            "860975",
+            "861004"
+          ],
+          "spl_set_id": [
+            "5043d03e-3c9d-4c96-b48d-187f02a1d27c"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "upc": [
+            "0368382760012"
+          ],
+          "unii": [
+            "786Z46389E"
+          ]
+        },
+        "marketing_category": "ANDA",
+        "dosage_form": "TABLET, FILM COATED",
+        "spl_id": "f845896f-d006-4f67-9de6-a734ca665025",
+        "product_type": "HUMAN PRESCRIPTION DRUG",
+        "route": [
+          "ORAL"
+        ],
+        "marketing_start_date": "20141209",
+        "product_id": "65841-810_f845896f-d006-4f67-9de6-a734ca665025",
+        "application_number": "ANDA203686",
+        "brand_name_base": "METFORMIN HYDROCHLORIDE",
+        "pharm_class": [
+          "Biguanide [EPC]",
+          "Biguanides [CS]"
+        ]
+      }
+    ]
+  }
+}

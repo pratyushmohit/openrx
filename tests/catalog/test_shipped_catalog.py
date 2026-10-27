@@ -1,6 +1,6 @@
 """Checks on the real catalog files in src/openrx/catalog/sources (not test fixtures)."""
 
-from openrx.catalog.loader import load_catalog
+from openrx.catalog.loader import lint_catalog, load_catalog
 
 catalog = load_catalog()
 
@@ -41,3 +41,14 @@ def test_every_endpoint_has_examples_for_search_and_count():
                 assert examples["search"], f"{source.id}.{endpoint.id}: no search example"
             if "count" in examples:
                 assert examples["count"], f"{source.id}.{endpoint.id}: no count example"
+
+
+def test_shipped_catalog_passes_lint():
+    # Every endpoint has an example file and no example file is orphaned.
+    assert lint_catalog() == []
+
+
+def test_every_endpoint_has_example_params():
+    for source in catalog:
+        for endpoint in source.endpoints:
+            assert endpoint.example_params, f"{source.id}.{endpoint.id}: no example_params"

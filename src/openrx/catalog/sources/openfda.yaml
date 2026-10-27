@@ -1,9 +1,13 @@
 # openFDA drug endpoints. Docs: https://open.fda.gov/apis/
-# Checked against the live API on 2026-10-27. Example responses: piece 5
-# (`openrx catalog capture-examples openfda`) fills them in.
+# Checked against the live API on 2026-10-27. Example responses are in
+# ../examples/openfda/, written by `openrx catalog capture-examples openfda`.
 #
 # All six endpoints share the same query parameters, so the common ones are
 # defined once with YAML anchors (&name) and reused (*name).
+#
+# Spaces, not "+": openFDA's docs write queries as URLs, where "+" stands for a
+# space. Parameters here are plain values that the HTTP client encodes, and a
+# literal "+" gets sent as %2B, which openFDA silently treats as no matches.
 
 id: openfda
 name: openFDA
@@ -24,18 +28,21 @@ rate_limit:
 guide: |
   Every endpoint takes the same parameters: search, count, sort, limit, skip.
 
-  search=field:term
-    - Quote values: search=openfda.generic_name:"metformin"
-    - AND:   field:"a"+AND+other:"b"
-    - OR:    field:"a"+field:"b"        (a space, written +, means OR)
-    - NOT:   field:"a"+AND+NOT+other:1
-    - Group: (field:"a"+field:"b")+AND+other:"c"
-    - Date range (YYYYMMDD, inclusive): receivedate:[20240101+TO+20240131]
+  Write parameter values with plain spaces. Never use "+" for a space: it is
+  sent literally and the search silently matches nothing.
+
+  search: field:term
+    - Quote values: openfda.generic_name:"metformin"
+    - AND:   field:"a" AND other:"b"
+    - OR:    field:"a" field:"b"        (terms separated by a space)
+    - NOT:   field:"a" AND NOT other:1
+    - Group: (field:"a" field:"b") AND other:"c"
+    - Date range (YYYYMMDD, inclusive): receivedate:[20240101 TO 20240131]
     - Field present: _exists_:boxed_warning
     - Prefix wildcard: openfda.brand_name:metf*
     - Without a field, search looks in every field.
 
-  count=field
+  count: field
     - Returns the most frequent values of a field across matching records, as
       [{"term": ..., "count": ...}], not records. Use limit to choose how many.
     - Add .exact to count whole phrases ("INJECTION SITE PAIN") instead of
@@ -47,7 +54,7 @@ guide: |
 
   limit, skip, sort
     - limit: 1 to 1000 records (default 1). skip: at most 25000.
-    - sort=receivedate:desc
+    - sort: receivedate:desc
 
   Responses
     - Records are in results; meta.results.total is the number of matches.
@@ -66,13 +73,14 @@ endpoints:
     params:
       - name: search
         description: Filter reports. See the guide for syntax.
-        example: 'patient.drug.openfda.generic_name:"metformin"+AND+serious:1'
+        example: &drug_event_search 'patient.drug.openfda.generic_name:"metformin" AND serious:1'
       - name: count
         description: Count the most common values of a field instead of returning records.
         example: patient.reaction.reactionmeddrapt.exact
       - &sort {name: sort, description: "Sort by a field, e.g. receivedate:desc."}
       - &limit {name: limit, type: integer, description: "Records (or count terms) to return, 1-1000.", example: 5}
       - &skip {name: skip, type: integer, description: "Records to skip for paging, at most 25000."}
+    example_params: {search: *drug_event_search, limit: 2}
     response_notes: >-
       Each result is one report. Reactions: patient.reaction[].reactionmeddrapt
       (MedDRA terms). Drugs: patient.drug[], with drugcharacterization 1 =
@@ -89,13 +97,14 @@ endpoints:
     params:
       - name: search
         description: Filter labels. See the guide for syntax.
-        example: '_exists_:boxed_warning+AND+openfda.generic_name:"warfarin"'
+        example: &drug_label_search '_exists_:boxed_warning AND openfda.generic_name:"warfarin"'
       - name: count
         description: Count the most common values of a field instead of returning records.
         example: openfda.route.exact
       - *sort
       - *limit
       - *skip
+    example_params: {search: *drug_label_search, limit: 2}
     response_notes: >-
       Label sections are arrays of text, e.g. boxed_warning[],
       adverse_reactions[], drug_interactions[], indications_and_usage[],
@@ -113,13 +122,14 @@ endpoints:
     params:
       - name: search
         description: Filter recalls. See the guide for syntax.
-        example: 'classification:"Class+I"+AND+report_date:[20250101+TO+20251231]'
+        example: &drug_enforcement_search 'classification:"Class I" AND report_date:[20250101 TO 20251231]'
       - name: count
         description: Count the most common values of a field instead of returning records.
         example: classification.exact
       - *sort
       - *limit
       - *skip
+    example_params: {search: *drug_enforcement_search, limit: 2}
     response_notes: >-
       classification is "Class I" (may cause serious harm or death), "Class
       II" or "Class III". status is Ongoing, Completed or Terminated. Useful
@@ -135,13 +145,14 @@ endpoints:
     params:
       - name: search
         description: Filter products. See the guide for syntax.
-        example: 'generic_name:"metformin"'
+        example: &drug_ndc_search 'generic_name:"metformin"'
       - name: count
         description: Count the most common values of a field instead of returning records.
         example: dosage_form.exact
       - *sort
       - *limit
       - *skip
+    example_params: {search: *drug_ndc_search, limit: 2}
     response_notes: >-
       product_ndc is labeler-product (e.g. "0002-1433"); packaging[] holds
       package_ndc values. active_ingredients[] has name and strength.
@@ -156,13 +167,14 @@ endpoints:
     params:
       - name: search
         description: Filter applications. See the guide for syntax.
-        example: 'openfda.generic_name:"semaglutide"'
+        example: &drug_drugsfda_search 'openfda.generic_name:"semaglutide"'
       - name: count
         description: Count the most common values of a field instead of returning records.
         example: sponsor_name
       - *sort
       - *limit
       - *skip
+    example_params: {search: *drug_drugsfda_search, limit: 2}
     response_notes: >-
       One result per application: application_number (e.g. "NDA209637"),
       sponsor_name, products[] (brand_name, dosage_form, route,
@@ -177,13 +189,14 @@ endpoints:
     params:
       - name: search
         description: Filter shortages. See the guide for syntax.
-        example: 'status:"Current"'
+        example: &drug_shortages_search 'status:"Current"'
       - name: count
         description: Count the most common values of a field instead of returning records.
         example: therapeutic_category
       - *sort
       - *limit
       - *skip
+    example_params: {search: *drug_shortages_search, limit: 2}
     response_notes: >-
       Fields include generic_name, package_ndc, status, availability,
       shortage_reason, therapeutic_category[], initial_posting_date and

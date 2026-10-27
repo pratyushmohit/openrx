@@ -20,16 +20,19 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help check lint typecheck test up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint lint-catalog typecheck test up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
 
-check: lint typecheck test ## Run all code checks (what CI will run)
+check: lint lint-catalog typecheck test ## Run all code checks (what CI will run)
 
 lint: ## Lint and check formatting with ruff
 	uv run ruff check .
 	uv run ruff format --check .
+
+lint-catalog: ## Check the API catalog (YAML + examples)
+	uv run openrx catalog lint
 
 typecheck: ## Static type check with pyright
 	uv run pyright
