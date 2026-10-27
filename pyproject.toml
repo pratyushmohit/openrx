@@ -61,7 +61,8 @@ typeCheckingMode = "standard"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--strict-markers"]
+# importlib: test files in different folders may share a name without clashing.
+addopts = ["--strict-markers", "--import-mode=importlib"]
 
 [tool.coverage.run]
 source = ["openrx"]
