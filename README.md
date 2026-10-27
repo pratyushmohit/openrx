@@ -210,9 +210,9 @@ All targets **(provisional)** until M0 measures Floci and Monty overhead on the 
 
 | Concern | Choice |
 |---|---|
-| Language | Python 3.12 (match a Floci-supported Lambda runtime; verify in M0) |
+| Language | Python 3.13 (matches the `python3.13` Lambda runtime, which Floci supports) |
 | Package manager | `uv` |
-| MCP server | Official `mcp` Python SDK (FastMCP), stdio |
+| MCP server | `fastmcp` (standalone FastMCP, built on the official `mcp` SDK), stdio |
 | Code sandbox | Pydantic Monty (`pydantic-monty`), inside the runner Lambdas |
 | Agent | LangGraph (hand-built graph) + `langchain-mcp-adapters` |
 | LLM | Local Ollama via `langchain-ollama` (`ChatOllama`); model from config |

@@ -1,7 +1,31 @@
 [project]
 name = "openrx"
 version = "0.1.0"
-description = "Add your description here"
+description = "MCP server with sandboxed code execution (search + execute) for public FDA/NIH drug data"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "boto3>=1.43.119",
+    "fastmcp>=4.1.4",
+    "httpx>=0.28.1",
+    "langchain-aws>=1.9.1",
+    "langchain-mcp-adapters>=0.3.1",
+    "langgraph>=1.2.18",
+    "pydantic>=2.14.1",
+    "pydantic-monty>=1.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.414",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.3",
+]
+evals = [
+    "matplotlib>=3.11.2",
+    "pandas>=3.1.0",
+    "pyarrow>=26.0.0",
+    "tiktoken>=0.14.0",
+]
