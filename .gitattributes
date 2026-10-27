@@ -1,0 +1,3 @@
+# Store text files with LF line endings in the repo and in the working copy.
+# Lambda code, shell scripts and the Makefile run on Linux, where CRLF breaks them.
+* text=auto eol=lf
