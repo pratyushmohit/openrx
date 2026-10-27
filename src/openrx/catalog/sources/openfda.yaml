@@ -1,0 +1,191 @@
+# openFDA drug endpoints. Docs: https://open.fda.gov/apis/
+# Checked against the live API on 2026-10-27. Example responses: piece 5
+# (`openrx catalog capture-examples openfda`) fills them in.
+#
+# All six endpoints share the same query parameters, so the common ones are
+# defined once with YAML anchors (&name) and reused (*name).
+
+id: openfda
+name: openFDA
+base_url: https://api.fda.gov
+
+auth:
+  type: query_param
+  name: api_key
+  # Logical secret name; the bridge resolves it to the secret's ARN (D-007).
+  secret: openrx/openfda_api_key
+  optional: true
+
+# 240 requests per minute per key or IP. Without a key: 1,000 per day per IP;
+# with a key: 120,000 per day. https://open.fda.gov/apis/authentication/
+rate_limit:
+  per_second: 4
+
+guide: |
+  Every endpoint takes the same parameters: search, count, sort, limit, skip.
+
+  search=field:term
+    - Quote values: search=openfda.generic_name:"metformin"
+    - AND:   field:"a"+AND+other:"b"
+    - OR:    field:"a"+field:"b"        (a space, written +, means OR)
+    - NOT:   field:"a"+AND+NOT+other:1
+    - Group: (field:"a"+field:"b")+AND+other:"c"
+    - Date range (YYYYMMDD, inclusive): receivedate:[20240101+TO+20240131]
+    - Field present: _exists_:boxed_warning
+    - Prefix wildcard: openfda.brand_name:metf*
+    - Without a field, search looks in every field.
+
+  count=field
+    - Returns the most frequent values of a field across matching records, as
+      [{"term": ..., "count": ...}], not records. Use limit to choose how many.
+    - Add .exact to count whole phrases ("INJECTION SITE PAIN") instead of
+      single words: count=patient.reaction.reactionmeddrapt.exact
+    - Some fields are already exact and reject .exact with error "Nothing to
+      count" (e.g. sponsor_name, status, therapeutic_category). If that
+      happens, retry without .exact.
+    - Date fields return [{"time": "YYYYMMDD", "count": ...}] instead.
+
+  limit, skip, sort
+    - limit: 1 to 1000 records (default 1). skip: at most 25000.
+    - sort=receivedate:desc
+
+  Responses
+    - Records are in results; meta.results.total is the number of matches.
+    - No matches is HTTP 404 with error.code "NOT_FOUND". Treat it as zero
+      results, not as a failure.
+    - The openfda block (generic_name, brand_name, rxcui, ...) is a harmonized
+      cross-reference added by FDA. Not every record has it, so a search on
+      openfda.* can miss records that only name the drug in other fields.
+
+endpoints:
+  - id: drug_event
+    path: /drug/event.json
+    description: >-
+      Adverse event reports from FAERS (FDA Adverse Event Reporting System):
+      suspected side effects, medication errors and outcomes reported for drugs.
+    params:
+      - name: search
+        description: Filter reports. See the guide for syntax.
+        example: 'patient.drug.openfda.generic_name:"metformin"+AND+serious:1'
+      - name: count
+        description: Count the most common values of a field instead of returning records.
+        example: patient.reaction.reactionmeddrapt.exact
+      - &sort {name: sort, description: "Sort by a field, e.g. receivedate:desc."}
+      - &limit {name: limit, type: integer, description: "Records (or count terms) to return, 1-1000.", example: 5}
+      - &skip {name: skip, type: integer, description: "Records to skip for paging, at most 25000."}
+    response_notes: >-
+      Each result is one report. Reactions: patient.reaction[].reactionmeddrapt
+      (MedDRA terms). Drugs: patient.drug[], with drugcharacterization 1 =
+      suspect, 2 = concomitant, 3 = interacting, and openfda.* names.
+      serious is 1 (serious) or 2; seriousnessdeath is 1 if the patient died.
+      receivedate is YYYYMMDD. A report shows a suspected link only, not
+      causation; counts are not incidence rates, and duplicates exist.
+
+  - id: drug_label
+    path: /drug/label.json
+    description: >-
+      Drug product labels (Structured Product Labeling): indications, boxed
+      warnings, warnings, adverse reactions, drug interactions, dosage.
+    params:
+      - name: search
+        description: Filter labels. See the guide for syntax.
+        example: '_exists_:boxed_warning+AND+openfda.generic_name:"warfarin"'
+      - name: count
+        description: Count the most common values of a field instead of returning records.
+        example: openfda.route.exact
+      - *sort
+      - *limit
+      - *skip
+    response_notes: >-
+      Label sections are arrays of text, e.g. boxed_warning[],
+      adverse_reactions[], drug_interactions[], indications_and_usage[],
+      contraindications[]. A section is absent when the label has none.
+      openfda.* has generic_name, brand_name, manufacturer_name, rxcui,
+      spl_set_id. One drug can have many labels (one per manufacturer and
+      version); effective_time is YYYYMMDD. drug_interactions is the place to
+      look for interactions (the RxNav interaction API was retired in 2024).
+
+  - id: drug_enforcement
+    path: /drug/enforcement.json
+    description: >-
+      Drug recall enforcement reports: recalled products, reason, class and
+      status.
+    params:
+      - name: search
+        description: Filter recalls. See the guide for syntax.
+        example: 'classification:"Class+I"+AND+report_date:[20250101+TO+20251231]'
+      - name: count
+        description: Count the most common values of a field instead of returning records.
+        example: classification.exact
+      - *sort
+      - *limit
+      - *skip
+    response_notes: >-
+      classification is "Class I" (may cause serious harm or death), "Class
+      II" or "Class III". status is Ongoing, Completed or Terminated. Useful
+      fields: reason_for_recall, product_description, recalling_firm,
+      recall_initiation_date and report_date (YYYYMMDD), recall_number.
+      openfda.* is often empty here, so also search product_description.
+
+  - id: drug_ndc
+    path: /drug/ndc.json
+    description: >-
+      NDC Directory: marketed drug products by National Drug Code, with active
+      ingredients, dosage form, route, labeler and packaging.
+    params:
+      - name: search
+        description: Filter products. See the guide for syntax.
+        example: 'generic_name:"metformin"'
+      - name: count
+        description: Count the most common values of a field instead of returning records.
+        example: dosage_form.exact
+      - *sort
+      - *limit
+      - *skip
+    response_notes: >-
+      product_ndc is labeler-product (e.g. "0002-1433"); packaging[] holds
+      package_ndc values. active_ingredients[] has name and strength.
+      Also: generic_name, brand_name, labeler_name, dosage_form, route[],
+      marketing_category, listing_expiration_date (YYYYMMDD).
+
+  - id: drug_drugsfda
+    path: /drug/drugsfda.json
+    description: >-
+      Drugs@FDA: FDA-approved drug applications (NDA, ANDA, BLA) with their
+      products and submission history (approvals, supplements).
+    params:
+      - name: search
+        description: Filter applications. See the guide for syntax.
+        example: 'openfda.generic_name:"semaglutide"'
+      - name: count
+        description: Count the most common values of a field instead of returning records.
+        example: sponsor_name
+      - *sort
+      - *limit
+      - *skip
+    response_notes: >-
+      One result per application: application_number (e.g. "NDA209637"),
+      sponsor_name, products[] (brand_name, dosage_form, route,
+      marketing_status, active_ingredients[]), submissions[] (submission_type,
+      submission_status, submission_status_date YYYYMMDD).
+
+  - id: drug_shortages
+    path: /drug/shortages.json
+    description: >-
+      Drug shortages reported to FDA: affected products, availability status
+      and reasons.
+    params:
+      - name: search
+        description: Filter shortages. See the guide for syntax.
+        example: 'status:"Current"'
+      - name: count
+        description: Count the most common values of a field instead of returning records.
+        example: therapeutic_category
+      - *sort
+      - *limit
+      - *skip
+    response_notes: >-
+      Fields include generic_name, package_ndc, status, availability,
+      shortage_reason, therapeutic_category[], initial_posting_date and
+      update_date, company_name and contact_info. Fewer records than other
+      endpoints (about 1,600).
