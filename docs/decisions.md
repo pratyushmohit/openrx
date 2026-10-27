@@ -115,3 +115,30 @@ model code runs on the host, so it is left out entirely.
 
 **Cost:** anything that executes sandboxed code (experiments, tests, evals) needs Floci
 running and pays Lambda's overhead (measured in E2: 274 ms cold, ~48 ms warm p50).
+
+---
+
+## D-006: Build Lambda zips inside the AWS Lambda image
+
+**Date:** 2026-10-27 · **Status:** Accepted
+
+**Context:** The runner Lambdas need `pydantic-monty`, which ships a native Linux
+binary (`monty`). We develop on Windows.
+
+**Options:**
+1. `pip install --platform manylinux_2_28_x86_64 --only-binary=:all:` on the host, zip
+   on the host (Terraform `archive_file`).
+2. Build inside `public.ecr.aws/lambda/python:3.13` with Docker
+   (`scripts/build_lambda.sh`, `make build LAMBDA=<name>`).
+3. Container-image Lambdas instead of zips.
+
+**Decision:** Option 2.
+
+**Why:** pip runs on the exact OS, glibc and Python as the Lambda, so it picks the right
+wheels without platform flags. The zip is written on Linux, so the binary keeps its
+executable bit; zips made on Windows drop it and the worker would fail to start. This is
+what AWS's own tooling does (`sam build --use-container`). Container images would also
+work but add an image registry to the setup; zips are enough at 18.8 MB.
+
+**Cost:** builds need Docker and take ~40 s (pip download). The image is referenced by
+tag `python:3.13`, not digest; pin the digest if builds ever differ between machines.

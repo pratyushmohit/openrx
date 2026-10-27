@@ -18,7 +18,7 @@ export AWS_ENDPOINT_URL ?= http://localhost:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help up up-ui down logs ps tf-init tf-plan tf-apply tf-destroy
+.PHONY: help up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -44,6 +44,10 @@ logs: ## Follow Floci logs
 
 ps: ## Show container status
 	docker compose --profile ui ps
+
+build: ## Build a Lambda zip: make build LAMBDA=<name> (from lambdas/<name>/)
+	@test -n "$(LAMBDA)" || { echo "usage: make build LAMBDA=<name>"; exit 1; }
+	bash scripts/build_lambda.sh $(LAMBDA)
 
 tf-init: ## Download the Terraform providers
 	$(TF) init

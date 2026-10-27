@@ -62,3 +62,42 @@ boto3 from the host (200 warm calls), excluding AWS CLI startup.
 **Implication:** A 48 ms warm floor uses about half of the "sandbox overhead p50
 ≤ 100 ms" budget (README §6.4) before Monty even starts. Pre-pull the Lambda image in
 `make up` or the docs so the first call isn't 20 s.
+
+---
+
+## E3a: Monty packaged into a Floci Lambda
+
+**Date:** 2026-10-27
+
+**Question:** Can a `python3.13` Lambda on Floci start Monty's worker and run code?
+
+**What we did:** `make build LAMBDA=probe` builds the zip inside
+`public.ecr.aws/lambda/python:3.13` (D-006). A `TEMP(M0)` probe Lambda (512 MB) creates
+the Monty pool once per container and runs each request's code in a fresh session.
+A host script sends code as text via boto3 and never runs Monty locally (D-005).
+
+**Found:**
+- Works. `1 + 1` → `2`; `print('hi'); 40 + 2` → `42` with stdout `hi\n`; `1/0` →
+  `MontyRuntimeError: ZeroDivisionError: division by zero`.
+- Zip: 18.8 MB (43.5 MB unzipped), within Lambda's 50 MB / 250 MB limits. Most of it
+  is the `monty` binary (31.6 MB). Its `755` mode survives the zip.
+- `pip install --target` puts the binary in `bin/`, which Monty doesn't search;
+  `MONTY_BIN=/var/task/bin/monty` fixes it.
+- Monty pool start: 1.8 ms. One trivial run: ~0.5–0.7 ms.
+
+| Invoke (512 MB) | Time |
+|---|---|
+| First call after deploying a new code version (Floci copies code into a volume) | ~8.2 s |
+| True cold start (new container, code volume cached) | ~300 ms |
+| Warm, p50 / p95 / p99 (n=200) | 48.0 / 48.8 / 51.9 ms |
+
+- The 8.2 s is Floci-specific ("Populated code volume … in 7,818ms", once per code
+  version). Since `make up` starts clean, the first call after each deploy pays it.
+- Monty adds ~30 ms to a cold start (hello Lambda: 274 ms).
+- The 48 ms warm floor (E2) is the same with Monty. Monty's own work is under 1 ms, so
+  the floor is in the invoke path. One warm call took 6.9 ms, which suggests the real
+  cost is small and something adds a fixed ~40 ms (TCP delayed ACK is a classic cause
+  of exactly 40 ms). Investigate in the latency experiment.
+
+**Implication:** Packaging is solved and reusable for the real runners. Overhead budget
+is dominated by Floci's invoke path, not Monty.
