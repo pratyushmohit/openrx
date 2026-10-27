@@ -72,9 +72,10 @@ boto3 from the host (200 warm calls), excluding AWS CLI startup.
 **Question:** Can a `python3.13` Lambda on Floci start Monty's worker and run code?
 
 **What we did:** `make build LAMBDA=probe` builds the zip inside
-`public.ecr.aws/lambda/python:3.13` (D-006). A `TEMP(M0)` probe Lambda (512 MB) creates
-the Monty pool once per container and runs each request's code in a fresh session.
-A host script sends code as text via boto3 and never runs Monty locally (D-005).
+`public.ecr.aws/lambda/python:3.13` (D-006). A probe Lambda (512 MB) creates the Monty
+pool once per container and runs each request's code in a fresh session. A host script
+sends code as text via boto3 and never runs Monty locally (D-005). The probe code was
+removed afterwards; see commit `77ff9e8`.
 
 **Found:**
 - Works. `1 + 1` → `2`; `print('hi'); 40 + 2` → `42` with stdout `hi\n`; `1/0` →

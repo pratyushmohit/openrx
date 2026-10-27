@@ -1,2 +1,0 @@
-# TEMP(M0): dependencies of the probe Lambda.
-pydantic-monty==1.4.0
