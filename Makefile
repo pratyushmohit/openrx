@@ -20,7 +20,7 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help check lint lint-catalog typecheck test up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint lint-catalog typecheck test test-integration deploy up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -39,6 +39,9 @@ typecheck: ## Static type check with pyright
 
 test: ## Run unit tests with coverage
 	uv run pytest --cov --cov-report=term-missing
+
+test-integration: ## Run tests against the deployed Lambdas on Floci (needs make up + deploy)
+	uv run pytest -m integration -p no:cacheprovider
 
 # Floci keeps state in memory, so recreating the container wipes every AWS
 # resource. Terraform's state must be wiped too, or it would believe the old
@@ -65,6 +68,11 @@ ps: ## Show container status
 build: ## Build a Lambda zip: make build LAMBDA=<name> (from lambdas/<name>/)
 	@test -n "$(LAMBDA)" || { echo "usage: make build LAMBDA=<name>"; exit 1; }
 	bash scripts/build_lambda.sh $(LAMBDA)
+
+# Terraform needs the zips to exist (it hashes them), so build before applying.
+deploy: ## Build the Lambda zips and apply Terraform to Floci
+	$(MAKE) build LAMBDA=bridge
+	$(TF) apply -auto-approve
 
 tf-init: ## Download the Terraform providers
 	$(TF) init

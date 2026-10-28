@@ -316,6 +316,14 @@ agent, a few calls per second) one container is enough.
 there. If Floci does not enforce reserved concurrency, the limiter is only per container
 locally; this is checked in M2, not assumed. Revisit with DynamoDB if throughput matters.
 
+*Update 2026-10-28 (checked in M2):* Floci enforces reserved concurrency 1. Six
+simultaneous invokes ran in one bridge container and finished 1.25 s apart, exactly
+ClinicalTrials.gov's 0.8/s rate, so the in-memory limiter is exact. Floci *queues* the
+extra invokes. Real AWS instead *rejects* synchronous invokes beyond reserved
+concurrency (TooManyRequestsException), so on AWS the runner must retry throttled
+bridge invokes; boto3's default retries cover a few, which the runner (M3) should not
+rely on silently.
+
 ---
 
 ## D-013: Replay fixtures live in S3

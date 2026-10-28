@@ -5,3 +5,20 @@ variable "floci_endpoint" {
   type        = string
   default     = "http://127.0.0.1:4566"
 }
+
+variable "fixture_mode" {
+  description = "Bridge fixture mode: live, record or replay (README FR-11)."
+  type        = string
+  default     = "live"
+
+  validation {
+    condition     = contains(["live", "record", "replay"], var.fixture_mode)
+    error_message = "fixture_mode must be live, record or replay."
+  }
+}
+
+variable "contact_email" {
+  description = "Sent to NCBI as the contact email (fills $${OPENRX_CONTACT_EMAIL}). Set it in terraform.tfvars, which is not committed; empty sends none."
+  type        = string
+  default     = ""
+}

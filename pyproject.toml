@@ -63,7 +63,9 @@ typeCheckingMode = "standard"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 # importlib: test files in different folders may share a name without clashing.
-addopts = ["--strict-markers", "--import-mode=importlib"]
+# Integration tests need Floci and deployed Lambdas: `make test-integration`.
+addopts = ["--strict-markers", "--import-mode=importlib", "-m", "not integration"]
+markers = ["integration: needs Floci running with the Lambdas deployed (make up && make deploy)"]
 # Lets tests import shared sample data from tests/samples.py.
 pythonpath = ["tests"]
 

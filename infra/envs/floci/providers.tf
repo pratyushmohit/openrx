@@ -13,12 +13,17 @@ provider "aws" {
   skip_requesting_account_id  = true
   skip_metadata_api_check     = true
 
+  # An emulator serves S3 at host/bucket, not bucket.host (no wildcard DNS).
+  s3_use_path_style = true
+
   # Every AWS service Terraform uses must be routed to Floci here. A service
   # missing from this list would silently go to real AWS (and fail on the
   # dummy credentials). Add services as we start using them.
   endpoints {
+    cloudwatchlogs = var.floci_endpoint
     iam            = var.floci_endpoint
     lambda         = var.floci_endpoint
+    s3             = var.floci_endpoint
     secretsmanager = var.floci_endpoint
     sts            = var.floci_endpoint
   }

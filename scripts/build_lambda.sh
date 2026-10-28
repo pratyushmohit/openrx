@@ -33,6 +33,9 @@ docker run --rm --entrypoint "" \
         -r "lambdas/$NAME/requirements.txt" --target "$pkg"
     fi
     mkdir -p "$pkg"
+    # The openrx package itself, without its dependencies: each Lambda lists only
+    # the libraries it needs in its requirements.txt.
+    pip install --quiet --no-cache-dir --no-deps /src --target "$pkg"
     cp lambdas/$NAME/*.py "$pkg"/
 
     # No zip CLI in the image; Python zipfile records each file mode.

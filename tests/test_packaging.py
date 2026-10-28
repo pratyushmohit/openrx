@@ -27,3 +27,24 @@ def test_wheel_contains_the_catalog_and_examples(tmp_path):
     }
     assert examples, "no example files in the source tree"
     assert examples <= names
+
+
+def test_lambda_requirements_match_uv_lock():
+    # A Lambda pinned to a different version than the one tested here would run
+    # code nobody tested.
+    import tomllib
+
+    locked = {
+        p["name"]: p["version"]
+        for p in tomllib.loads((ROOT / "uv.lock").read_text("utf-8"))["package"]
+    }
+    for requirements in (ROOT / "lambdas").glob("*/requirements.txt"):
+        for line in requirements.read_text(encoding="utf-8").splitlines():
+            line = line.split("#")[0].strip()
+            if not line:
+                continue
+            name, _, version = line.partition("==")
+            assert version, f"{requirements}: {line!r} must be pinned with =="
+            assert locked.get(name.lower()) == version, (
+                f"{requirements}: {line} vs uv.lock {locked.get(name.lower())}"
+            )

@@ -20,3 +20,6 @@ infra/envs/floci/build/
 .coverage
 .coverage.*
 htmlcov/
+
+# Local Terraform settings (e.g. contact_email)
+*.tfvars
