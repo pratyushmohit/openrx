@@ -184,3 +184,43 @@ def eval_footprint() -> None:
     typer.echo(f"  ratio         {theirs.total / ours.total:.1f}x")
     if ours.total > TOKEN_BUDGET:
         raise typer.Exit(code=1)
+
+
+@app.command("ask")
+def ask_command(
+    question: Annotated[str, typer.Argument(help="A question about drugs.")],
+    trace: Annotated[bool, typer.Option("--trace", help="Show every model and tool call.")] = False,
+) -> None:
+    """Answer a question with the agent, end to end (needs Floci, the Lambdas and Ollama)."""
+    import asyncio
+    import time
+
+    from openrx.agent.run import ask_question, summarise, timed
+
+    started = time.perf_counter()
+    result = asyncio.run(ask_question(question))
+    totals = summarise(result, timed(started))
+
+    if trace:
+        for event in result.events:
+            if event["kind"] == "llm":
+                typer.echo(
+                    f"  model  {event['ms'] / 1000:6.1f}s  {event['input_tokens']:>6} in "
+                    f"{event['output_tokens']:>5} out  {event['tool_calls']} tool call(s)"
+                )
+            elif event["kind"] == "tool":
+                status = "ok" if event["ok"] else f"error {event['error_type']}"
+                typer.echo(
+                    f"  {event['tool']:<7}{event['ms'] / 1000:6.1f}s  {status}  "
+                    f"{event['request_calls']} request(s), {event['bytes_fetched']:,} B fetched, "
+                    f"{event['bytes_returned']:,} B returned"
+                )
+        typer.echo("")
+    typer.echo(result.answer)
+    typer.echo("")
+    reduction = f", data reduction {totals['data_reduction']}x" if totals["data_reduction"] else ""
+    typer.echo(
+        f"[{totals['seconds']}s: {totals['llm_calls']} model calls ({totals['model_seconds']}s, "
+        f"{totals['input_tokens']:,} in / {totals['output_tokens']:,} out tokens), "
+        f"{totals['tool_calls']} tool calls ({totals['tool_seconds']}s){reduction}]"
+    )

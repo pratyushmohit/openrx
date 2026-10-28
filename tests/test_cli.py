@@ -184,3 +184,19 @@ def test_eval_footprint_reports_tokens_and_the_ratio():
     assert result.exit_code == 0, result.output
     assert "OpenRx" in result.output and "within the 1,500 budget" in result.output
     assert "per endpoint" in result.output and "ratio" in result.output
+
+
+def test_ask_prints_the_answer_and_a_summary(monkeypatch):
+    from openrx.agent import run as run_module
+    from openrx.agent.graph import AgentResult
+
+    async def fake_ask(question, env=None):
+        return AgentResult(answer=f"answer to {question}", steps=1, events=[])
+
+    monkeypatch.setattr(run_module, "ask_question", fake_ask)
+
+    result = runner.invoke(app, ["ask", "metformin?", "--trace"])
+
+    assert result.exit_code == 0, result.output
+    assert "answer to metformin?" in result.output
+    assert "model calls" in result.output
