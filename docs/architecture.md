@@ -17,7 +17,7 @@ invoke, and the bridge checks every request against the catalog.
 
 ```mermaid
 flowchart LR
-  client["MCP client<br/>LangGraph agent or Claude Desktop<br/><i>M4</i>"]
+  client["MCP client<br/>LangGraph agent (openrx ask)<br/>or any MCP client"]
   ollama["Ollama<br/>qwen3.5 on RX 9070 XT"]
 
   subgraph host["Host: our code"]
@@ -49,8 +49,7 @@ flowchart LR
 
   classDef built stroke:#333,stroke-width:1.5px
   classDef planned stroke:#333,stroke-width:1.5px,stroke-dasharray:5 4
-  class secrets,bedrock,ollama,apis,bridge,search,execute,server built
-  class client planned
+  class secrets,bedrock,ollama,apis,bridge,search,execute,server,client built
   style sandbox fill:#fbf1e1,stroke:#a8640a,color:#111
   style creds fill:#fbe9eb,stroke:#ad2a3c,color:#111
   style floci fill:#eef1f6,stroke:#586170,color:#111
@@ -149,6 +148,6 @@ enforcement on.
 | search-runner | M3 | Built |
 | execute-runner | M3 | Built |
 | Sandbox-escape suite (NFR-2) and end-to-end secret-exposure check (§6.5) | M3 | **Open: deferred** |
-| MCP server (`openrx serve`, two tools) | M4 | Built (descriptions: piece 2) |
-| LangGraph agent, `openrx ask` | M4 | Planned |
+| MCP server (`openrx serve`, two tools, descriptions, 714-token footprint) | M4 | Built |
+| LangGraph agent, `openrx ask` | M4 | Built |
 | Eval harness and report | M5 | Planned |

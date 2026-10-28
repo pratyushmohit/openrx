@@ -397,7 +397,7 @@ A milestone is done only when its exit criteria pass.
 | M1 | Catalog | Schema, loader, catalog functions, lint, OpenAPI converter; all five sources | `catalog lint` passes; unit tests ≥ 80% coverage; every endpoint has an example response |
 | M2 | Bridge | Validation, allowlist, rate limits, budget, secrets, record/replay (fixtures in S3); local first, then Lambda | Request-abuse evals 100%; record/replay round-trips on sample requests; bridge overhead SLO met |
 | M3 | Runners | Shared Monty runner; search/execute Lambdas; Terraform for all Lambdas, IAM, secrets | Escape, resource-abuse, and secret-exposure suites 100%; sandbox overhead SLO met; `make deploy` from clean works. **Status:** done except the sandbox-escape suite and the end-to-end secret-exposure check, deferred (see `docs/architecture.md`) |
-| M4 | MCP server + agent | Two tools, descriptions, `instructions`, LangGraph agent, `openrx ask` | NFR-1 footprint test passes; CUJ-1 demoed with `openrx ask` (CUJ-3 with a third-party client deferred); search/execute latency SLOs met |
+| M4 | MCP server + agent | Two tools, descriptions, `instructions`, LangGraph agent, `openrx ask` | NFR-1 footprint test passes; CUJ-1 demoed with `openrx ask` (CUJ-3 with a third-party client deferred); search/execute latency SLOs met. **Status:** done (footprint 714 tokens; CUJ-1 answered with `openrx ask`; search/execute SLOs met) |
 | M5 | Evals + launch | Task suite, reference solutions, fixtures for the task suite, scorer, runner, footprint analysis, report, README | Fixtures recorded for every task; all P0 requirements done; all §6 metrics reported; P0 targets met or documented with reasons; README results published |
 | M6 | Stretch (P2) | FR-18 to FR-21 | Per item |
 

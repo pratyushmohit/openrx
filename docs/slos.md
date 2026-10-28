@@ -26,9 +26,9 @@ which adds ~43 ms per request; E4).
 | Sandbox overhead (host → runner invoke + Monty session + type check + teardown, trivial code) | **7.33 / 7.76 / 10.02 ms** round trip; 2.42 ms inside the runner (M3, n=100, `make bench-runners`; 5.53 ms / 0.78 ms without type checking) | ≤ 100 ms | ≤ 250 ms | ≤ 500 ms | **Met** (about 13× headroom) |
 | Bridge `request()` overhead: time inside the bridge, replay mode (`bridge_ms`) | **1.26 / 1.46 / 1.73 ms** (M2, real bridge, n=200; `make bench-bridge`) | ≤ 30 ms | ≤ 80 ms | ≤ 150 ms | **Met** (about 25× headroom) |
 | Runner → bridge invoke hop (inside the Docker network) | 4.2 / 4.9 / 5.3 ms (E4) | | | | Reported; adds to the above for each `request()` |
-| `search` call end to end, warm | not measured | ≤ 300 ms | ≤ 800 ms | ≤ 1.5 s | Provisional until M4 |
-| `execute` call end to end, warm, ≤ 5 requests | Runner part, 5 gathered requests in replay: **46.6 / 48.9 / 50.2 ms** (M3, n=100) | ≤ 1 s | ≤ 2.5 s | ≤ 5 s | Runner part well within; provisional until M4 adds the MCP server |
-| Full task end to end with the local model | not measured | report | ≤ 90 s | report | Provisional; LLM speed is deferred to the end of the project |
+| `search` call end to end, warm (MCP client → server → search-runner → back) | **15.9 / 17.0 / 19.0 ms** (M4, n=100, `make bench-mcp`) | ≤ 300 ms | ≤ 800 ms | ≤ 1.5 s | **Met** |
+| `execute` call end to end, warm, 5 requests, replay | **47.8 / 52.6 / 55.0 ms** through the MCP server (M4, n=100); runner part 46.6 ms | ≤ 1 s | ≤ 2.5 s | ≤ 5 s | **Met** |
+| Full task end to end with the local model | One question (metformin's top FAERS reactions): 21.5 s, 4 model calls (16.4 s, 8,246 in / 586 out tokens), 3 tool calls (4.8 s); a second run took 7 tool calls | report | ≤ 90 s | report | Provisional until M5 measures it over the task suite; LLM speed is deferred |
 
 ## Tool footprint (README NFR-1, §6.2)
 

@@ -7,7 +7,14 @@ from langchain_core.messages import AIMessage, BaseMessage, SystemMessage, ToolM
 from langchain_core.outputs import ChatGeneration, ChatResult
 from langchain_core.tools import StructuredTool
 
-from openrx.agent.graph import MAX_STEPS, SYSTEM_PROMPT, ask, build_agent, message_text
+from openrx.agent.graph import (
+    MAX_STEPS,
+    NO_ANSWER,
+    SYSTEM_PROMPT,
+    ask,
+    build_agent,
+    message_text,
+)
 
 
 class ScriptedModel(BaseChatModel):
@@ -162,3 +169,15 @@ def test_message_text_reads_strings_and_bedrock_style_blocks():
         {"type": "text", "text": "leads."},
     ]
     assert message_text(AIMessage(content=blocks)) == "Nausea leads."
+
+
+def test_text_falls_back_to_other_blocks_that_carry_text():
+    blocks: list[str | dict[Any, Any]] = [{"type": "reasoning", "text": "The answer is 6809."}]
+
+    assert message_text(AIMessage(content=blocks)) == "The answer is 6809."
+
+
+def test_an_empty_final_answer_is_said_plainly():
+    result, _ = run_agent([AIMessage(content=[])])
+
+    assert result.answer == NO_ANSWER

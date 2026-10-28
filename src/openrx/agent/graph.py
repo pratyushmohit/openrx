@@ -23,6 +23,7 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
 MAX_STEPS = 15
+NO_ANSWER = "(The model finished without a text answer.)"
 
 SYSTEM_PROMPT = """\
 You answer questions about drugs with the OpenRx tools. First use search to find the \
@@ -117,7 +118,7 @@ async def ask(agent: Any, question: str) -> AgentResult:
     )
     events = state["events"]
     return AgentResult(
-        answer=message_text(state["messages"][-1]),
+        answer=message_text(state["messages"][-1]) or NO_ANSWER,
         steps=state["steps"],
         events=events,
         stopped_at_limit=any(e["kind"] == "step_limit" for e in events),
@@ -134,7 +135,14 @@ def message_text(message: AnyMessage) -> str:
         for block in content
         if not isinstance(block, dict) or block.get("type") == "text"
     ]
-    return "".join(parts).strip()
+    text = "".join(parts).strip()
+    if text:
+        return text
+    # No "text" block (seen once in M4): fall back to any block that carries text,
+    # such as a reasoning block, rather than returning an empty answer.
+    return "".join(
+        str(block.get("text", "")) for block in content if isinstance(block, dict)
+    ).strip()
 
 
 def _tool_event(name: str, output: str, ms: float) -> dict[str, Any]:
