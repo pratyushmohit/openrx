@@ -1,0 +1,20 @@
+{
+  "request": {
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
+    "params": {
+      "id": "38000000",
+      "tool": "openrx",
+      "email": "${OPENRX_CONTACT_EMAIL}",
+      "db": "pubmed",
+      "rettype": "abstract",
+      "retmode": "text"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": "1. Salud Colect. 2023 Nov 16;19:e4462. doi: 10.18294/sc.2023.4462.\n\n[Some present and future ethical dilemmas surrounding advancements in in vitro \nfertilization.].\n\n[Article in Spanish; Abstract available in Spanish from the publisher]\n\nReguera Cabezas M(1).\n\nAuthor information:\n(1)Bióloga, Magíster en Genética y Reproducción Humana Asistida, Unidad de \nReproducción Asistida, miembro del Comité de Ética Asistencial, Hospital \nUniversitario Marqués de Valdecilla, Cantabria, España.\n\nThe growing field of assisted human reproduction has achieved unimaginable \nmilestones. Its continuous development and the innovations it generates at times \npose both ethical and legal dilemmas. This essay aims to elucidate the \nprogressive changes occurring in the realm of the origin of life due to the \ndevelopment of new options and strategies in assisted human reproduction. First, \nit constructs an interdisciplinary reflection on human nature and the changes \nsociety faces from the perspectives of science, ethics, and law, particularly \nfrom the perspective of Spain. Second, it provides a brief overview of current \nor future biomedical techniques in the field of human reproduction. It concludes \nwith a discussion of the need to reflect on the rapid advancement of science in \nassisted human reproduction.\n\nPublisher: El creciente campo de la reproducción humana asistida ha alcanzado \nhitos inimaginables. Su continuo desarrollo y las innovaciones que genera, en \nocasiones, plantean dilemas tanto éticos como jurídicos. El presente ensayo \ntrata de exponer los cambios progresivos que se están viviendo en el ámbito del \norigen de la vida debido al desarrollo de nuevas opciones y estrategias en \nreproducción humana asistida. En primer lugar, se realiza una reflexión \ninterdisciplinar desde la ciencia, la ética y el derecho, sobre la naturaleza \nhumana y los cambios a los que la sociedad se enfrenta, en particular, desde la \nperspectiva española. En segundo lugar, recoge una breve aproximaci…"
+}

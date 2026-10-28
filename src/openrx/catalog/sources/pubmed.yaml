@@ -1,0 +1,117 @@
+# PubMed via NCBI E-utilities. Docs: https://www.ncbi.nlm.nih.gov/books/NBK25499/
+# Checked against the live API on 2026-10-28. Example responses are in
+# ../examples/pubmed/, written by `openrx catalog capture-examples pubmed`.
+#
+# NCBI asks every caller to identify itself with `tool` and `email`, so the
+# bridge adds them to every request (fixed_params). The email is a ${...}
+# placeholder filled from configuration, so no real address is committed.
+
+id: pubmed
+name: PubMed
+base_url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils
+
+auth:
+  type: query_param
+  name: api_key
+  secret: openrx/ncbi_api_key
+  optional: true
+
+# 3 requests per second without a key, 10 with one. We stay at 3 either way.
+# https://www.ncbi.nlm.nih.gov/books/NBK25497/
+rate_limit:
+  per_second: 3
+
+fixed_params:
+  tool: openrx
+  email: ${OPENRX_CONTACT_EMAIL}
+
+guide: |
+  The usual flow is: search (get PMIDs) -> summaries (titles, journals, dates)
+  -> abstracts (text) for the few papers that matter.
+
+  term (search): PubMed query syntax, with plain spaces.
+    - Boolean: semaglutide AND pancreatitis, (A OR B) NOT C. Uppercase AND/OR/NOT.
+    - Fields: "Lancet"[Journal], smith j[Author], diabetes[MeSH Terms],
+      randomized controlled trial[Publication Type], cancer[Title/Abstract]
+    - Dates: 2023:2025[pdat] (publication years), or use mindate/maxdate with
+      datetype=pdat (format YYYY, YYYY/MM or YYYY/MM/DD).
+    - Phrases in quotes: "acute kidney injury"
+  retmax: how many PMIDs to return (default 20, at most 10000).
+  retstart: skip that many, for paging. Only the first 10000 matches are
+  reachable; narrow the query instead of paging further.
+  sort: relevance (default) or pub_date.
+
+  id (summaries, abstracts): one PMID or several, comma-separated:
+  "38000000,38000001". Send at most 200 per request.
+
+  Responses
+    - search: esearchresult.count is the total (a string of digits), and
+      esearchresult.idlist the PMIDs on this page.
+    - summaries: result.uids lists the PMIDs; each result[<pmid>] has title,
+      authors[].name, source (journal), pubdate, pubtype[], articleids[]
+      (doi, pmc).
+    - abstracts: plain text, papers separated by blank lines. Some papers
+      have no abstract.
+    - No matches: count "0" and an empty idlist, not an error.
+
+endpoints:
+  - id: search
+    path: /esearch.fcgi
+    description: >-
+      Search PubMed and get the matching PMIDs (PubMed ids) and the total count.
+    fixed_params: {db: pubmed, retmode: json}
+    params:
+      - name: term
+        required: true
+        description: PubMed query. See the guide for syntax.
+        example: &search_term semaglutide AND pancreatitis
+      - {name: retmax, type: integer, description: "PMIDs to return, 1-10000 (default 20).", example: 20}
+      - {name: retstart, type: integer, description: "Matches to skip, for paging."}
+      - {name: sort, description: "relevance (default) or pub_date.", example: pub_date}
+      - {name: mindate, description: "Earliest date, YYYY[/MM[/DD]]; use with maxdate and datetype.", example: "2024"}
+      - {name: maxdate, description: "Latest date, YYYY[/MM[/DD]].", example: "2025"}
+      - {name: datetype, description: "Which date mindate/maxdate filter on: pdat (publication) or edat (added to PubMed).", example: pdat}
+    example_params: {term: *search_term, retmax: 3}
+    response_notes: >-
+      esearchresult.count is the total number of matches (a string),
+      esearchresult.idlist the PMIDs returned (strings), and
+      esearchresult.querytranslation shows how PubMed expanded the query
+      (e.g. into MeSH terms), which helps explain surprising counts.
+
+  - id: summary
+    path: /esummary.fcgi
+    description: >-
+      Article summaries for PMIDs: title, authors, journal, publication date,
+      publication types and ids such as DOI.
+    fixed_params: {db: pubmed, retmode: json}
+    params:
+      - name: id
+        required: true
+        description: One PMID or several, comma-separated (at most 200).
+        example: &summary_ids "38000000,38000001"
+    example_params: {id: *summary_ids}
+    response_notes: >-
+      result.uids is the list of PMIDs; result[pmid] holds title, authors
+      (list of {name}), source (journal abbreviation), fulljournalname,
+      pubdate (free text such as "2023 Nov 16"), pubtype (e.g. "Journal
+      Article", "Review"), and articleids (idtype doi / pmc / pubmed).
+      No abstract here: use the abstracts endpoint.
+
+  - id: abstracts
+    path: /efetch.fcgi
+    description: >-
+      Abstracts for PMIDs, as plain text (citation, title, authors,
+      affiliations, abstract).
+    fixed_params: {db: pubmed, rettype: abstract, retmode: text}
+    response_format: text
+    params:
+      - name: id
+        required: true
+        description: One PMID or several, comma-separated (at most 200).
+        example: &abstract_ids "38000000"
+    example_params: {id: *abstract_ids}
+    response_notes: >-
+      Plain text, not JSON. Each paper starts with a numbered citation line
+      ("1. Journal. Date;Volume:Pages. doi: ..."), then the title, authors,
+      affiliations and abstract, and ends with "PMID: <id>". Papers are
+      separated by blank lines. Some papers have no abstract.

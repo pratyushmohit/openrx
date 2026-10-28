@@ -12,3 +12,11 @@ resource "aws_secretsmanager_secret" "openfda_api_key" {
   # destroy/apply cycles work.
   recovery_window_in_days = 0
 }
+
+# API key for NCBI E-utilities (PubMed), read only by the bridge. Optional:
+# without one NCBI allows 3 requests per second, with one 10.
+resource "aws_secretsmanager_secret" "ncbi_api_key" {
+  name                    = "openrx/ncbi_api_key"
+  description             = "NCBI E-utilities API key (optional; raises rate limits)."
+  recovery_window_in_days = 0
+}

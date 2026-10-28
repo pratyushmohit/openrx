@@ -1,0 +1,37 @@
+{
+  "request": {
+    "url": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json",
+    "params": {
+      "term": "ozempik",
+      "maxEntries": 3
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "approximateGroup": {
+      "inputTerm": null,
+      "candidate": [
+        {
+          "rxcui": "1991307",
+          "rxaui": "12628738",
+          "score": "8.341192245483398",
+          "rank": "1",
+          "source": "MMSL"
+        },
+        {
+          "rxcui": "1991307",
+          "rxaui": "9706750",
+          "score": "8.341192245483398",
+          "rank": "1",
+          "name": "Ozempic",
+          "source": "RXNORM"
+        }
+      ]
+    }
+  }
+}

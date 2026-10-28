@@ -1,0 +1,35 @@
+{
+  "request": {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json",
+    "params": {
+      "drugName": "semaglutide",
+      "relaSource": "ATC"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "rxclassDrugInfoList": {
+      "rxclassDrugInfo": [
+        {
+          "minConcept": {
+            "rxcui": "1991302",
+            "name": "semaglutide",
+            "tty": "IN"
+          },
+          "rxclassMinConceptItem": {
+            "classId": "A10BJ",
+            "className": "Glucagon-like peptide-1 (GLP-1) analogues",
+            "classType": "ATC1-4"
+          },
+          "rela": "",
+          "relaSource": "ATC"
+        }
+      ]
+    }
+  }
+}

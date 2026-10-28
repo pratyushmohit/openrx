@@ -1,0 +1,55 @@
+{
+  "request": {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json",
+    "params": {
+      "classId": "A10BJ",
+      "relaSource": "ATC"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "drugMemberGroup": {
+      "drugMember": [
+        {
+          "minConcept": {
+            "rxcui": "1440051",
+            "name": "lixisenatide",
+            "tty": "IN"
+          },
+          "nodeAttr": [
+            {
+              "attrName": "SourceId",
+              "attrValue": "A10BJ03"
+            },
+            {
+              "attrName": "SourceName",
+              "attrValue": "lixisenatide"
+            }
+          ]
+        },
+        {
+          "minConcept": {
+            "rxcui": "1534763",
+            "name": "albiglutide",
+            "tty": "IN"
+          },
+          "nodeAttr": [
+            {
+              "attrName": "SourceId",
+              "attrValue": "A10BJ04"
+            },
+            {
+              "attrName": "SourceName",
+              "attrValue": "albiglutide"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

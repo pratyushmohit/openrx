@@ -3,7 +3,7 @@ import json
 import httpx
 import pytest
 
-from openrx.catalog.capture import MAX_ITEMS, capture_source, example_request, trim
+from openrx.catalog.capture import MAX_ITEMS, MAX_TEXT, capture_source, example_request, trim
 from openrx.catalog.loader import example_path
 from openrx.catalog.schema import Source
 
@@ -176,3 +176,77 @@ def test_requests_are_spaced_by_the_rate_limit(tmp_path):
 
     assert [r.endpoint_id for r in results] == ["search", "study", "draft"]
     assert pauses == pytest.approx([0.25, 0.25])  # 4 per second, none before the first
+
+
+# --- fixed params and text responses ----------------------------------------------
+
+PUBMED = Source.model_validate(
+    {
+        "id": "pubmed",
+        "name": "PubMed",
+        "base_url": "https://eutils.example.gov",
+        "rate_limit": {"per_second": 3},
+        "fixed_params": {"tool": "openrx", "email": "${CONTACT_EMAIL}"},
+        "endpoints": [
+            {
+                "id": "abstracts",
+                "path": "/efetch.fcgi",
+                "description": "Abstracts.",
+                "fixed_params": {"db": "pubmed", "retmode": "text"},
+                "response_format": "text",
+                "params": [{"name": "id", "required": True, "description": "PMIDs."}],
+                "example_params": {"id": "1"},
+            }
+        ],
+    }
+)
+
+
+def test_fixed_params_are_sent_filled_but_recorded_with_placeholders(tmp_path):
+    seen = []
+
+    def handler(request):
+        seen.append(request)
+        return httpx.Response(200, text="1. A paper. PMID: 1")
+
+    [result] = capture_source(
+        PUBMED, fake_client(handler), root=tmp_path, env={"CONTACT_EMAIL": "me@example.org"}
+    )
+
+    assert result.error is None and result.warnings == ()
+    sent = dict(seen[0].url.params)
+    assert sent == {
+        "id": "1",
+        "tool": "openrx",
+        "email": "me@example.org",
+        "db": "pubmed",
+        "retmode": "text",
+    }
+    text = example_path(tmp_path, "pubmed", "abstracts").read_text(encoding="utf-8")
+    assert "me@example.org" not in text  # the committed file never holds the real value
+    assert json.loads(text)["request"]["params"]["email"] == "${CONTACT_EMAIL}"
+
+
+def test_missing_placeholder_value_is_a_warning_and_the_param_is_left_out(tmp_path):
+    seen = []
+
+    def handler(request):
+        seen.append(request)
+        return httpx.Response(200, text="abstract")
+
+    [result] = capture_source(PUBMED, fake_client(handler), root=tmp_path, env={})
+
+    assert result.error is None
+    assert result.warnings == ("${CONTACT_EMAIL} is not set; sent without it",)
+    assert "email" not in dict(seen[0].url.params)
+
+
+def test_text_response_is_stored_as_a_trimmed_string(tmp_path):
+    long_text = "word " * 1000
+
+    capture_source(
+        PUBMED, fake_client(lambda r: httpx.Response(200, text=long_text)), root=tmp_path, env={}
+    )
+
+    record = json.loads(example_path(tmp_path, "pubmed", "abstracts").read_text(encoding="utf-8"))
+    assert record["response"] == long_text[:MAX_TEXT] + "…"

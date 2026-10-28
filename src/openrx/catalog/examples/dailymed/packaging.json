@@ -1,0 +1,45 @@
+{
+  "request": {
+    "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bfd6ec0f-8264-4877-aa6d-f347f53bc426/packaging.json",
+    "params": {}
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "data": {
+      "spl_version": 4,
+      "products": [
+        {
+          "packaging": [
+            {
+              "ndc": "70518-4262-0",
+              "package_descriptions": [
+                "180  in 1 BOTTLE, PLASTIC"
+              ]
+            }
+          ],
+          "active_ingredients": [
+            {
+              "strength": "1000 mg",
+              "name": "METFORMIN HYDROCHLORIDE"
+            }
+          ],
+          "product_name_generic": "Metformin Hydrochloride",
+          "product_name": "Metformin Hydrochloride",
+          "product_code": "70518-4262"
+        }
+      ],
+      "published_date": "Oct 26, 2026",
+      "title": "METFORMIN HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]",
+      "setid": "bfd6ec0f-8264-4877-aa6d-f347f53bc426"
+    },
+    "metadata": {
+      "db_published_date": "Oct 26, 2026 09:17:45PM EST",
+      "current_url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bfd6ec0f-8264-4877-aa6d-f347f53bc426/packaging.json"
+    }
+  }
+}

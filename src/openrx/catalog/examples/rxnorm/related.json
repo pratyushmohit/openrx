@@ -1,0 +1,44 @@
+{
+  "request": {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6809/related.json",
+    "params": {
+      "tty": "BN"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "relatedGroup": {
+      "rxcui": null,
+      "conceptGroup": [
+        {
+          "tty": "BN",
+          "conceptProperties": [
+            {
+              "rxcui": "1372692",
+              "name": "Kazano",
+              "synonym": "",
+              "tty": "BN",
+              "language": "ENG",
+              "suppress": "N",
+              "umlscui": ""
+            },
+            {
+              "rxcui": "1372706",
+              "name": "Jentadueto",
+              "synonym": "",
+              "tty": "BN",
+              "language": "ENG",
+              "suppress": "N",
+              "umlscui": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -224,3 +224,32 @@ apart from what people write.
 **Cost:** a source is now one YAML plus one JSON per endpoint. `catalog lint` covers the
 gap: it requires an example for every endpoint and flags example files whose endpoint or
 source no longer exists.
+
+---
+
+## D-010: Fixed parameters added by the bridge; per-endpoint response format
+
+**Date:** 2026-10-28 · **Status:** Accepted
+
+**Context:** NCBI asks every PubMed caller to send `tool` and `email`, and several
+endpoints need constant parameters (`db=pubmed`, `retmode=json`). PubMed abstracts are
+only available as plain text, not JSON. The contact email must not be committed.
+
+**Decision:**
+1. Sources and endpoints may declare `fixed_params`, merged with endpoint values
+   winning. The bridge adds them to every request. A caller can never set them: a
+   fixed parameter, or the auth parameter, may not also be declared as a caller
+   parameter, and the schema rejects such a catalog.
+2. Values may contain `${NAME}` placeholders, filled from configuration when a request
+   is made. Committed files (YAML and example records) keep the placeholder; a test
+   checks that no example request holds an email address.
+3. Endpoints declare `response_format`: `json` (default) or `text`.
+
+**Why:** Constants belong to the catalog, not to model-written code, which would
+otherwise have to remember them on every call. Reserving them also narrows what a caller
+can do (e.g. PubMed endpoints are pinned to `db=pubmed`). Placeholders keep personal or
+environment-specific values out of git while the catalog stays the single source of
+truth.
+
+**Cost:** the bridge must apply the same merge and expansion (M2); `expand_placeholders`
+in `schema.py` is shared so both use one implementation.

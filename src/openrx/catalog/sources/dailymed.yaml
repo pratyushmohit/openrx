@@ -1,0 +1,99 @@
+# DailyMed web services (v2), NLM's database of FDA drug labels (SPLs).
+# Docs: https://dailymed.nlm.nih.gov/dailymed/app-support-web-services.cfm
+# Checked against the live API on 2026-10-28. Example responses are in
+# ../examples/dailymed/, written by `openrx catalog capture-examples dailymed`.
+#
+# Full label text is only served as XML here, so label content comes from
+# openFDA (openfda.drug_label). DailyMed is used to find labels (SPLs) and
+# their versions, names and packaging.
+
+id: dailymed
+name: DailyMed
+base_url: https://dailymed.nlm.nih.gov/dailymed/services/v2
+
+# DailyMed publishes no rate limit; NLM's general limit is 20 per second per IP.
+# We stay well below it.
+rate_limit:
+  per_second: 5
+
+guide: |
+  DailyMed identifies each label (SPL) by a setid (a UUID that stays the same
+  across versions) and a version number.
+
+  Typical flow: labels (find setids by drug name) -> packaging (products,
+  ingredients and package NDCs for one setid) or history (its versions).
+  To read a label's text, use the same setid with openFDA: openfda.drug_label,
+  search set_id:"<setid>". Use the top-level set_id field, not
+  openfda.spl_set_id, which is missing on most labels.
+
+  Paging: pagesize (at most 100, default 100) and page (from 1). metadata has
+  total_elements, total_pages and current_page. On the last page,
+  next_page_url is the string "null", not a real null.
+
+  No matches: data is an empty list with HTTP 200, not an error.
+
+endpoints:
+  - id: labels
+    path: /spls.json
+    description: >-
+      Find drug labels (SPLs) by drug name: title, setid, version and
+      publication date.
+    params:
+      - name: drug_name
+        description: Generic or brand name to search for, e.g. metformin.
+        example: &labels_drug metformin
+      - {name: pagesize, type: integer, description: "Results per page, at most 100 (default 100).", example: 10}
+      - {name: page, type: integer, description: "Page number, from 1."}
+    example_params: {drug_name: *labels_drug, pagesize: 3}
+    response_notes: >-
+      data is a list of {setid, title, spl_version, published_date}. title
+      names the product and, in brackets, the labeler (e.g. "METFORMIN
+      HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]"). Many labels
+      per drug: one per labeler and product. published_date is text such as
+      "Oct 26, 2026".
+
+  - id: drug_names
+    path: /drugnames.json
+    description: Drug names known to DailyMed, brand (B) or generic (G).
+    params:
+      - name: drug_name
+        description: Name or part of a name to look up.
+        example: &names_drug metformin
+      - {name: pagesize, type: integer, description: "Results per page, at most 100 (default 100).", example: 10}
+      - {name: page, type: integer, description: "Page number, from 1."}
+    example_params: {drug_name: *names_drug, pagesize: 3}
+    response_notes: >-
+      data is a list of {drug_name, name_type}, where name_type is "B"
+      (brand) or "G" (generic). Matches include combination products that
+      contain the name.
+
+  - id: packaging
+    path: /spls/{setid}/packaging.json
+    description: >-
+      Products in one label with their active ingredients, strengths and
+      package NDCs.
+    params:
+      - name: setid
+        in: path
+        required: true
+        description: Label setid from the labels endpoint.
+        example: &packaging_setid bfd6ec0f-8264-4877-aa6d-f347f53bc426
+    example_params: {setid: *packaging_setid}
+    response_notes: >-
+      data has title, setid, spl_version and products[]: {product_name,
+      product_name_generic, product_code, active_ingredients: [{name,
+      strength}], packaging: [{ndc, package_descriptions[]}]}.
+
+  - id: history
+    path: /spls/{setid}/history.json
+    description: Every published version of one label, with dates.
+    params:
+      - name: setid
+        in: path
+        required: true
+        description: Label setid from the labels endpoint.
+        example: &history_setid bfd6ec0f-8264-4877-aa6d-f347f53bc426
+    example_params: {setid: *history_setid}
+    response_notes: >-
+      data.spl has title and setid; data.history is a list of {spl_version,
+      published_date}, newest first.

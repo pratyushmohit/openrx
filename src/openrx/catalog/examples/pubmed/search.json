@@ -1,0 +1,45 @@
+{
+  "request": {
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+    "params": {
+      "term": "semaglutide AND pancreatitis",
+      "retmax": 3,
+      "tool": "openrx",
+      "email": "${OPENRX_CONTACT_EMAIL}",
+      "db": "pubmed",
+      "retmode": "json"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "header": {
+      "type": "esearch",
+      "version": "0.3"
+    },
+    "esearchresult": {
+      "count": "286",
+      "retmax": "3",
+      "retstart": "0",
+      "idlist": [
+        "42941539",
+        "42930015"
+      ],
+      "translationset": [
+        {
+          "from": "semaglutide",
+          "to": "\"semaglutide\"[Supplementary Concept] OR \"semaglutide\"[All Fields] OR \"semaglutide\"[MeSH Terms]"
+        },
+        {
+          "from": "pancreatitis",
+          "to": "\"pancreas\"[MeSH Terms] OR \"pancreas\"[All Fields] OR \"pancreatic\"[All Fields] OR \"pancreatitides\"[All Fields] OR \"pancreatitis\"[MeSH Terms] OR \"pancreatitis\"[All Fields]"
+        }
+      ],
+      "querytranslation": "(\"semaglutide\"[Supplementary Concept] OR \"semaglutide\"[All Fields] OR \"semaglutide\"[MeSH Terms]) AND (\"pancreas\"[MeSH Terms] OR \"pancreas\"[All Fields] OR \"pancreatic\"[All Fields] OR \"pancreatitides\"[A…"
+    }
+  }
+}

@@ -3,7 +3,7 @@ import copy
 import pytest
 from pydantic import ValidationError
 
-from openrx.catalog.schema import Endpoint, Param, Source
+from openrx.catalog.schema import Endpoint, Param, Source, expand_placeholders
 
 VALID_SOURCE = {
     "id": "clinicaltrials",
@@ -213,3 +213,56 @@ def test_example_params_must_include_required_params():
 def test_example_params_are_optional_and_default_to_empty():
     assert Endpoint.model_validate(endpoint()).example_params == {}
     assert Endpoint.model_validate(endpoint(example_params={"nctId": "NCT1"})).example_params
+
+
+# --- fixed_params and response_format --------------------------------------------
+
+
+def test_fixed_params_merge_with_endpoint_values_winning():
+    parsed = Source.model_validate(
+        source(
+            auth=None,
+            fixed_params={"tool": "openrx", "db": "all"},
+            endpoints=[
+                endpoint(fixed_params={"db": "pubmed"}),
+                VALID_SOURCE["endpoints"][1],
+            ],
+        )
+    )
+
+    assert parsed.fixed_params_for(parsed.endpoints[0]) == {"tool": "openrx", "db": "pubmed"}
+    assert parsed.fixed_params_for(parsed.endpoints[1]) == {"tool": "openrx", "db": "all"}
+
+
+def test_placeholder_names_must_be_upper_snake_case():
+    assert_invalid(Source, source(fixed_params={"email": "${contact}"}), "UPPER_SNAKE_CASE")
+
+
+def test_endpoint_fixed_param_cannot_also_be_a_caller_param():
+    assert_invalid(Endpoint, endpoint(fixed_params={"format": "json"}), "can't also be caller")
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"fixed_params": {"format": "json"}},  # a source fixed param
+        {"auth": {"type": "query_param", "name": "format", "secret": "s"}},  # the auth param
+    ],
+)
+def test_params_the_bridge_adds_are_reserved(changes):
+    assert_invalid(Source, source(**changes), "reserved for the bridge: ['format']")
+
+
+def test_response_format_defaults_to_json_and_allows_text():
+    assert Endpoint.model_validate(endpoint()).response_format == "json"
+    assert Endpoint.model_validate(endpoint(response_format="text")).response_format == "text"
+    assert_invalid(Endpoint, endpoint(response_format="xml"), "response_format")
+
+
+def test_expand_placeholders_fills_known_and_drops_unknown():
+    params = {"tool": "openrx", "email": "${EMAIL}", "both": "${A}-${B}", "n": 3}
+
+    filled, missing = expand_placeholders(params, {"EMAIL": "me@example.org", "A": "a"})
+
+    assert filled == {"tool": "openrx", "email": "me@example.org", "n": 3}
+    assert missing == ["B"]

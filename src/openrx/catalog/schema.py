@@ -16,6 +16,19 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 # so they must be simple, unambiguous identifiers.
 _ID_PATTERN = r"^[a-z][a-z0-9_]*$"
 _PLACEHOLDER = re.compile(r"\{([^{}]*)\}")
+# ${NAME} in a fixed parameter value: filled from configuration at request time, so
+# values like a contact email stay out of git.
+ENV_PLACEHOLDER = re.compile(r"\$\{([^{}]*)\}")
+
+FixedParams = dict[str, str | int]
+
+
+def _check_fixed_params(fixed: FixedParams) -> FixedParams:
+    for name, value in fixed.items():
+        for var in ENV_PLACEHOLDER.findall(str(value)):
+            if not re.fullmatch(r"[A-Z][A-Z0-9_]*", var):
+                raise ValueError(f"fixed param {name!r}: ${{{var}}} must be UPPER_SNAKE_CASE")
+    return fixed
 
 
 class _Strict(BaseModel):
@@ -72,10 +85,17 @@ class Endpoint(_Strict):
     params: tuple[Param, ...] = ()
     response_notes: str = ""
     # The request `catalog capture-examples` sends to record example_response.
+    # Sent on every request to this endpoint and never settable by the caller, e.g.
+    # db=pubmed. Merged over the source's fixed_params.
+    fixed_params: FixedParams = Field(default_factory=dict)
+    # Most APIs answer JSON; some (PubMed abstracts) only plain text.
+    response_format: Literal["json", "text"] = "json"
     example_params: dict[str, str | int | float | bool] = Field(default_factory=dict)
     # Not written in YAML: the loader attaches it from examples/<source>/<id>.json
     # (D-009). Optional so endpoints can be drafted; `catalog lint` requires it.
     example_response: Any = None
+
+    _fixed_params_are_valid = field_validator("fixed_params")(_check_fixed_params)
 
     @field_validator("path")
     @classmethod
@@ -114,6 +134,9 @@ class Endpoint(_Strict):
         required = {p.name for p in self.params if p.required}
         if self.example_params and (absent := sorted(required - set(self.example_params))):
             raise ValueError(f"example_params is missing required parameters: {absent}")
+
+        if clash := sorted(set(self.fixed_params) & set(names)):
+            raise ValueError(f"fixed_params can't also be caller parameters: {clash}")
         return self
 
 
@@ -126,7 +149,11 @@ class Source(_Strict):
     auth: Auth | None = None
     rate_limit: RateLimit
     guide: str = Field(default="", description="Query syntax notes shown by catalog_guide().")
+    # Sent on every request to every endpoint, e.g. NCBI's tool and email.
+    fixed_params: FixedParams = Field(default_factory=dict)
     endpoints: tuple[Endpoint, ...] = Field(min_length=1)
+
+    _fixed_params_are_valid = field_validator("fixed_params")(_check_fixed_params)
 
     @field_validator("base_url")
     @classmethod
@@ -143,8 +170,40 @@ class Source(_Strict):
         ids = [e.id for e in self.endpoints]
         if duplicates := sorted({i for i in ids if ids.count(i) > 1}):
             raise ValueError(f"duplicate endpoint ids: {duplicates}")
+
+        # The bridge adds these itself, so a caller must never be able to set them.
+        reserved = set(self.fixed_params) | ({self.auth.name} if self.auth else set())
+        for endpoint in self.endpoints:
+            if clash := sorted(reserved & {p.name for p in endpoint.params}):
+                raise ValueError(
+                    f"endpoint {endpoint.id!r}: parameters reserved for the bridge: {clash}"
+                )
         return self
 
     def endpoint(self, endpoint_id: str) -> Endpoint | None:
         """Return the endpoint with this id, or None."""
         return next((e for e in self.endpoints if e.id == endpoint_id), None)
+
+    def fixed_params_for(self, endpoint: Endpoint) -> FixedParams:
+        """The fixed parameters for a request to `endpoint`, endpoint values winning."""
+        return {**self.fixed_params, **endpoint.fixed_params}
+
+
+def expand_placeholders(params: FixedParams, env: dict[str, str]) -> tuple[FixedParams, list[str]]:
+    """Fill ${NAME} placeholders from `env`.
+
+    Returns the parameters that could be filled and the names of missing variables;
+    a parameter whose variable is missing is left out rather than sent half-filled.
+    """
+    filled: FixedParams = {}
+    missing: list[str] = []
+    for name, value in params.items():
+        if not isinstance(value, str):
+            filled[name] = value
+            continue
+        absent = [v for v in ENV_PLACEHOLDER.findall(value) if v not in env]
+        if absent:
+            missing.extend(absent)
+            continue
+        filled[name] = ENV_PLACEHOLDER.sub(lambda m: env[m.group(1)], value)
+    return filled, missing

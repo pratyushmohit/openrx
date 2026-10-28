@@ -1,0 +1,190 @@
+{
+  "request": {
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi",
+    "params": {
+      "id": "38000000,38000001",
+      "tool": "openrx",
+      "email": "${OPENRX_CONTACT_EMAIL}",
+      "db": "pubmed",
+      "retmode": "json"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "header": {
+      "type": "esummary",
+      "version": "0.3"
+    },
+    "result": {
+      "uids": [
+        "38000000",
+        "38000001"
+      ],
+      "38000000": {
+        "uid": "38000000",
+        "pubdate": "2023 Nov 16",
+        "epubdate": "2023 Nov 16",
+        "source": "Salud Colect",
+        "authors": [
+          {
+            "name": "Reguera Cabezas M",
+            "authtype": "Author",
+            "clusterid": ""
+          }
+        ],
+        "lastauthor": "Reguera Cabezas M",
+        "title": "[Some present and future ethical dilemmas surrounding advancements in in vitro fertilization.].",
+        "sorttitle": "some present and future ethical dilemmas surrounding advancements in in vitro fertilization",
+        "volume": "19",
+        "issue": "",
+        "pages": "e4462",
+        "lang": [
+          "spa"
+        ],
+        "nlmuniqueid": "101276038",
+        "issn": "1669-2381",
+        "essn": "1851-8265",
+        "pubtype": [
+          "Journal Article",
+          "English Abstract"
+        ],
+        "recordstatus": "PubMed - indexed for MEDLINE",
+        "pubstatus": "3",
+        "articleids": [
+          {
+            "idtype": "pubmed",
+            "idtypen": 1,
+            "value": "38000000"
+          },
+          {
+            "idtype": "pmc",
+            "idtypen": 8,
+            "value": "PMC11930338"
+          }
+        ],
+        "history": [
+          {
+            "pubstatus": "received",
+            "date": "2023/04/14 00:00"
+          },
+          {
+            "pubstatus": "accepted",
+            "date": "2023/10/26 00:00"
+          }
+        ],
+        "references": [],
+        "attributes": [
+          "Has Abstract"
+        ],
+        "pmcrefcount": 122,
+        "fulljournalname": "Salud colectiva",
+        "elocationid": "doi: 10.18294/sc.2023.4462",
+        "doctype": "citation",
+        "srccontriblist": [],
+        "booktitle": "",
+        "medium": "",
+        "edition": "",
+        "publisherlocation": "",
+        "publishername": "",
+        "srcdate": "",
+        "reportnumber": "",
+        "availablefromurl": "",
+        "locationlabel": "",
+        "doccontriblist": [],
+        "docdate": "",
+        "bookname": "",
+        "chapter": "",
+        "sortpubdate": "2023/11/16 00:00",
+        "sortfirstauthor": "Reguera Cabezas M",
+        "vernaculartitle": "Algunos dilemas éticos presentes y futuros ante los avances en fecundación in vitro."
+      },
+      "38000001": {
+        "uid": "38000001",
+        "pubdate": "2024 Mar",
+        "epubdate": "2023 Nov 24",
+        "source": "Anaesth Intensive Care",
+        "authors": [
+          {
+            "name": "Breth-Petersen M",
+            "authtype": "Author",
+            "clusterid": ""
+          },
+          {
+            "name": "Barratt AL",
+            "authtype": "Author",
+            "clusterid": ""
+          }
+        ],
+        "lastauthor": "Pickles KM",
+        "title": "Exploring anaesthetists' views on the carbon footprint of anaesthesia and identifying opportunities and challenges for reducing its impact on the environment.",
+        "sorttitle": "exploring anaesthetists views on the carbon footprint of anaesthesia and identifying opportunities and challenges for reducing its impact on the environment",
+        "volume": "52",
+        "issue": "2",
+        "pages": "91-104",
+        "lang": [
+          "eng"
+        ],
+        "nlmuniqueid": "0342017",
+        "issn": "0310-057X",
+        "essn": "1448-0271",
+        "pubtype": [
+          "Journal Article"
+        ],
+        "recordstatus": "PubMed - indexed for MEDLINE",
+        "pubstatus": "256",
+        "articleids": [
+          {
+            "idtype": "pubmed",
+            "idtypen": 1,
+            "value": "38000001"
+          },
+          {
+            "idtype": "pmc",
+            "idtypen": 8,
+            "value": "PMC10880423"
+          }
+        ],
+        "history": [
+          {
+            "pubstatus": "medline",
+            "date": "2024/02/22 06:43"
+          },
+          {
+            "pubstatus": "pubmed",
+            "date": "2023/11/24 18:42"
+          }
+        ],
+        "references": [],
+        "attributes": [
+          "Has Abstract"
+        ],
+        "pmcrefcount": 32,
+        "fulljournalname": "Anaesthesia and intensive care",
+        "elocationid": "doi: 10.1177/0310057X231212211",
+        "doctype": "citation",
+        "srccontriblist": [],
+        "booktitle": "",
+        "medium": "",
+        "edition": "",
+        "publisherlocation": "",
+        "publishername": "",
+        "srcdate": "",
+        "reportnumber": "",
+        "availablefromurl": "",
+        "locationlabel": "",
+        "doccontriblist": [],
+        "docdate": "",
+        "bookname": "",
+        "chapter": "",
+        "sortpubdate": "2024/03/01 00:00",
+        "sortfirstauthor": "Breth-Petersen M",
+        "vernaculartitle": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+# RxNorm and RxClass, NLM's drug terminology APIs (RxNav).
+# Docs: https://lhncbc.nlm.nih.gov/RxNav/APIs/RxNormAPIs.html
+#       https://lhncbc.nlm.nih.gov/RxNav/APIs/RxClassAPIs.html
+# Checked against the live API on 2026-10-28. Example responses are in
+# ../examples/rxnorm/, written by `openrx catalog capture-examples rxnorm`.
+#
+# Every path ends in .json: without it the API answers in XML.
+# The RxNav drug-interaction API was retired in 2024; interactions come from
+# openFDA labels (openfda.drug_label, drug_interactions).
+
+id: rxnorm
+name: RxNorm
+base_url: https://rxnav.nlm.nih.gov/REST
+
+# NLM allows at most 20 requests per second per IP address.
+# https://documentation.uts.nlm.nih.gov/terms-of-service.html
+rate_limit:
+  per_second: 20
+
+guide: |
+  RxNorm gives every drug concept an id, the RxCUI (a string of digits). Most
+  lookups start by turning a name into an RxCUI.
+
+  Term types (tty) say what kind of concept an RxCUI is:
+    IN   ingredient                  metformin
+    BN   brand name                  Glucophage
+    SCD  clinical drug               metformin hydrochloride 500 MG Oral Tablet
+    SBD  branded drug                ... [Glucophage]
+    MIN  multiple ingredients        metformin / sitagliptin
+
+  Typical flows
+    - Exact name -> RxCUI: rxcui_by_name. Unknown name -> empty idGroup.
+    - Misspelled or partial name -> approximate_match, then CHECK the returned
+      name: the top candidate can be a different drug (e.g. "metfromin" ->
+      merbromin, an antiseptic). Candidates without a name are duplicates.
+    - Ingredient -> brands or products: related with tty "BN" or "SCD SBD".
+    - Drug class: classes_of_drug (e.g. semaglutide -> ATC A10BJ, GLP-1
+      analogues), then class_members to list every drug in that class.
+
+  No match is an empty object (e.g. {"idGroup": {}}) with HTTP 200, not an
+  error.
+
+endpoints:
+  - id: rxcui_by_name
+    path: /rxcui.json
+    description: Find the RxCUI for an exact drug name (ingredient, brand or product).
+    params:
+      - name: name
+        required: true
+        description: Drug name, e.g. metformin or Ozempic.
+        example: &rxcui_name metformin
+      - name: search
+        type: integer
+        description: "0 exact (default); 1 normalized; 2 best match: exact if found, else normalized; 9 approximate."
+        example: 2
+    example_params: {name: *rxcui_name, search: 2}
+    response_notes: >-
+      idGroup.rxnormId is a list of RxCUIs (strings), usually one.
+      idGroup is empty ({}) when nothing matches.
+
+  - id: approximate_match
+    path: /approximateTerm.json
+    description: >-
+      Best-matching drug concepts for a misspelled or partial name, with
+      scores.
+    params:
+      - name: term
+        required: true
+        description: Name to match, typos allowed.
+        example: &approx_term ozempik
+      - name: maxEntries
+        type: integer
+        description: How many candidates to return (default 20).
+        example: 3
+    example_params: {term: *approx_term, maxEntries: 3}
+    response_notes: >-
+      approximateGroup.candidate is a list of {rxcui, name, score, rank,
+      source}, best first. Some candidates have no name (the same concept
+      from another source); use the named ones. Always compare the returned
+      name with what was asked: rank 1 can be the wrong drug.
+
+  - id: related
+    path: /rxcui/{rxcui}/related.json
+    description: >-
+      Concepts related to an RxCUI by term type: an ingredient's brands,
+      clinical drugs, branded drugs, and so on.
+    params:
+      - name: rxcui
+        in: path
+        required: true
+        description: RxCUI to start from.
+        example: &related_rxcui "6809"
+      - name: tty
+        required: true
+        description: "One or more term types separated by spaces, e.g. \"BN\" or \"SCD SBD\"."
+        example: &related_tty BN
+    example_params: {rxcui: *related_rxcui, tty: *related_tty}
+    response_notes: >-
+      relatedGroup.conceptGroup is a list with one entry per requested tty:
+      {tty, conceptProperties: [{rxcui, name, synonym, tty}]}. A tty with no
+      concepts has no conceptProperties key. Brand results include
+      combination products (e.g. metformin -> Janumet, Jentadueto).
+
+  - id: properties
+    path: /rxcui/{rxcui}/allProperties.json
+    description: >-
+      Names, synonyms and cross-reference codes (ATC, DrugBank, ...) for an
+      RxCUI.
+    params:
+      - name: rxcui
+        in: path
+        required: true
+        description: RxCUI to describe.
+        example: &properties_rxcui "6809"
+      - name: prop
+        required: true
+        description: "Property groups separated by spaces: names, codes, attributes, sources, all."
+        example: &properties_prop names codes
+    example_params: {rxcui: *properties_rxcui, prop: *properties_prop}
+    response_notes: >-
+      propConceptGroup.propConcept is a list of {propCategory, propName,
+      propValue}, e.g. CODES / ATC / A10BA02, CODES / DRUGBANK / DB00331,
+      NAMES / RxNorm Name / metformin.
+
+  - id: classes_of_drug
+    path: /rxclass/class/byDrugName.json
+    description: >-
+      Drug classes a drug belongs to (RxClass): ATC classes, mechanisms of
+      action, established pharmacologic classes and more.
+    params:
+      - name: drugName
+        required: true
+        description: Drug name, e.g. semaglutide.
+        example: &class_drug semaglutide
+      - name: relaSource
+        description: "Class source: ATC, MEDRT, DAILYMED (FDA pharmacologic classes), and others."
+        example: &class_source ATC
+    example_params: {drugName: *class_drug, relaSource: *class_source}
+    response_notes: >-
+      rxclassDrugInfoList.rxclassDrugInfo is a list of {minConcept: {rxcui,
+      name, tty}, rxclassMinConceptItem: {classId, className, classType},
+      rela, relaSource}. The same class repeats for each product of the
+      drug; deduplicate on classId.
+
+  - id: class_members
+    path: /rxclass/classMembers.json
+    description: Every drug in a class, e.g. all GLP-1 analogues (ATC A10BJ).
+    params:
+      - name: classId
+        required: true
+        description: Class id from classes_of_drug, e.g. A10BJ.
+        example: &members_class A10BJ
+      - name: relaSource
+        required: true
+        description: Source of the class id, e.g. ATC.
+        example: &members_source ATC
+    example_params: {classId: *members_class, relaSource: *members_source}
+    response_notes: >-
+      drugMemberGroup.drugMember is a list of {minConcept: {rxcui, name,
+      tty}, nodeAttr}. For ATC A10BJ: lixisenatide, albiglutide,
+      dulaglutide, semaglutide, liraglutide, exenatide.

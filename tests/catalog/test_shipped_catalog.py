@@ -1,6 +1,8 @@
 """Checks on the real catalog files in src/openrx/catalog/sources (not test fixtures)."""
 
-from openrx.catalog.loader import lint_catalog, load_catalog
+import json
+
+from openrx.catalog.loader import CATALOG_DIR, lint_catalog, load_catalog
 
 catalog = load_catalog()
 
@@ -52,3 +54,29 @@ def test_every_endpoint_has_example_params():
     for source in catalog:
         for endpoint in source.endpoints:
             assert endpoint.example_params, f"{source.id}.{endpoint.id}: no example_params"
+
+
+def test_shipped_sources():
+    assert [s.id for s in catalog] == ["dailymed", "openfda", "pubmed", "rxnorm"]
+
+
+def test_pubmed_identifies_itself_without_committing_an_email():
+    pubmed = catalog.source("pubmed")
+    assert pubmed is not None
+
+    assert pubmed.fixed_params == {"tool": "openrx", "email": "${OPENRX_CONTACT_EMAIL}"}
+
+
+def test_no_real_email_address_in_any_example_request():
+    # Example files are committed; fixed params must be recorded unfilled.
+    for path in CATALOG_DIR.glob("examples/*/*.json"):
+        params = json.loads(path.read_text(encoding="utf-8"))["request"]["params"]
+        for name, value in params.items():
+            assert "@" not in str(value), f"{path.name}: {name} looks like a real address"
+
+
+def test_text_endpoints_have_text_examples():
+    for source in catalog:
+        for endpoint in source.endpoints:
+            if endpoint.response_format == "text":
+                assert isinstance(endpoint.example_response, str), f"{source.id}.{endpoint.id}"

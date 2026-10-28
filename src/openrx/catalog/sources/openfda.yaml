@@ -110,8 +110,10 @@ endpoints:
       adverse_reactions[], drug_interactions[], indications_and_usage[],
       contraindications[]. A section is absent when the label has none.
       openfda.* has generic_name, brand_name, manufacturer_name, rxcui,
-      spl_set_id. One drug can have many labels (one per manufacturer and
-      version); effective_time is YYYYMMDD. drug_interactions is the place to
+      spl_set_id. set_id (top level) is the label's SPL setid, the same id
+      DailyMed uses; search set_id:"<setid>" to find a label from DailyMed
+      (openfda.spl_set_id is missing on most labels). One drug can have many
+      labels (one per manufacturer and version); effective_time is YYYYMMDD. drug_interactions is the place to
       look for interactions (the RxNav interaction API was retired in 2024).
 
   - id: drug_enforcement

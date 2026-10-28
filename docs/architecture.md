@@ -142,7 +142,9 @@ enforcement on.
 | Lambda build (`make build`) | M0 | Built |
 | Package + CLI skeleton | M1 | Built |
 | Catalog schema | M1 | Built |
-| Catalog loader, lint, five sources, `catalog_*()` | M1 | In progress |
+| Catalog loader, lint, example capture | M1 | Built |
+| Catalog sources: openFDA, PubMed, RxNorm, DailyMed (ClinicalTrials.gov next) | M1 | 4 of 5 built |
+| `catalog_*()` functions | M1 | Planned |
 | Bridge | M2 | Planned |
 | search-runner, execute-runner | M3 | Planned |
 | MCP server, LangGraph agent | M4 | Planned |

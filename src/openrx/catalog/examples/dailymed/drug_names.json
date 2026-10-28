@@ -1,0 +1,39 @@
+{
+  "request": {
+    "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/drugnames.json",
+    "params": {
+      "drug_name": "metformin",
+      "pagesize": 3
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "data": [
+      {
+        "name_type": "B",
+        "drug_name": "ALOGLIPTIN AND METFORMIN HYDROCHLORIDE"
+      },
+      {
+        "name_type": "G",
+        "drug_name": "ALOGLIPTIN AND METFORMIN HYDROCHLORIDE"
+      }
+    ],
+    "metadata": {
+      "db_published_date": "Oct 26, 2026 09:17:45PM EST",
+      "elements_per_page": 3,
+      "current_url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/drugnames.json?drug_name=metformin&pagesize=3",
+      "next_page_url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/drugnames.json?drug_name=metformin&pagesize=3&page=2",
+      "total_elements": 60,
+      "total_pages": 20,
+      "current_page": 1,
+      "previous_page": "null",
+      "previous_page_url": "null",
+      "next_page": 2
+    }
+  }
+}

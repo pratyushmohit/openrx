@@ -1,0 +1,43 @@
+{
+  "request": {
+    "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json",
+    "params": {
+      "drug_name": "metformin",
+      "pagesize": 3
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "data": [
+      {
+        "spl_version": 4,
+        "published_date": "Oct 26, 2026",
+        "title": "METFORMIN HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]",
+        "setid": "bfd6ec0f-8264-4877-aa6d-f347f53bc426"
+      },
+      {
+        "spl_version": 12,
+        "published_date": "Oct 23, 2026",
+        "title": "PIOGLITAZONE HYDROCHLORIDE AND METFORMIN HYDROCHLORIDE TABLET, FILM COATED [RISING PHARMA HOLDINGS, INC.]",
+        "setid": "8d252dab-e868-42d3-95ea-69423d909e84"
+      }
+    ],
+    "metadata": {
+      "db_published_date": "Oct 26, 2026 09:17:45PM EST",
+      "elements_per_page": 3,
+      "current_url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=metformin&pagesize=3",
+      "next_page_url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=metformin&pagesize=3&page=2",
+      "total_elements": 558,
+      "total_pages": 186,
+      "current_page": 1,
+      "previous_page": "null",
+      "previous_page_url": "null",
+      "next_page": 2
+    }
+  }
+}

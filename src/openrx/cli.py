@@ -83,6 +83,8 @@ def catalog_capture_examples(
         results = capture_source(source, client, root=directory, only=endpoint)
 
     for r in results:
+        for warning in r.warnings:
+            typer.echo(f"note   {source_id}.{r.endpoint_id}: {warning}", err=True)
         if r.error:
             typer.echo(f"FAILED {source_id}.{r.endpoint_id}: {r.error}", err=True)
         else:
