@@ -20,16 +20,17 @@ from typing import Any, Literal, Protocol, cast
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
+from openrx.mcp_server.descriptions import (
+    EXECUTE_DESCRIPTION,
+    INSTRUCTIONS,
+    SEARCH_DESCRIPTION,
+)
 from openrx.runner.requests import LambdaClient
 from openrx.runner.results import ToolResult
 
 Tool = Literal["search", "execute"]
 
 SERVER_NAME = "openrx"
-# Placeholders: piece 2 of M4 writes the real descriptions and instructions.
-INSTRUCTIONS = "Public FDA and NIH drug data. Use search to find endpoints, then execute."
-SEARCH_DESCRIPTION = "Run Python against the API catalog to find endpoints."
-EXECUTE_DESCRIPTION = "Run Python that calls the APIs through request()."
 
 
 class Runners(Protocol):

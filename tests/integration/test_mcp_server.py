@@ -13,6 +13,7 @@ import pytest
 from fastmcp import Client
 from fastmcp.client.transports import StdioTransport
 
+from openrx.mcp_server.descriptions import EXECUTE_EXAMPLE, SEARCH_EXAMPLE
 from openrx.mcp_server.server import server_from_environment
 
 pytestmark = pytest.mark.integration
@@ -66,3 +67,24 @@ def test_openrx_serve_works_over_stdio():
 
     assert search["result"][0] == "openfda.drug_event"
     assert execute["result"] == ["6809"]
+
+
+def test_the_examples_in_the_tool_descriptions_work(monkeypatch):
+    # The model copies these; they must run and return what they promise.
+    for key, value in FLOCI_ENV.items():
+        monkeypatch.setenv(key, value)
+    server = server_from_environment()
+
+    async def go():
+        async with Client(server) as client:
+            search = await client.call_tool("search", {"code": SEARCH_EXAMPLE})
+            execute = await client.call_tool("execute", {"code": EXECUTE_EXAMPLE})
+            return search.structured_content, execute.structured_content
+
+    search, execute = asyncio.run(go())
+
+    assert search is not None and search["error"] is None
+    assert search["result"]["path"] == "/drug/event.json"
+    assert execute is not None and execute["error"] is None
+    assert len(execute["result"]) == 5
+    assert all(isinstance(term, str) and count > 0 for term, count in execute["result"])
