@@ -21,7 +21,7 @@ flowchart LR
   ollama["Ollama<br/>qwen3.5 on RX 9070 XT"]
 
   subgraph host["Host: our code"]
-    server["OpenRx MCP server<br/>stdio · fastmcp<br/>tools: search(code), execute(code)<br/><i>M4</i>"]
+    server["OpenRx MCP server<br/>stdio · fastmcp<br/>tools: search(code), execute(code)"]
   end
 
   subgraph floci["Floci 2.3.0 · local AWS · 127.0.0.1:4566 · IAM enforced"]
@@ -49,8 +49,8 @@ flowchart LR
 
   classDef built stroke:#333,stroke-width:1.5px
   classDef planned stroke:#333,stroke-width:1.5px,stroke-dasharray:5 4
-  class secrets,bedrock,ollama,apis,bridge,search,execute built
-  class client,server planned
+  class secrets,bedrock,ollama,apis,bridge,search,execute,server built
+  class client planned
   style sandbox fill:#fbf1e1,stroke:#a8640a,color:#111
   style creds fill:#fbe9eb,stroke:#ad2a3c,color:#111
   style floci fill:#eef1f6,stroke:#586170,color:#111
@@ -149,5 +149,6 @@ enforcement on.
 | search-runner | M3 | Built |
 | execute-runner | M3 | Built |
 | Sandbox-escape suite (NFR-2) and end-to-end secret-exposure check (§6.5) | M3 | **Open: deferred** |
-| MCP server, LangGraph agent | M4 | Planned |
+| MCP server (`openrx serve`, two tools) | M4 | Built (descriptions: piece 2) |
+| LangGraph agent, `openrx ask` | M4 | Planned |
 | Eval harness and report | M5 | Planned |

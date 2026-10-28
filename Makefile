@@ -20,7 +20,7 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge bench-runners deploy up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge bench-runners deploy serve up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -74,6 +74,9 @@ ps: ## Show container status
 build: ## Build a Lambda zip: make build LAMBDA=<name> (from lambdas/<name>/)
 	@test -n "$(LAMBDA)" || { echo "usage: make build LAMBDA=<name>"; exit 1; }
 	bash scripts/build_lambda.sh $(LAMBDA)
+
+serve: ## Run the OpenRx MCP server over stdio, against Floci
+	uv run openrx serve
 
 # Terraform needs the zips to exist (it hashes them), so build before applying.
 deploy: ## Build the Lambda zips and apply Terraform to Floci

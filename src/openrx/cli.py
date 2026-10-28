@@ -145,3 +145,11 @@ def catalog_import_openapi(
         typer.echo(f"FAILED: {e}", err=True)
         raise typer.Exit(code=1) from None
     typer.echo(f"wrote  {out}")
+
+
+@app.command("serve")
+def serve() -> None:
+    """Run the OpenRx MCP server over stdio (for an MCP client or the agent)."""
+    from openrx.mcp_server.server import server_from_environment
+
+    server_from_environment().run()
