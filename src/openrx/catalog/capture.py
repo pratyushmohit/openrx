@@ -24,28 +24,10 @@ import httpx
 
 from openrx.catalog.loader import CATALOG_DIR, example_path
 from openrx.catalog.schema import Endpoint, Source, expand_placeholders
+from openrx.catalog.trim import MAX_ITEMS, MAX_STRING, trim
 
-# Small enough to read at a glance, big enough to show the shape.
-MAX_ITEMS = 2
-MAX_STRING = 200
 # A text response (e.g. an abstract) is one string, so it may be longer.
 MAX_TEXT = 2000
-
-
-def trim(value: Any, max_items: int = MAX_ITEMS, max_string: int = MAX_STRING) -> Any:
-    """Shrink a JSON value but keep its shape.
-
-    Lists keep their first `max_items` entries, strings are cut to `max_string`
-    characters (ending in "…"), and objects keep every key: the field names are the
-    most useful part of an example.
-    """
-    if isinstance(value, str):
-        return value if len(value) <= max_string else value[:max_string] + "…"
-    if isinstance(value, list):
-        return [trim(v, max_items, max_string) for v in value[:max_items]]
-    if isinstance(value, dict):
-        return {k: trim(v, max_items, max_string) for k, v in value.items()}
-    return value
 
 
 def example_request(source: Source, endpoint: Endpoint) -> tuple[str, dict[str, Any]]:

@@ -13,7 +13,7 @@ import math
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
-from openrx.catalog.capture import trim
+from openrx.catalog.trim import trim
 
 MAX_RESULT_CHARS = 40_000
 MAX_STDOUT_CHARS = 10_000

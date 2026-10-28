@@ -324,6 +324,11 @@ concurrency (TooManyRequestsException), so on AWS the runner must retry throttle
 bridge invokes; boto3's default retries cover a few, which the runner (M3) should not
 rely on silently.
 
+*Update 2026-10-28 (M3):* Monty's `max_suspensions` counts every call into the host,
+`catalog_*()` included, so it can't express "50 `request()` calls". The runner's own
+`request()` wrapper counts those exactly and is the primary budget; `max_suspensions`
+stays as an outer cap on all external calls (200), and the bridge as the backup.
+
 ---
 
 ## D-013: Replay fixtures live in S3
@@ -350,3 +355,27 @@ recording would need a separate local path.
 **Cost:** one more AWS service in Terraform and on the bridge's IAM role. `make up` starts
 Floci clean (D-003), so recorded fixtures must be exported to and re-imported from the
 repo (a `make` target, M5) to survive restarts.
+
+---
+
+## D-014: request() is an async external function
+
+**Date:** 2026-10-28 · **Status:** Accepted (README open question 1)
+
+**Context:** Monty offers two ways for sandboxed code to call host functions: async
+external functions (AsyncMonty, `await request(...)`), or a pause-and-resume loop
+where the host answers each call in turn.
+
+**Decision:** async. `request()` is a coroutine; `catalog_*()` stay plain functions.
+
+**Why:** measured in the runner Lambda (M3 piece 3, probe with a fake 0.2 s request):
+top-level `await` works, and `asyncio.gather` of three requests took 214 ms instead of
+600 ms, so independent calls really overlap. Fan-out tasks (README CUJ-2) can be
+written naturally. The type checker also understands the async stub.
+
+**Cost:** the Lambda handler is synchronous while AsyncMonty's pool belongs to an
+event loop, so `SandboxHost` keeps one loop per container (a fresh `asyncio.run()` per
+invocation would leave the pool on a closed loop), and the pool has to be created
+inside that running loop. With a single bridge container (D-012), parallel requests
+still queue at the bridge; the gain is natural code and overlapping waits, not more
+upstream throughput.

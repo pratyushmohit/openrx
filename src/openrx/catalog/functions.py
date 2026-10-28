@@ -14,9 +14,9 @@ from collections import Counter
 from collections.abc import Callable, Iterable
 from typing import Any
 
-from openrx.catalog.capture import trim
 from openrx.catalog.loader import Catalog
 from openrx.catalog.schema import Endpoint, Source
+from openrx.catalog.trim import trim
 
 # Default size of the example in catalog_endpoint(): enough to show every field name,
 # small enough not to fill the model's context (README goal G2).
@@ -61,6 +61,8 @@ def catalog_endpoint(
     The example is shortened (one item per list, short strings) unless `full_example`
     is true; it still shows every field name.
     """
+    _require("id", id, str)
+    _require("full_example", full_example, bool)
     src = _source(catalog, source)
     endpoint = src.endpoint(id)
     if endpoint is None:
@@ -108,6 +110,10 @@ def catalog_find(catalog: Catalog, text: str, limit: int = FIND_LIMIT) -> list[d
     across the catalog. Ties are broken by source and endpoint id, so the same query
     always gives the same order.
     """
+    _require("text", text, str)
+    _require("limit", limit, int)
+    if not 1 <= limit <= 100:
+        raise ValueError(f"limit must be between 1 and 100, got {limit}")
     words = _words(text)
     if not words:
         raise ValueError("catalog_find needs at least one search word, e.g. 'adverse events'")
@@ -154,7 +160,14 @@ def catalog_functions(catalog: Catalog) -> dict[str, Callable[..., Any]]:
     }
 
 
+def _require(name: str, value: Any, kind: type) -> None:
+    # Model code may run without the type checker, so check here too (FR-9).
+    if not isinstance(value, kind) or (kind is int and isinstance(value, bool)):
+        raise ValueError(f"{name} must be a {kind.__name__}, got {type(value).__name__}")
+
+
 def _source(catalog: Catalog, source_id: str) -> Source:
+    _require("source", source_id, str)
     source = catalog.source(source_id)
     if source is None:
         known = ", ".join(s.id for s in catalog)

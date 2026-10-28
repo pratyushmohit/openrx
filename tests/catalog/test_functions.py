@@ -248,3 +248,25 @@ def test_catalog_functions_are_bound_and_named_as_model_code_sees_them():
     assert fns["catalog_endpoint"]("fda", "draft")["id"] == "draft"
     assert fns["catalog_find"]("abstracts", limit=1)[0]["id"] == "abstracts"
     assert fns["catalog_guide"]("fda") == "Use quotes."
+
+
+@pytest.mark.parametrize(
+    ("call", "message"),
+    [
+        (lambda: catalog_find(SMALL, "x", limit="ten"), "limit must be a int, got str"),  # pyright: ignore[reportArgumentType]
+        (lambda: catalog_find(SMALL, "x", limit=True), "limit must be a int, got bool"),
+        (lambda: catalog_find(SMALL, "x", limit=0), "between 1 and 100"),
+        (lambda: catalog_find(SMALL, 42), "text must be a str"),  # pyright: ignore[reportArgumentType]
+        (lambda: catalog_endpoint(SMALL, "fda", 3), "id must be a str"),  # pyright: ignore[reportArgumentType]
+        (
+            lambda: catalog_endpoint(SMALL, "fda", "draft", full_example="yes"),  # pyright: ignore[reportArgumentType]
+            "full_example must be a bool",
+        ),
+        (lambda: catalog_guide(SMALL, ["fda"]), "source must be a str"),  # pyright: ignore[reportArgumentType]
+        (lambda: catalog_endpoints(SMALL, 1), "source must be a str"),  # pyright: ignore[reportArgumentType]
+    ],
+)
+def test_bad_arguments_get_a_clear_message(call, message):
+    # Model code can run without the type checker, so the functions check too.
+    with pytest.raises(ValueError, match=message):
+        call()
