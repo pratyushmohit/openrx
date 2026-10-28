@@ -1,0 +1,26 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_shortages",
+  "url": "https://api.fda.gov/drug/shortages.json",
+  "params": {
+   "search": "generic_name:\"amoxicillin\" AND status:\"Current\"",
+   "limit": 1
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:25+00:00",
+ "response": {
+  "status": 404,
+  "data": {
+   "error": {
+    "code": "NOT_FOUND",
+    "message": "No matches found!"
+   }
+  },
+  "bytes": 80,
+  "truncated": false,
+  "note": null
+ }
+}

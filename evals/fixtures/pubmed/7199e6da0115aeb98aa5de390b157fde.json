@@ -1,0 +1,44 @@
+{
+ "version": 1,
+ "request": {
+  "source": "pubmed",
+  "endpoint": "search",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+  "params": {
+   "term": "semaglutide",
+   "retmax": 0
+  },
+  "fixed": {
+   "tool": "openrx",
+   "email": "${OPENRX_CONTACT_EMAIL}",
+   "db": "pubmed",
+   "retmode": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:18+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "header": {
+    "type": "esearch",
+    "version": "0.3"
+   },
+   "esearchresult": {
+    "count": "5979",
+    "retmax": "0",
+    "retstart": "0",
+    "idlist": [],
+    "translationset": [
+     {
+      "from": "semaglutide",
+      "to": "\"semaglutide\"[Supplementary Concept] OR \"semaglutide\"[All Fields] OR \"semaglutide\"[MeSH Terms]"
+     }
+    ],
+    "querytranslation": "\"semaglutide\"[Supplementary Concept] OR \"semaglutide\"[All Fields] OR \"semaglutide\"[MeSH Terms]"
+   }
+  },
+  "bytes": 391,
+  "truncated": false,
+  "note": null
+ }
+}

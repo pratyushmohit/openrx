@@ -1,0 +1,22 @@
+{
+ "version": 1,
+ "request": {
+  "source": "rxnorm",
+  "endpoint": "rxcui_by_name",
+  "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json",
+  "params": {
+   "name": "aspirin-02fce1"
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T13:06:28+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "idGroup": {}
+  },
+  "bytes": 14,
+  "truncated": false,
+  "note": null
+ }
+}

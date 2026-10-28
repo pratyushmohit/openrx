@@ -20,7 +20,7 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge bench-runners bench-mcp deploy serve up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge bench-runners bench-mcp deploy serve eval-record fixtures-export fixtures-import up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -77,6 +77,15 @@ ps: ## Show container status
 build: ## Build a Lambda zip: make build LAMBDA=<name> (from lambdas/<name>/)
 	@test -n "$(LAMBDA)" || { echo "usage: make build LAMBDA=<name>"; exit 1; }
 	bash scripts/build_lambda.sh $(LAMBDA)
+
+eval-record: ## Record the data every eval task needs, then export it to evals/fixtures/
+	uv run openrx eval record
+
+fixtures-export: ## Copy recorded fixtures from Floci's S3 into evals/fixtures/
+	uv run openrx eval fixtures export
+
+fixtures-import: ## Upload evals/fixtures/ into Floci's S3 (after make up && make deploy)
+	uv run openrx eval fixtures import
 
 serve: ## Run the OpenRx MCP server over stdio, against Floci
 	uv run openrx serve

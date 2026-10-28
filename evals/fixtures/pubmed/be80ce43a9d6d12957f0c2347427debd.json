@@ -1,0 +1,44 @@
+{
+ "version": 1,
+ "request": {
+  "source": "pubmed",
+  "endpoint": "search",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+  "params": {
+   "term": "lixisenatide",
+   "retmax": 0
+  },
+  "fixed": {
+   "tool": "openrx",
+   "email": "${OPENRX_CONTACT_EMAIL}",
+   "db": "pubmed",
+   "retmode": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:18+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "header": {
+    "type": "esearch",
+    "version": "0.3"
+   },
+   "esearchresult": {
+    "count": "762",
+    "retmax": "0",
+    "retstart": "0",
+    "idlist": [],
+    "translationset": [
+     {
+      "from": "lixisenatide",
+      "to": "\"lixisenatide\"[Supplementary Concept] OR \"lixisenatide\"[All Fields]"
+     }
+    ],
+    "querytranslation": "\"lixisenatide\"[Supplementary Concept] OR \"lixisenatide\"[All Fields]"
+   }
+  },
+  "bytes": 333,
+  "truncated": false,
+  "note": null
+ }
+}

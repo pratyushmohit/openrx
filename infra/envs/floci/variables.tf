@@ -7,13 +7,13 @@ variable "floci_endpoint" {
 }
 
 variable "fixture_mode" {
-  description = "Bridge fixture mode: live, record or replay (README FR-11)."
+  description = "Bridge fixture mode: live, record, replay or replay_or_record (README FR-11)."
   type        = string
   default     = "live"
 
   validation {
-    condition     = contains(["live", "record", "replay"], var.fixture_mode)
-    error_message = "fixture_mode must be live, record or replay."
+    condition     = contains(["live", "record", "replay", "replay_or_record"], var.fixture_mode)
+    error_message = "fixture_mode must be live, record, replay or replay_or_record."
   }
 }
 

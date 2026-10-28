@@ -1,0 +1,50 @@
+{
+ "version": 1,
+ "request": {
+  "source": "rxnorm",
+  "endpoint": "approximate_match",
+  "url": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json",
+  "params": {
+   "term": "ozempik",
+   "maxEntries": 3
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:25+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "approximateGroup": {
+    "inputTerm": null,
+    "candidate": [
+     {
+      "rxcui": "1991307",
+      "rxaui": "12628738",
+      "score": "8.341192245483398",
+      "rank": "1",
+      "source": "MMSL"
+     },
+     {
+      "rxcui": "1991307",
+      "rxaui": "9706750",
+      "score": "8.341192245483398",
+      "rank": "1",
+      "name": "Ozempic",
+      "source": "RXNORM"
+     },
+     {
+      "rxcui": "2736942",
+      "rxaui": "13042224",
+      "score": "8.2316037273407",
+      "rank": "3",
+      "name": "Ozempic Pill",
+      "source": "RXNORM"
+     }
+    ]
+   }
+  },
+  "bytes": 375,
+  "truncated": false,
+  "note": null
+ }
+}

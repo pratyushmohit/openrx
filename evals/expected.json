@@ -1,0 +1,95 @@
+{
+  "amoxicillin_shortage": false,
+  "class1_recall_firms_2025": [
+    "SAINI TRADE INC",
+    "DermaRite Industries, LLC",
+    "Endo USA, Inc."
+  ],
+  "glitazone_boxed_warnings": [
+    "pioglitazone",
+    "metformin"
+  ],
+  "glp1_class_members": [
+    "albiglutide",
+    "dulaglutide",
+    "exenatide",
+    "liraglutide",
+    "lixisenatide",
+    "semaglutide"
+  ],
+  "glp1_paper_ranking": [
+    "liraglutide",
+    "semaglutide",
+    "exenatide",
+    "dulaglutide",
+    "lixisenatide",
+    "albiglutide"
+  ],
+  "label_versions_count": 4,
+  "metformin_dosage_forms": [
+    "TABLET, FILM COATED",
+    "TABLET",
+    "TABLET, EXTENDED RELEASE"
+  ],
+  "metformin_label_count": 558,
+  "metformin_reports_2023": 26629,
+  "metformin_rxcui": [
+    "6809"
+  ],
+  "metformin_top_reactions": [
+    "NAUSEA",
+    "DIARRHOEA",
+    "BLOOD GLUCOSE INCREASED",
+    "DRUG INEFFECTIVE",
+    "FATIGUE"
+  ],
+  "misspelled_ozempic_rxcui": [
+    "1991307"
+  ],
+  "recruiting_obesity_trials": 1137,
+  "semaglutide_atc_class": [
+    "A10BJ"
+  ],
+  "semaglutide_pancreatitis_papers": 286,
+  "semaglutide_papers_recent": 2614,
+  "semaglutide_phase3_sponsors": [
+    "Novo Nordisk A/S",
+    "Eli Lilly and Company",
+    "University of Colorado, Denver"
+  ],
+  "shortage_categories": [
+    "Anesthesia",
+    "Pediatric",
+    "Psychiatry"
+  ],
+  "sitagliptin_brand_names": [
+    "Brynovin",
+    "Janumet",
+    "Januvia",
+    "Steglujan",
+    "Zituvimet",
+    "Zituvio"
+  ],
+  "statins_serious_reports": [
+    "simvastatin",
+    "atorvastatin",
+    "rosuvastatin"
+  ],
+  "trial_phase_values": [
+    "NA",
+    "EARLY_PHASE1",
+    "PHASE1",
+    "PHASE2",
+    "PHASE3",
+    "PHASE4"
+  ],
+  "trial_sponsor_drug_label": true,
+  "trial_status_and_sponsor": [
+    "COMPLETED",
+    "Novo Nordisk A/S"
+  ],
+  "warfarin_boxed_warning": [
+    "bleeding"
+  ],
+  "warfarin_death_share": 12.7
+}

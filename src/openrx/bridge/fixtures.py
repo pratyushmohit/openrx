@@ -5,6 +5,9 @@ Modes, set by OPENRX_FIXTURE_MODE:
     live     call the API (default)
     record   call the API and save its answer to S3
     replay   answer from S3 only; a missing fixture is an error, never a live call
+    replay_or_record
+             replay when a fixture exists, otherwise call the API and save it; for
+             evals, where the agent's requests vary from run to run (M5 decision)
 
 Fixtures are stored at fixtures/<source>/<fingerprint>.json (see build.fingerprint).
 Every real answer is recorded, whatever its status, because tasks can depend on a 404
@@ -25,8 +28,8 @@ from openrx.bridge.build import OutgoingRequest
 from openrx.bridge.upstream import RETRY_STATUSES, UpstreamResult
 from openrx.bridge.validate import ValidRequest
 
-Mode = Literal["live", "record", "replay"]
-MODES: tuple[Mode, ...] = ("live", "record", "replay")
+Mode = Literal["live", "record", "replay", "replay_or_record"]
+MODES: tuple[Mode, ...] = ("live", "record", "replay", "replay_or_record")
 FIXTURE_VERSION = 1
 
 
@@ -123,8 +126,10 @@ def respond(
     """
     if mode == "replay":
         return _replay(out, store, clock)
+    if mode == "replay_or_record" and store.get(fixture_key(out)) is not None:
+        return _replay(out, store, clock)
     result = call_upstream()
-    if mode == "record" and result.status not in RETRY_STATUSES:
+    if mode in ("record", "replay_or_record") and result.status not in RETRY_STATUSES:
         store.put(fixture_key(out), _encode(req, out, result))
     return result
 

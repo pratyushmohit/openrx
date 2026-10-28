@@ -164,7 +164,7 @@ def test_parse_mode(raw, mode):
 
 
 def test_unknown_mode_is_refused():
-    with pytest.raises(ValueError, match="live, record, replay"):
+    with pytest.raises(ValueError, match="live, record, replay, replay_or_record"):
         parse_mode("offline")
 
 
@@ -207,3 +207,29 @@ def test_s3_store_other_errors_are_raised():
 
     with pytest.raises(ClientError):
         store.get("fixtures/x.json")
+
+
+# --- replay_or_record (evals, M5) -----------------------------------------------
+
+
+def test_replay_or_record_records_a_miss_then_replays_it():
+    store, upstream = MemoryStore(), Upstream(data={"count": "9"})
+
+    first = respond("replay_or_record", REQ, OUT, store, upstream)
+    second = respond("replay_or_record", REQ, OUT, store, upstream)
+
+    assert upstream.calls == 1  # the second answer came from the fixture
+    assert first.data == second.data == {"count": "9"}
+    assert second.attempts == 0 and len(store.objects) == 1
+
+
+def test_replay_or_record_does_not_freeze_temporary_failures():
+    store = MemoryStore()
+
+    respond("replay_or_record", REQ, OUT, store, Upstream(status=503))
+
+    assert store.objects == {}
+
+
+def test_parse_mode_accepts_replay_or_record():
+    assert parse_mode("replay_or_record") == "replay_or_record"

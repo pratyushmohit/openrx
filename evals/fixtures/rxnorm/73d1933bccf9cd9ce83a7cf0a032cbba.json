@@ -1,0 +1,152 @@
+{
+ "version": 1,
+ "request": {
+  "source": "rxnorm",
+  "endpoint": "class_members",
+  "url": "https://rxnav.nlm.nih.gov/REST/rxclass/classMembers.json",
+  "params": {
+   "classId": "A10BJ",
+   "relaSource": "ATC"
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:11+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "drugMemberGroup": {
+    "drugMember": [
+     {
+      "minConcept": {
+       "rxcui": "1440051",
+       "name": "lixisenatide",
+       "tty": "IN"
+      },
+      "nodeAttr": [
+       {
+        "attrName": "SourceId",
+        "attrValue": "A10BJ03"
+       },
+       {
+        "attrName": "SourceName",
+        "attrValue": "lixisenatide"
+       },
+       {
+        "attrName": "Relation",
+        "attrValue": "DIRECT"
+       }
+      ]
+     },
+     {
+      "minConcept": {
+       "rxcui": "1534763",
+       "name": "albiglutide",
+       "tty": "IN"
+      },
+      "nodeAttr": [
+       {
+        "attrName": "SourceId",
+        "attrValue": "A10BJ04"
+       },
+       {
+        "attrName": "SourceName",
+        "attrValue": "albiglutide"
+       },
+       {
+        "attrName": "Relation",
+        "attrValue": "DIRECT"
+       }
+      ]
+     },
+     {
+      "minConcept": {
+       "rxcui": "1551291",
+       "name": "dulaglutide",
+       "tty": "IN"
+      },
+      "nodeAttr": [
+       {
+        "attrName": "SourceId",
+        "attrValue": "A10BJ05"
+       },
+       {
+        "attrName": "SourceName",
+        "attrValue": "dulaglutide"
+       },
+       {
+        "attrName": "Relation",
+        "attrValue": "DIRECT"
+       }
+      ]
+     },
+     {
+      "minConcept": {
+       "rxcui": "1991302",
+       "name": "semaglutide",
+       "tty": "IN"
+      },
+      "nodeAttr": [
+       {
+        "attrName": "SourceId",
+        "attrValue": "A10BJ06"
+       },
+       {
+        "attrName": "SourceName",
+        "attrValue": "semaglutide"
+       },
+       {
+        "attrName": "Relation",
+        "attrValue": "DIRECT"
+       }
+      ]
+     },
+     {
+      "minConcept": {
+       "rxcui": "475968",
+       "name": "liraglutide",
+       "tty": "IN"
+      },
+      "nodeAttr": [
+       {
+        "attrName": "SourceId",
+        "attrValue": "A10BJ02"
+       },
+       {
+        "attrName": "SourceName",
+        "attrValue": "liraglutide"
+       },
+       {
+        "attrName": "Relation",
+        "attrValue": "DIRECT"
+       }
+      ]
+     },
+     {
+      "minConcept": {
+       "rxcui": "60548",
+       "name": "exenatide",
+       "tty": "IN"
+      },
+      "nodeAttr": [
+       {
+        "attrName": "SourceId",
+        "attrValue": "A10BJ01"
+       },
+       {
+        "attrName": "SourceName",
+        "attrValue": "exenatide"
+       },
+       {
+        "attrName": "Relation",
+        "attrValue": "DIRECT"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "bytes": 1369,
+  "truncated": false,
+  "note": null
+ }
+}

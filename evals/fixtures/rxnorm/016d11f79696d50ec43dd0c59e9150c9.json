@@ -1,0 +1,85 @@
+{
+ "version": 1,
+ "request": {
+  "source": "rxnorm",
+  "endpoint": "related",
+  "url": "https://rxnav.nlm.nih.gov/REST/rxcui/593411/related.json",
+  "params": {
+   "tty": "BN"
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:12+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "relatedGroup": {
+    "rxcui": null,
+    "conceptGroup": [
+     {
+      "tty": "BN",
+      "conceptProperties": [
+       {
+        "rxcui": "1372738",
+        "name": "Janumet",
+        "synonym": "",
+        "tty": "BN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+       },
+       {
+        "rxcui": "1992827",
+        "name": "Steglujan",
+        "synonym": "",
+        "tty": "BN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+       },
+       {
+        "rxcui": "2670442",
+        "name": "Zituvio",
+        "synonym": "",
+        "tty": "BN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+       },
+       {
+        "rxcui": "2677156",
+        "name": "Zituvimet",
+        "synonym": "",
+        "tty": "BN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+       },
+       {
+        "rxcui": "2716486",
+        "name": "Brynovin",
+        "synonym": "",
+        "tty": "BN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+       },
+       {
+        "rxcui": "638596",
+        "name": "Januvia",
+        "synonym": "",
+        "tty": "BN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "bytes": 723,
+  "truncated": false,
+  "note": null
+ }
+}

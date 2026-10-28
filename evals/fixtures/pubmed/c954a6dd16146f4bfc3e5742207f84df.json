@@ -1,0 +1,44 @@
+{
+ "version": 1,
+ "request": {
+  "source": "pubmed",
+  "endpoint": "search",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+  "params": {
+   "term": "liraglutide",
+   "retmax": 0
+  },
+  "fixed": {
+   "tool": "openrx",
+   "email": "${OPENRX_CONTACT_EMAIL}",
+   "db": "pubmed",
+   "retmode": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:17+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "header": {
+    "type": "esearch",
+    "version": "0.3"
+   },
+   "esearchresult": {
+    "count": "6016",
+    "retmax": "0",
+    "retstart": "0",
+    "idlist": [],
+    "translationset": [
+     {
+      "from": "liraglutide",
+      "to": "\"liraglutid\"[All Fields] OR \"liraglutide\"[Supplementary Concept] OR \"liraglutide\"[All Fields] OR \"liraglutide\"[MeSH Terms] OR \"liraglutide's\"[All Fields]"
+     }
+    ],
+    "querytranslation": "\"liraglutid\"[All Fields] OR \"liraglutide\"[Supplementary Concept] OR \"liraglutide\"[All Fields] OR \"liraglutide\"[MeSH Terms] OR \"liraglutide s\"[All Fields]"
+   }
+  },
+  "bytes": 517,
+  "truncated": false,
+  "note": null
+ }
+}

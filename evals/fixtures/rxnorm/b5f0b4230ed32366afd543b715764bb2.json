@@ -1,0 +1,26 @@
+{
+ "version": 1,
+ "request": {
+  "source": "rxnorm",
+  "endpoint": "rxcui_by_name",
+  "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json",
+  "params": {
+   "name": "metformin"
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:15:01+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "idGroup": {
+    "rxnormId": [
+     "6809"
+    ]
+   }
+  },
+  "bytes": 33,
+  "truncated": false,
+  "note": null
+ }
+}

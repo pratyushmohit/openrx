@@ -1,0 +1,44 @@
+{
+ "version": 1,
+ "request": {
+  "source": "pubmed",
+  "endpoint": "search",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+  "params": {
+   "term": "exenatide",
+   "retmax": 0
+  },
+  "fixed": {
+   "tool": "openrx",
+   "email": "${OPENRX_CONTACT_EMAIL}",
+   "db": "pubmed",
+   "retmode": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:17+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "header": {
+    "type": "esearch",
+    "version": "0.3"
+   },
+   "esearchresult": {
+    "count": "4545",
+    "retmax": "0",
+    "retstart": "0",
+    "idlist": [],
+    "translationset": [
+     {
+      "from": "exenatide",
+      "to": "\"exenatide\"[Supplementary Concept] OR \"exenatide\"[All Fields] OR \"exenatide\"[MeSH Terms] OR \"exenatide's\"[All Fields]"
+     }
+    ],
+    "querytranslation": "\"exenatide\"[Supplementary Concept] OR \"exenatide\"[All Fields] OR \"exenatide\"[MeSH Terms] OR \"exenatide s\"[All Fields]"
+   }
+  },
+  "bytes": 439,
+  "truncated": false,
+  "note": null
+ }
+}

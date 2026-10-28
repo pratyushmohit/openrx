@@ -1,0 +1,26 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_label",
+  "url": "https://api.fda.gov/drug/label.json",
+  "params": {
+   "search": "_exists_:boxed_warning AND openfda.generic_name:\"rosiglitazone\"",
+   "limit": 1
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:20+00:00",
+ "response": {
+  "status": 404,
+  "data": {
+   "error": {
+    "code": "NOT_FOUND",
+    "message": "No matches found!"
+   }
+  },
+  "bytes": 80,
+  "truncated": false,
+  "note": null
+ }
+}

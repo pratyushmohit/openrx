@@ -1,0 +1,44 @@
+{
+ "version": 1,
+ "request": {
+  "source": "pubmed",
+  "endpoint": "search",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+  "params": {
+   "term": "albiglutide",
+   "retmax": 0
+  },
+  "fixed": {
+   "tool": "openrx",
+   "email": "${OPENRX_CONTACT_EMAIL}",
+   "db": "pubmed",
+   "retmode": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:16+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "header": {
+    "type": "esearch",
+    "version": "0.3"
+   },
+   "esearchresult": {
+    "count": "317",
+    "retmax": "0",
+    "retstart": "0",
+    "idlist": [],
+    "translationset": [
+     {
+      "from": "albiglutide",
+      "to": "\"rglp-1 protein\"[Supplementary Concept] OR \"rglp-1 protein\"[All Fields] OR \"albiglutide\"[All Fields]"
+     }
+    ],
+    "querytranslation": "\"rglp 1 protein\"[Supplementary Concept] OR \"rglp 1 protein\"[All Fields] OR \"albiglutide\"[All Fields]"
+   }
+  },
+  "bytes": 402,
+  "truncated": false,
+  "note": null
+ }
+}

@@ -363,7 +363,8 @@ openrx serve                              # MCP server (stdio)
 openrx ask "<question>" --model <name>
 openrx catalog lint
 openrx catalog import-openapi clinicaltrials <spec>
-openrx eval record                        # refresh fixtures from live APIs
+openrx eval record                        # record task data (replay_or_record), save expected answers
+openrx eval fixtures export|import        # evals/fixtures/ <-> Floci's S3 (after make up)
 openrx eval run --models <m1>,<m2> -k 3
 openrx eval footprint                     # static token analysis
 openrx eval report
@@ -379,7 +380,7 @@ src/openrx/     the Python package (src layout, D-008)
   mcp_server/   runner/   bridge/   agent/   evals/   observability/
 lambdas/        search_runner/  execute_runner/  bridge/   (thin entry points into openrx)
 infra/          modules/{lambda,iam,secrets,vpc}  envs/{floci,aws}
-evals/          tasks.yaml  reference/  fixtures/
+evals/          tasks.yaml  expected.json  fixtures/<source>/<fingerprint>.json
 scripts/        build_lambda.sh
 results/  tests/  docs/{decisions.md, slos.md, m0-findings.md}
 docker-compose.yml  Makefile  README.md  pyproject.toml  .env.example

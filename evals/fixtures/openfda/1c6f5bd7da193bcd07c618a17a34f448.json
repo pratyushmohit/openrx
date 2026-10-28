@@ -1,0 +1,1124 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_event",
+  "url": "https://api.fda.gov/drug/event.json",
+  "params": {
+   "search": "patient.drug.openfda.generic_name:\"atorvastatin\" AND serious:1",
+   "limit": 1
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:15+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-07-30",
+    "results": {
+     "skip": 0,
+     "limit": 1,
+     "total": 162040
+    }
+   },
+   "results": [
+    {
+     "safetyreportversion": "12",
+     "safetyreportid": "10003392",
+     "primarysourcecountry": "CA",
+     "occurcountry": "CA",
+     "transmissiondateformat": "102",
+     "transmissiondate": "20150821",
+     "reporttype": "2",
+     "serious": "1",
+     "seriousnesshospitalization": "1",
+     "receivedateformat": "102",
+     "receivedate": "20140312",
+     "receiptdateformat": "102",
+     "receiptdate": "20150602",
+     "fulfillexpeditecriteria": "1",
+     "companynumb": "CA-ROCHE-1359421",
+     "duplicate": "1",
+     "reportduplicate": {
+      "duplicatesource": "ROCHE",
+      "duplicatenumb": "CA-ROCHE-1359421"
+     },
+     "primarysource": {
+      "reportercountry": "CA",
+      "qualification": "1"
+     },
+     "sender": {
+      "sendertype": "2",
+      "senderorganization": "FDA-Public Use"
+     },
+     "receiver": {
+      "receivertype": "6",
+      "receiverorganization": "FDA"
+     },
+     "patient": {
+      "patientonsetage": "77",
+      "patientonsetageunit": "801",
+      "patientweight": "81",
+      "patientsex": "1",
+      "reaction": [
+       {
+        "reactionmeddraversionpt": "18.0",
+        "reactionmeddrapt": "Subdural haematoma",
+        "reactionoutcome": "4"
+       }
+      ],
+      "drug": [
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "RAMIPRIL.",
+        "drugadministrationroute": "065",
+        "drugindication": "HYPERTENSION",
+        "drugstartdateformat": "102",
+        "drugstartdate": "19950101",
+        "activesubstance": {
+         "activesubstancename": "RAMIPRIL"
+        },
+        "openfda": {
+         "application_number": [
+          "ANDA077626",
+          "ANDA078832",
+          "ANDA077900",
+          "ANDA079116",
+          "ANDA091604",
+          "ANDA078745"
+         ],
+         "brand_name": [
+          "RAMIPRIL"
+         ],
+         "generic_name": [
+          "RAMIPRIL"
+         ],
+         "manufacturer_name": [
+          "Lupin Pharmaceuticals, Inc.",
+          "Zydus Lifesciences Limited",
+          "Hikma Pharmaceuticals USA Inc.",
+          "Zydus Pharmaceuticals USA Inc.",
+          "GSMS, Incorporated",
+          "Rising Pharma Holdings, Inc.",
+          "Exelan Pharmaceuticals, Inc.",
+          "BluePoint Laboratories",
+          "Chartwell RX, LLC."
+         ],
+         "product_ndc": [
+          "68180-588",
+          "68180-589",
+          "68180-590",
+          "68180-591",
+          "65841-655",
+          "65841-656",
+          "65841-657",
+          "65841-658",
+          "0054-0106",
+          "0054-0107",
+          "0054-0108",
+          "0054-0109",
+          "68382-144",
+          "68382-145",
+          "68382-146",
+          "68382-147",
+          "51407-707",
+          "51407-708",
+          "51407-709",
+          "57237-222",
+          "57237-223",
+          "57237-224",
+          "57237-225",
+          "76282-670",
+          "76282-671",
+          "76282-672",
+          "76282-673",
+          "68001-428",
+          "68001-429",
+          "68001-430",
+          "68001-431",
+          "62135-271",
+          "62135-272",
+          "62135-273",
+          "62135-274"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "ORAL"
+         ],
+         "substance_name": [
+          "RAMIPRIL"
+         ],
+         "rxcui": [
+          "198188",
+          "198189",
+          "261962",
+          "845488"
+         ],
+         "spl_id": [
+          "43bbe4ee-f918-4087-93b9-336a801a8944",
+          "1d7227b2-6052-40b4-bf22-29f18672ce08",
+          "8a7f6a6e-70a7-43ce-9f85-e60e237246ba",
+          "d155011e-1c8b-4ac2-9a2f-6d62127620c3",
+          "9f641c30-6ffa-4765-8991-cc15976b111d",
+          "a9af89b5-fbbe-4314-9f8d-f5a28a23b23e",
+          "37481fc5-771f-4dc7-aa06-6913ab75d485",
+          "5aa8efd9-6e26-311d-e063-6394a90afe25",
+          "47ce17ad-f085-8ce7-e063-6294a90a7520"
+         ],
+         "spl_set_id": [
+          "a8cdec12-81d1-4ef4-82c0-d05d93c37a07",
+          "496b346b-ca79-4483-a950-bed9464e6a9d",
+          "7e9e84f7-ff47-463d-bf47-7a9745960aae",
+          "055bb582-67cd-425a-8823-d543c14305ce",
+          "62f6aa5a-7587-4349-b61d-b2c235749979",
+          "d5c58fb5-b415-4567-9790-55631705c5cd",
+          "1e1dfacf-b831-4743-a874-9a5e5ef8a120",
+          "45707435-4fc8-457e-9ff2-02d7be9b4a6e",
+          "b7e49f05-6d4f-465a-b0d7-f704466a2e52"
+         ],
+         "package_ndc": [
+          "68180-589-09",
+          "68180-589-10",
+          "68180-589-01",
+          "68180-589-02",
+          "68180-590-09",
+          "68180-590-10",
+          "68180-590-01",
+          "68180-590-02",
+          "68180-591-09",
+          "68180-591-10",
+          "68180-591-02",
+          "68180-591-01",
+          "68180-588-01",
+          "68180-588-02",
+          "68180-588-09",
+          "65841-655-06",
+          "65841-655-16",
+          "65841-655-01",
+          "65841-655-05",
+          "65841-655-30",
+          "65841-656-06",
+          "65841-656-16",
+          "65841-656-01",
+          "65841-656-05",
+          "65841-656-30",
+          "65841-657-06",
+          "65841-657-16",
+          "65841-657-01",
+          "65841-657-05",
+          "65841-657-30",
+          "65841-658-06",
+          "65841-658-16",
+          "65841-658-01",
+          "65841-658-05",
+          "65841-658-30",
+          "0054-0106-25",
+          "0054-0107-29",
+          "0054-0107-25",
+          "0054-0107-20",
+          "0054-0108-25",
+          "0054-0108-29",
+          "0054-0108-20",
+          "0054-0109-25",
+          "0054-0109-29",
+          "68382-144-06",
+          "68382-144-16",
+          "68382-144-01",
+          "68382-144-05",
+          "68382-144-30",
+          "68382-144-77",
+          "68382-145-06",
+          "68382-145-16",
+          "68382-145-01",
+          "68382-145-05",
+          "68382-145-30",
+          "68382-145-77",
+          "68382-146-06",
+          "68382-146-16",
+          "68382-146-01",
+          "68382-146-05",
+          "68382-146-30",
+          "68382-146-77",
+          "68382-147-06",
+          "68382-147-16",
+          "68382-147-01",
+          "68382-147-05",
+          "68382-147-30",
+          "68382-147-77",
+          "51407-707-01",
+          "51407-708-01",
+          "51407-709-01",
+          "57237-222-30",
+          "57237-222-01",
+          "57237-223-01",
+          "57237-223-05",
+          "57237-224-01",
+          "57237-224-05",
+          "57237-225-01",
+          "57237-225-05",
+          "76282-670-01",
+          "76282-671-01",
+          "76282-671-05",
+          "76282-672-01",
+          "76282-672-05",
+          "76282-673-01",
+          "76282-673-05",
+          "68001-428-00",
+          "68001-429-00",
+          "68001-430-00",
+          "68001-430-03",
+          "68001-431-00",
+          "68001-431-03",
+          "62135-271-30",
+          "62135-271-90",
+          "62135-271-01",
+          "62135-272-90",
+          "62135-272-01",
+          "62135-272-05",
+          "62135-273-90",
+          "62135-273-01",
+          "62135-273-05",
+          "62135-274-90",
+          "62135-274-01",
+          "62135-274-05"
+         ],
+         "nui": [
+          "N0000175562",
+          "N0000000181"
+         ],
+         "pharm_class_epc": [
+          "Angiotensin Converting Enzyme Inhibitor [EPC]"
+         ],
+         "pharm_class_moa": [
+          "Angiotensin-converting Enzyme Inhibitors [MoA]"
+         ],
+         "unii": [
+          "L35JN3I7SJ"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "WARFARIN",
+        "drugadministrationroute": "065",
+        "drugindication": "THROMBOSIS PROPHYLAXIS",
+        "drugstartdateformat": "102",
+        "drugstartdate": "19820101",
+        "activesubstance": {
+         "activesubstancename": "WARFARIN"
+        },
+        "openfda": {
+         "application_number": [
+          "ANDA090935",
+          "ANDA202202"
+         ],
+         "brand_name": [
+          "WARFARIN SODIUM"
+         ],
+         "generic_name": [
+          "WARFARIN"
+         ],
+         "manufacturer_name": [
+          "Exelan Pharmaceuticals Inc.",
+          "Amneal Pharmaceuticals LLC"
+         ],
+         "product_ndc": [
+          "76282-327",
+          "76282-328",
+          "76282-329",
+          "76282-330",
+          "76282-331",
+          "76282-332",
+          "76282-333",
+          "76282-334",
+          "76282-335",
+          "65162-761",
+          "65162-762",
+          "65162-763",
+          "65162-764",
+          "65162-765",
+          "65162-766",
+          "65162-767",
+          "65162-768",
+          "65162-769"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "ORAL"
+         ],
+         "substance_name": [
+          "WARFARIN SODIUM"
+         ],
+         "rxcui": [
+          "855288",
+          "855296",
+          "855302",
+          "855312",
+          "855318",
+          "855324",
+          "855332",
+          "855338",
+          "855344"
+         ],
+         "spl_id": [
+          "45e85c4e-ae91-4cf3-bd98-1d5b5aecc7c5",
+          "caa13d7d-5a78-412c-8e5e-e03a51164e96"
+         ],
+         "spl_set_id": [
+          "c0cc4511-e656-4b6d-96cd-e02e76173b9d",
+          "558b7a0d-5490-4c1b-802e-3ab3f1efe760"
+         ],
+         "package_ndc": [
+          "76282-327-01",
+          "76282-327-10",
+          "76282-328-01",
+          "76282-328-10",
+          "76282-329-01",
+          "76282-329-10",
+          "76282-330-01",
+          "76282-330-10",
+          "76282-331-01",
+          "76282-331-10",
+          "76282-332-01",
+          "76282-332-10",
+          "76282-333-01",
+          "76282-333-10",
+          "76282-334-01",
+          "76282-335-01",
+          "65162-761-10",
+          "65162-761-50",
+          "65162-761-11",
+          "65162-762-10",
+          "65162-762-50",
+          "65162-762-11",
+          "65162-763-10",
+          "65162-763-50",
+          "65162-763-11",
+          "65162-764-10",
+          "65162-764-50",
+          "65162-764-11",
+          "65162-765-10",
+          "65162-765-50",
+          "65162-765-11",
+          "65162-766-10",
+          "65162-766-50",
+          "65162-766-11",
+          "65162-767-10",
+          "65162-767-50",
+          "65162-767-11",
+          "65162-768-10",
+          "65162-768-50",
+          "65162-768-11",
+          "65162-769-10",
+          "65162-769-50",
+          "65162-769-11"
+         ],
+         "unii": [
+          "6153CWM0CL"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "LIPITOR",
+        "drugadministrationroute": "065",
+        "drugindication": "BLOOD CHOLESTEROL INCREASED",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20100201",
+        "activesubstance": {
+         "activesubstancename": "ATORVASTATIN CALCIUM"
+        },
+        "openfda": {
+         "application_number": [
+          "NDA020702"
+         ],
+         "brand_name": [
+          "LIPITOR"
+         ],
+         "generic_name": [
+          "ATORVASTATIN CALCIUM"
+         ],
+         "manufacturer_name": [
+          "Viatris Specialty LLC"
+         ],
+         "product_ndc": [
+          "58151-155",
+          "58151-156",
+          "58151-157",
+          "58151-158"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "ORAL"
+         ],
+         "substance_name": [
+          "ATORVASTATIN CALCIUM TRIHYDRATE"
+         ],
+         "rxcui": [
+          "259255",
+          "262095",
+          "617310",
+          "617311",
+          "617312",
+          "617314",
+          "617318",
+          "617320"
+         ],
+         "spl_id": [
+          "dd011a82-7356-4b83-86c4-b21cd9138fc6"
+         ],
+         "spl_set_id": [
+          "a60cc18b-0631-4cf0-b021-9f52224ece65"
+         ],
+         "package_ndc": [
+          "58151-155-77",
+          "58151-156-77",
+          "58151-157-77",
+          "58151-158-77"
+         ],
+         "unii": [
+          "48A5M73Z4Q"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "TAMSULOSIN",
+        "drugadministrationroute": "065",
+        "drugindication": "URINARY RETENTION",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20140319",
+        "drugenddateformat": "102",
+        "drugenddate": "20140321",
+        "activesubstance": {
+         "activesubstancename": "TAMSULOSIN"
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "ADALAT CC",
+        "drugadministrationroute": "065",
+        "drugindication": "HYPERTENSION",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20100201",
+        "activesubstance": {
+         "activesubstancename": "NIFEDIPINE"
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "DIPYRIDAMOLE.",
+        "drugadministrationroute": "065",
+        "drugindication": "HYPERTENSION",
+        "drugstartdateformat": "102",
+        "drugstartdate": "19820101",
+        "activesubstance": {
+         "activesubstancename": "DIPYRIDAMOLE"
+        },
+        "openfda": {
+         "application_number": [
+          "ANDA074521",
+          "ANDA040874",
+          "ANDA040782",
+          "ANDA040542"
+         ],
+         "brand_name": [
+          "DIPYRIDAMOLE"
+         ],
+         "generic_name": [
+          "DIPYRIDAMOLE"
+         ],
+         "manufacturer_name": [
+          "Hikma Pharmaceuticals USA Inc.",
+          "Zydus Pharmaceuticals USA Inc.",
+          "Amneal Pharmaceuticals of New York LLC",
+          "Oxford Pharmaceuticals, LLC",
+          "Zydus Lifesciences Limited"
+         ],
+         "product_ndc": [
+          "0641-2569",
+          "68382-187",
+          "68382-188",
+          "68382-189",
+          "0115-1070",
+          "0115-1071",
+          "0115-1072",
+          "69584-181",
+          "69584-182",
+          "69584-183",
+          "65841-662",
+          "65841-663",
+          "65841-664"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "INTRAVENOUS",
+          "ORAL"
+         ],
+         "substance_name": [
+          "DIPYRIDAMOLE"
+         ],
+         "rxcui": [
+          "309953",
+          "197622",
+          "309952",
+          "309955"
+         ],
+         "spl_id": [
+          "4c31b09f-7015-4534-afd6-5cb042792109",
+          "8b638b19-214a-4a58-a336-656d690130e3",
+          "02250a0f-40e1-4f73-8ead-1be26f78edc8",
+          "6cf8d202-17fc-4c56-be33-4d74f6591077",
+          "7426aa35-2cba-4a73-b80f-d044bfe22177"
+         ],
+         "spl_set_id": [
+          "6093dcd9-82d2-414f-8507-eda22c14f626",
+          "004bada0-dbf7-4a94-8792-6833d7eeda2b",
+          "a18b2af5-7c4a-4b7f-92c7-8a76e34da373",
+          "f7ffd78a-e93a-40f4-8193-2d6ab4dafd00",
+          "312aadb1-435c-4aa7-8e46-6506cedacaa0"
+         ],
+         "package_ndc": [
+          "0641-2569-41",
+          "0641-2569-44",
+          "68382-187-01",
+          "68382-187-05",
+          "68382-187-10",
+          "68382-187-77",
+          "68382-188-01",
+          "68382-188-05",
+          "68382-188-10",
+          "68382-188-77",
+          "68382-189-01",
+          "68382-189-05",
+          "68382-189-10",
+          "68382-189-77",
+          "0115-1070-01",
+          "0115-1071-01",
+          "0115-1072-01",
+          "69584-181-10",
+          "69584-182-10",
+          "69584-183-10",
+          "65841-662-01",
+          "65841-662-05",
+          "65841-662-10",
+          "65841-662-77",
+          "65841-663-01",
+          "65841-663-05",
+          "65841-663-10",
+          "65841-663-77",
+          "65841-664-01",
+          "65841-664-05",
+          "65841-664-10",
+          "65841-664-77"
+         ],
+         "nui": [
+          "N0000008832",
+          "N0000175578"
+         ],
+         "pharm_class_pe": [
+          "Decreased Platelet Aggregation [PE]"
+         ],
+         "pharm_class_epc": [
+          "Platelet Aggregation Inhibitor [EPC]"
+         ],
+         "unii": [
+          "64ALC7F90C"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "SYNTHROID",
+        "drugadministrationroute": "065",
+        "drugindication": "HYPOTHYROIDISM",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20010101",
+        "activesubstance": {
+         "activesubstancename": "LEVOTHYROXINE SODIUM"
+        },
+        "openfda": {
+         "application_number": [
+          "NDA021402"
+         ],
+         "brand_name": [
+          "SYNTHROID"
+         ],
+         "generic_name": [
+          "LEVOTHYROXINE SODIUM"
+         ],
+         "manufacturer_name": [
+          "AbbVie Inc."
+         ],
+         "product_ndc": [
+          "0074-3727",
+          "0074-4341",
+          "0074-4552",
+          "0074-5182",
+          "0074-6594",
+          "0074-6624",
+          "0074-9296",
+          "0074-7068",
+          "0074-7069",
+          "0074-7070",
+          "0074-7148",
+          "0074-7149"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "ORAL"
+         ],
+         "substance_name": [
+          "LEVOTHYROXINE SODIUM"
+         ],
+         "rxcui": [
+          "892246",
+          "892251",
+          "892255",
+          "966158",
+          "966171",
+          "966185",
+          "966191",
+          "966201",
+          "966205",
+          "966218",
+          "966220",
+          "966221",
+          "966222",
+          "966224",
+          "966225",
+          "966247",
+          "966248",
+          "966249",
+          "966250",
+          "966251",
+          "966253",
+          "966270",
+          "966271",
+          "966282"
+         ],
+         "spl_id": [
+          "b85ab7fa-ba96-43cd-b736-44b3924e644c"
+         ],
+         "spl_set_id": [
+          "1e11ad30-1041-4520-10b0-8f9d30d30fcc"
+         ],
+         "package_ndc": [
+          "0074-4341-13",
+          "0074-4341-90",
+          "0074-4341-19",
+          "0074-4341-72",
+          "0074-4552-13",
+          "0074-4552-90",
+          "0074-4552-19",
+          "0074-4552-11",
+          "0074-4552-71",
+          "0074-4552-72",
+          "0074-5182-13",
+          "0074-5182-90",
+          "0074-5182-71",
+          "0074-5182-19",
+          "0074-5182-11",
+          "0074-5182-72",
+          "0074-6594-13",
+          "0074-6594-90",
+          "0074-6594-71",
+          "0074-6594-19",
+          "0074-6594-72",
+          "0074-6624-13",
+          "0074-6624-90",
+          "0074-6624-19",
+          "0074-6624-11",
+          "0074-6624-71",
+          "0074-6624-72",
+          "0074-9296-13",
+          "0074-9296-90",
+          "0074-9296-19",
+          "0074-9296-71",
+          "0074-9296-72",
+          "0074-7068-13",
+          "0074-7068-90",
+          "0074-7068-71",
+          "0074-7068-19",
+          "0074-7068-11",
+          "0074-7068-72",
+          "0074-3727-13",
+          "0074-3727-90",
+          "0074-3727-71",
+          "0074-3727-19",
+          "0074-3727-72",
+          "0074-7069-90",
+          "0074-7069-71",
+          "0074-7069-19",
+          "0074-7069-11",
+          "0074-7069-72",
+          "0074-7070-13",
+          "0074-7070-90",
+          "0074-7070-71",
+          "0074-7070-19",
+          "0074-7070-72",
+          "0074-7148-90",
+          "0074-7148-19",
+          "0074-7148-71",
+          "0074-7148-11",
+          "0074-7148-72",
+          "0074-7149-90",
+          "0074-7149-19"
+         ],
+         "unii": [
+          "9J765S329G"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "1",
+        "medicinalproduct": "VISMODEGIB",
+        "drugbatchnumb": "552287",
+        "drugauthorizationnumb": "203388",
+        "drugdosagetext": "DATE OF LAST DOSE PRIOR TO SAE: 06/FEB/2014.",
+        "drugdosageform": "CAPSULE",
+        "drugadministrationroute": "048",
+        "drugindication": "BASAL CELL CARCINOMA",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20130403",
+        "drugenddateformat": "102",
+        "drugenddate": "20140206",
+        "activesubstance": {
+         "activesubstancename": "VISMODEGIB"
+        },
+        "openfda": {
+         "application_number": [
+          "NDA203388"
+         ],
+         "brand_name": [
+          "ERIVEDGE"
+         ],
+         "generic_name": [
+          "VISMODEGIB"
+         ],
+         "manufacturer_name": [
+          "Genentech, Inc."
+         ],
+         "product_ndc": [
+          "50242-140"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "ORAL"
+         ],
+         "substance_name": [
+          "VISMODEGIB"
+         ],
+         "rxcui": [
+          "1242992",
+          "1242998"
+         ],
+         "spl_id": [
+          "d8b343ee-5767-4934-ad68-5164d4de5228"
+         ],
+         "spl_set_id": [
+          "eb368bb6-80e3-4df9-8a85-91df0a2ada6a"
+         ],
+         "package_ndc": [
+          "50242-140-01",
+          "50242-140-86"
+         ],
+         "nui": [
+          "N0000184149",
+          "N0000184148"
+         ],
+         "pharm_class_epc": [
+          "Hedgehog Pathway Inhibitor [EPC]"
+         ],
+         "pharm_class_moa": [
+          "Smoothened Receptor Antagonists [MoA]"
+         ],
+         "unii": [
+          "25X868M3DS"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "PHYTONADIONE.",
+        "drugadministrationroute": "042",
+        "drugindication": "THROMBOSIS",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20140215",
+        "drugenddateformat": "102",
+        "drugenddate": "20140215",
+        "activesubstance": {
+         "activesubstancename": "PHYTONADIONE"
+        },
+        "openfda": {
+         "application_number": [
+          "ANDA216601",
+          "ANDA216298",
+          "ANDA214966",
+          "ANDA216444",
+          "ANDA210189",
+          "ANDA207719",
+          "ANDA217734",
+          "ANDA216852",
+          "ANDA083722",
+          "ANDA214596",
+          "ANDA087954",
+          "ANDA087955",
+          "ANDA217386",
+          "ANDA219212",
+          "ANDA209373",
+          "ANDA213329",
+          "ANDA213336"
+         ],
+         "brand_name": [
+          "PHYTONADIONE",
+          "PHYTONADIONE PHYTONADIONE",
+          "VITAMIN K1"
+         ],
+         "generic_name": [
+          "PHYTONADIONE"
+         ],
+         "manufacturer_name": [
+          "Amneal Pharmaceuticals LLC",
+          "Sun Pharmaceutical Industries, Inc.",
+          "Cipla USA Inc.",
+          "Alembic Pharmaceuticals Inc.",
+          "Zydus Pharmaceuticals USA Inc.",
+          "Dr.Reddy's Laboratories Inc",
+          "Amneal Pharmaceuticals Private Limited",
+          "Baxter Healthcare Corporation",
+          "International Medication Systems, Limited",
+          "Hospira, Inc.",
+          "Gland Pharma Limited",
+          "GLENMARK PHARMACEUTICALS INC",
+          "Caplin Steriles Limited",
+          "Amneal Pharmaceuticals NY LLC",
+          "Cipla USA., Inc.",
+          "Fresenius Kabi USA, LLC",
+          "Sagent Pharmaceuticals",
+          "Exelan Pharmaceuticals, Inc.",
+          "Agnitio Inc.",
+          "Xiromed LLC",
+          "ScieGen Pharmaceuticals Inc",
+          "Zydus Lifesciences Limited",
+          "Alembic Pharmaceuticals Limited",
+          "Northstar Rx LLC.",
+          "Orbicular Pharmaceutical Technologies Private Limited"
+         ],
+         "product_ndc": [
+          "70121-1682",
+          "70095-154",
+          "69097-003",
+          "62332-826",
+          "70710-1014",
+          "43598-405",
+          "80830-1683",
+          "43066-132",
+          "76329-1240",
+          "69097-708",
+          "69097-709",
+          "0409-9157",
+          "0409-9158",
+          "68083-606",
+          "68462-758",
+          "65145-151",
+          "69238-1051",
+          "69097-999",
+          "65219-635",
+          "25021-505",
+          "76282-740",
+          "72134-008",
+          "70700-331",
+          "50228-333",
+          "70771-1318",
+          "46708-826",
+          "16714-973",
+          "81607-020"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "INTRAMUSCULAR",
+          "INTRAVENOUS",
+          "SUBCUTANEOUS",
+          "ORAL"
+         ],
+         "substance_name": [
+          "PHYTONADIONE"
+         ],
+         "rxcui": [
+          "727625",
+          "198102",
+          "1670192",
+          "312424"
+         ],
+         "spl_id": [
+          "a2f87d42-33cd-4706-bd3c-8b15c8095617",
+          "529e577c-78f0-54c6-e063-6394a90af94f",
+          "d0d625e2-d304-4382-bd6a-e714de668f13",
+          "6da12ac4-63b8-4927-917e-7856d68686f4",
+          "e01282e9-c321-44ca-adc7-93d3e808fe4c",
+          "c4a2bf44-0ad2-c0d2-164f-562ba6df930c",
+          "2e9f7291-f42c-4b3f-98a2-6126b5c38a66",
+          "98fa1675-8af1-42c5-bbab-8b3632d52a0f",
+          "50dd7ff3-6b34-4dbe-ab65-1c3601aba42a",
+          "b3dd9cac-1295-48b6-b9b1-48d36cb732b9",
+          "689ec2ad-01a2-43bb-82f4-ac5cf0d91313",
+          "1d345aaf-a506-4d73-a0ac-41c41675cebf",
+          "9410a036-446d-493b-845e-d87105f8e0df",
+          "114b1330-6f03-476c-8678-8cd0da189bce",
+          "94d89db9-981d-4fc5-b6fe-5d4b73230e35",
+          "82b768e9-502a-4b78-8200-c6bc4d0d76b1",
+          "02a39690-38e6-42e9-9897-391c2df9e07e",
+          "ba507639-69c8-4451-ac5c-b5bc64f297ca",
+          "1c09ec9b-5913-42d4-92e2-34d26682556a",
+          "efc664b8-931d-4577-8b06-9653637eb89a",
+          "2151937d-2482-d1f1-fbb4-08df466c26a0",
+          "02ae977c-f584-4433-e063-6394a90a1290",
+          "40070531-4723-48f2-89b4-9efde4d1c71f",
+          "6ccb76ab-1549-4a47-a119-8059588ad83d",
+          "36fd9f1d-be83-4b1f-bf3d-149b3c942af8",
+          "1a12da69-249c-42d2-8cde-1f0ecfbc299c"
+         ],
+         "spl_set_id": [
+          "2ce1dd90-11ad-4f74-af16-45b7e59f05da",
+          "51c175dd-02f9-68d1-e063-6294a90a4b36",
+          "4bc2de7b-6564-4d77-8a65-6be57b706093",
+          "b1e53422-c85d-4bb6-af4f-24934cc319b0",
+          "6c992275-b040-42d0-9eff-570dce4272fe",
+          "02445c07-7b4b-cd70-54e8-ebefc814f547",
+          "ddd351d3-8b9e-482d-9ab8-f367ce1c3cc0",
+          "98fa1675-8af1-42c5-bbab-8b3632d52a0f",
+          "e0b0c8f1-75be-4f25-898a-7b97b608c615",
+          "1add4de5-0f9c-453e-9dd5-abb8077b566a",
+          "e8808230-2c44-44c6-8cab-8f29b6b34051",
+          "c375bfab-5a4b-40f3-a783-8372158af860",
+          "60e5abd1-e2fa-4a5e-b25b-3ec6cfdeed14",
+          "114b1330-6f03-476c-8678-8cd0da189bce",
+          "54c1c1df-0e65-4da8-9023-6cbaa0f5bd0d",
+          "7dd1f275-94d3-45d2-a4d0-696ce60a2a9b",
+          "02a39690-38e6-42e9-9897-391c2df9e07e",
+          "3d571642-3d3a-41ae-855e-304ae4fff459",
+          "63771c95-d4f5-42eb-b591-4df146f18cb0",
+          "66ada4f8-c5a9-49f1-848f-e172416892a1",
+          "a4b394e7-b766-824e-a8bf-f56808de76e1",
+          "c0e38a20-7225-46a5-9730-924cbd08dbee",
+          "fa26f747-c64e-4090-a0cf-de3d3d9b004c",
+          "6ccb76ab-1549-4a47-a119-8059588ad83d",
+          "5429b58b-ec2b-4a18-95d9-a9d804321192",
+          "d954e3d7-a4d5-4798-887d-7af916ff0181"
+         ],
+         "package_ndc": [
+          "70121-1682-1",
+          "70121-1682-7",
+          "70095-154-01",
+          "70095-154-02",
+          "69097-003-67",
+          "69097-003-96",
+          "62332-826-05",
+          "62332-826-10",
+          "70710-1014-1",
+          "70710-1014-2",
+          "70710-1014-4",
+          "70710-1014-3",
+          "43598-405-11",
+          "43598-405-16",
+          "80830-1683-2",
+          "80830-1683-3",
+          "43066-132-10",
+          "76329-1240-1",
+          "69097-709-96",
+          "69097-708-96",
+          "0409-9157-31",
+          "0409-9157-50",
+          "0409-9157-01",
+          "0409-9158-31",
+          "0409-9158-50",
+          "0409-9158-01",
+          "0409-9158-11",
+          "0409-9158-55",
+          "0409-9158-25",
+          "68083-606-05",
+          "68083-606-25",
+          "68462-758-05",
+          "68462-758-25",
+          "65145-151-01",
+          "65145-151-05",
+          "65145-151-10",
+          "69238-1051-3",
+          "69238-1051-1",
+          "69097-999-02",
+          "69097-999-07",
+          "65219-635-00",
+          "65219-635-01",
+          "25021-505-70",
+          "76282-740-30",
+          "72134-008-01",
+          "70700-331-24",
+          "70700-331-25",
+          "50228-333-30",
+          "50228-333-01",
+          "70771-1318-1",
+          "70771-1318-2",
+          "70771-1318-4",
+          "70771-1318-3",
+          "46708-826-05",
+          "46708-826-10",
+          "16714-973-02",
+          "16714-973-01",
+          "81607-020-01",
+          "81607-020-02"
+         ],
+         "nui": [
+          "N0000175965",
+          "N0000175982",
+          "M0022806",
+          "N0000180191",
+          "N0000175966"
+         ],
+         "pharm_class_pe": [
+          "Increased Prothrombin Activity [PE]",
+          "Reversed Anticoagulation Activity [PE]"
+         ],
+         "pharm_class_cs": [
+          "Vitamin K [CS]"
+         ],
+         "pharm_class_epc": [
+          "Vitamin K [EPC]",
+          "Warfarin Reversal Agent [EPC]"
+         ],
+         "unii": [
+          "A034SE7857"
+         ]
+        }
+       }
+      ],
+      "summary": {
+       "narrativeincludeclinical": "CASE EVENT DATE: 20140215"
+      }
+     }
+    }
+   ]
+  },
+  "bytes": 35901,
+  "truncated": false,
+  "note": null
+ }
+}

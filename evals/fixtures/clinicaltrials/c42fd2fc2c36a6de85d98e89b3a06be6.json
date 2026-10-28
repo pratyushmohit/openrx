@@ -1,0 +1,1693 @@
+{
+ "version": 1,
+ "request": {
+  "source": "clinicaltrials",
+  "endpoint": "search_studies",
+  "url": "https://clinicaltrials.gov/api/v2/studies",
+  "params": {
+   "query.intr": "semaglutide",
+   "filter.advanced": "AREA[Phase]PHASE3",
+   "fields": "LeadSponsorName",
+   "pageSize": 1000
+  },
+  "fixed": {
+   "format": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:19+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "studies": [
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Zagazig University"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Pfizer"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "McGill University Health Centre/Research Institute of the McGill University Health Centre"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Eli Lilly and Company"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Shandong New Time Pharmaceutical Co., LTD"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Qilu Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Hangzhou Jiuyuan Gene Engineering Co. Ltd.,"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Ottawa Heart Institute Research Corporation"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Boehringer Ingelheim"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Bangabandhu Sheikh Mujib Medical University, Dhaka, Bangladesh"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "The United Bio-Technology (Hengqin) Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Qilu Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Chia Tai Tianqing Pharmaceutical Group Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Texas Southwestern Medical Center"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Eli Lilly and Company"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Carnot Laboratories"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "RenJi Hospital"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Georgios Papadakis"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Children's Hospital Los Angeles"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Zagazig University"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "McGill University Health Centre/Research Institute of the McGill University Health Centre"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Colorado, Denver"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Chengdu Brilliant Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Colorado, Denver"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "AstraZeneca"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Guangdong Raynovent Biotech Co., Ltd"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Fujian Shengdi Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Chicago"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Loma Linda University"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Jens D Hove, MD,PHD"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University Medical Centre Ljubljana"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Michael Mæng"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "CSPC Baike (Shandong) Biopharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Wei Hu"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Axel Brandes"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Gan & Lee Pharmaceuticals."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Minnesota"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Centre Hospitalier Universitaire Dijon"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Colorado, Denver"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University Hospital, Angers"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Fujian Shengdi Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Colorado, Denver"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Hangzhou Jiuyuan Gene Engineering Co. Ltd.,"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Vanda Pharmaceuticals"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "McGill University Health Centre/Research Institute of the McGill University Health Centre"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Instituto Mexicano del Seguro Social"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University Health Network, Toronto"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Popular Medical College Hospital"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Leiden University Medical Center"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Durham VA Medical Center"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "The George Institute"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Steno Diabetes Center Copenhagen"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Tel-Aviv Sourasky Medical Center"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "The University of Hong Kong"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Eli Lilly and Company"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Hangzhou Zhongmei Huadong Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Hangzhou Zhongmei Huadong Pharmaceutical Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Instituto Mexicano del Seguro Social"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "BrightGene Bio-Medical Technology Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "All India Institute of Medical Sciences, Bhubaneswar"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Eli Lilly and Company"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University Medical Center Groningen"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "BrightGene Bio-Medical Technology Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Hull"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Fundación Instituto de Estudios de Ciencias de la Salud de Castilla y León"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "AgelessRx"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University College, London"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "McGill University Health Centre/Research Institute of the McGill University Health Centre"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Ole Lander Svendsen"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Geisinger Clinic"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Universitaire Ziekenhuizen KU Leuven"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "BrightGene Bio-Medical Technology Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Colorado, Denver"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Emory University"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Kailera"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Mount Sinai Hospital, Canada"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "State University of New York at Buffalo"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "University of Massachusetts, Worcester"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Sun Yat-sen University"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Innovent Biologics (Suzhou) Co. Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "CSPC ZhongQi Pharmaceutical Technology Co., Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Innovent Biologics (Suzhou) Co. Ltd."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Gan & Lee Pharmaceuticals."
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Carnot Laboratories"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "VA Office of Research and Development"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Esbjerg Hospital - University Hospital of Southern Denmark"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Amgen"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Eli Lilly and Company"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Novo Nordisk A/S"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Capital Medical University"
+       }
+      }
+     }
+    },
+    {
+     "protocolSection": {
+      "sponsorCollaboratorsModule": {
+       "leadSponsor": {
+        "name": "Nordsjaellands Hospital"
+       }
+      }
+     }
+    }
+   ]
+  },
+  "bytes": 19282,
+  "truncated": false,
+  "note": null
+ }
+}

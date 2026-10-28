@@ -1,0 +1,309 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_event",
+  "url": "https://api.fda.gov/drug/event.json",
+  "params": {
+   "search": "patient.drug.openfda.generic_name:\"warfarin\" AND seriousnessdeath:1",
+   "limit": 1
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:22+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-07-30",
+    "results": {
+     "skip": 0,
+     "limit": 1,
+     "total": 16212
+    }
+   },
+   "results": [
+    {
+     "safetyreportversion": "2",
+     "safetyreportid": "10005125",
+     "primarysourcecountry": "JP",
+     "occurcountry": "JP",
+     "transmissiondateformat": "102",
+     "transmissiondate": "20141002",
+     "reporttype": "2",
+     "serious": "1",
+     "seriousnessdeath": "1",
+     "receivedateformat": "102",
+     "receivedate": "20140312",
+     "receiptdateformat": "102",
+     "receiptdate": "20140328",
+     "fulfillexpeditecriteria": "1",
+     "companynumb": "JP-TAKEDA-2014TUS001714",
+     "duplicate": "1",
+     "reportduplicate": {
+      "duplicatesource": "TAKEDA",
+      "duplicatenumb": "JP-TAKEDA-2014TUS001714"
+     },
+     "primarysource": {
+      "reportercountry": "JP",
+      "qualification": "1"
+     },
+     "sender": {
+      "sendertype": "2",
+      "senderorganization": "FDA-Public Use"
+     },
+     "receiver": {
+      "receivertype": "6",
+      "receiverorganization": "FDA"
+     },
+     "patient": {
+      "patientsex": "0",
+      "reaction": [
+       {
+        "reactionmeddraversionpt": "17.0",
+        "reactionmeddrapt": "Death",
+        "reactionoutcome": "5"
+       }
+      ],
+      "drug": [
+       {
+        "drugcharacterization": "1",
+        "medicinalproduct": "FEBURIC",
+        "drugauthorizationnumb": "021856",
+        "drugstructuredosagenumb": "10",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugcumulativedosagenumb": "3700",
+        "drugcumulativedosageunit": "003",
+        "drugdosagetext": "10 MG, QD",
+        "drugdosageform": "TABLET",
+        "drugadministrationroute": "048",
+        "drugindication": "GOUT",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20121120",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124"
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "BASEN",
+        "drugstructuredosagenumb": ".9",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugdosagetext": "0.9 MG, QD",
+        "drugadministrationroute": "048",
+        "drugindication": "DIABETES MELLITUS",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20130523",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124",
+        "drugrecurreadministration": "3"
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "AMARYL",
+        "drugstructuredosagenumb": "2",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugdosagetext": "2 MG, QD",
+        "drugadministrationroute": "048",
+        "drugindication": "DIABETES MELLITUS",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20130523",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124",
+        "drugrecurreadministration": "3"
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "WARFARIN",
+        "drugstructuredosagenumb": "1",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugdosagetext": "1 MG, QD",
+        "drugadministrationroute": "048",
+        "drugindication": "MYOCARDIAL INFARCTION",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20130523",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124",
+        "drugrecurreadministration": "3",
+        "openfda": {
+         "application_number": [
+          "ANDA090935",
+          "ANDA202202"
+         ],
+         "brand_name": [
+          "WARFARIN SODIUM"
+         ],
+         "generic_name": [
+          "WARFARIN"
+         ],
+         "manufacturer_name": [
+          "Exelan Pharmaceuticals Inc.",
+          "Amneal Pharmaceuticals LLC"
+         ],
+         "product_ndc": [
+          "76282-327",
+          "76282-328",
+          "76282-329",
+          "76282-330",
+          "76282-331",
+          "76282-332",
+          "76282-333",
+          "76282-334",
+          "76282-335",
+          "65162-761",
+          "65162-762",
+          "65162-763",
+          "65162-764",
+          "65162-765",
+          "65162-766",
+          "65162-767",
+          "65162-768",
+          "65162-769"
+         ],
+         "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+         ],
+         "route": [
+          "ORAL"
+         ],
+         "substance_name": [
+          "WARFARIN SODIUM"
+         ],
+         "rxcui": [
+          "855288",
+          "855296",
+          "855302",
+          "855312",
+          "855318",
+          "855324",
+          "855332",
+          "855338",
+          "855344"
+         ],
+         "spl_id": [
+          "45e85c4e-ae91-4cf3-bd98-1d5b5aecc7c5",
+          "caa13d7d-5a78-412c-8e5e-e03a51164e96"
+         ],
+         "spl_set_id": [
+          "c0cc4511-e656-4b6d-96cd-e02e76173b9d",
+          "558b7a0d-5490-4c1b-802e-3ab3f1efe760"
+         ],
+         "package_ndc": [
+          "76282-327-01",
+          "76282-327-10",
+          "76282-328-01",
+          "76282-328-10",
+          "76282-329-01",
+          "76282-329-10",
+          "76282-330-01",
+          "76282-330-10",
+          "76282-331-01",
+          "76282-331-10",
+          "76282-332-01",
+          "76282-332-10",
+          "76282-333-01",
+          "76282-333-10",
+          "76282-334-01",
+          "76282-335-01",
+          "65162-761-10",
+          "65162-761-50",
+          "65162-761-11",
+          "65162-762-10",
+          "65162-762-50",
+          "65162-762-11",
+          "65162-763-10",
+          "65162-763-50",
+          "65162-763-11",
+          "65162-764-10",
+          "65162-764-50",
+          "65162-764-11",
+          "65162-765-10",
+          "65162-765-50",
+          "65162-765-11",
+          "65162-766-10",
+          "65162-766-50",
+          "65162-766-11",
+          "65162-767-10",
+          "65162-767-50",
+          "65162-767-11",
+          "65162-768-10",
+          "65162-768-50",
+          "65162-768-11",
+          "65162-769-10",
+          "65162-769-50",
+          "65162-769-11"
+         ],
+         "unii": [
+          "6153CWM0CL"
+         ]
+        }
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "FRANDOL S",
+        "drugstructuredosagenumb": "40",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugdosagetext": "40 MG, QD",
+        "drugadministrationroute": "048",
+        "drugindication": "ANGINA PECTORIS",
+        "drugstartdateformat": "102",
+        "drugstartdate": "20130523",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124",
+        "drugrecurreadministration": "3"
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "ARTIST",
+        "drugstructuredosagenumb": "2.5",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugdosagetext": "2.5 MG, QD",
+        "drugadministrationroute": "048",
+        "drugindication": "HYPERTENSION",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124"
+       },
+       {
+        "drugcharacterization": "2",
+        "medicinalproduct": "ALDACTONE A",
+        "drugstructuredosagenumb": "250",
+        "drugstructuredosageunit": "003",
+        "drugseparatedosagenumb": "1",
+        "drugintervaldosageunitnumb": "1",
+        "drugintervaldosagedefinition": "804",
+        "drugdosagetext": "250 MG, QD",
+        "drugadministrationroute": "048",
+        "drugindication": "HYPERTENSION",
+        "drugenddateformat": "102",
+        "drugenddate": "20131124"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "bytes": 9776,
+  "truncated": false,
+  "note": null
+ }
+}

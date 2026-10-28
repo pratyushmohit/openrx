@@ -1,0 +1,51 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_event",
+  "url": "https://api.fda.gov/drug/event.json",
+  "params": {
+   "search": "patient.drug.openfda.generic_name:\"metformin\"",
+   "count": "patient.reaction.reactionmeddrapt.exact",
+   "limit": 5
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:11+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-07-30"
+   },
+   "results": [
+    {
+     "term": "NAUSEA",
+     "count": 30159
+    },
+    {
+     "term": "DIARRHOEA",
+     "count": 28197
+    },
+    {
+     "term": "BLOOD GLUCOSE INCREASED",
+     "count": 27577
+    },
+    {
+     "term": "DRUG INEFFECTIVE",
+     "count": 22744
+    },
+    {
+     "term": "FATIGUE",
+     "count": 21483
+    }
+   ]
+  },
+  "bytes": 770,
+  "truncated": false,
+  "note": null
+ }
+}

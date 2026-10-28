@@ -11,7 +11,7 @@ per call; it never contains the API key.
 
 Configuration (environment, set by Terraform):
 
-    OPENRX_FIXTURE_MODE     live | record | replay (default live)
+    OPENRX_FIXTURE_MODE     live | record | replay | replay_or_record (default live)
     OPENRX_FIXTURE_BUCKET   S3 bucket for fixtures (needed for record and replay)
     OPENRX_SECRET_ARNS      JSON: catalog secret name -> Secrets Manager ARN
     OPENRX_CONTACT_EMAIL    fills ${OPENRX_CONTACT_EMAIL} in the catalog (optional)

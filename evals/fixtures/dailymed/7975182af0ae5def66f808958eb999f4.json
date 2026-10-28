@@ -1,0 +1,55 @@
+{
+ "version": 1,
+ "request": {
+  "source": "dailymed",
+  "endpoint": "history",
+  "url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bfd6ec0f-8264-4877-aa6d-f347f53bc426/history.json",
+  "params": {},
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:10+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "data": {
+    "spl": {
+     "title": "METFORMIN HYDROCHLORIDE TABLET, FILM COATED [REMEDYREPACK INC.]",
+     "setid": "bfd6ec0f-8264-4877-aa6d-f347f53bc426"
+    },
+    "history": [
+     {
+      "spl_version": 4,
+      "published_date": "Oct 26, 2026"
+     },
+     {
+      "spl_version": 3,
+      "published_date": "Sep 02, 2026"
+     },
+     {
+      "spl_version": 2,
+      "published_date": "Oct 02, 2025"
+     },
+     {
+      "spl_version": 1,
+      "published_date": "Jan 27, 2025"
+     }
+    ]
+   },
+   "metadata": {
+    "db_published_date": "Oct 26, 2026 09:17:45PM EST",
+    "elements_per_page": 100,
+    "current_url": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/bfd6ec0f-8264-4877-aa6d-f347f53bc426/history.json",
+    "next_page_url": "null",
+    "total_elements": 4,
+    "total_pages": 1,
+    "current_page": 1,
+    "previous_page": "null",
+    "previous_page_url": "null",
+    "next_page": "null"
+   }
+  },
+  "bytes": 746,
+  "truncated": false,
+  "note": null
+ }
+}

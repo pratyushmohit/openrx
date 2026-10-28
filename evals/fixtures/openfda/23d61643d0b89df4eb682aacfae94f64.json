@@ -1,0 +1,43 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_ndc",
+  "url": "https://api.fda.gov/drug/ndc.json",
+  "params": {
+   "search": "generic_name:\"metformin\"",
+   "count": "dosage_form.exact",
+   "limit": 3
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:22+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-10-27"
+   },
+   "results": [
+    {
+     "term": "TABLET, FILM COATED",
+     "count": 217
+    },
+    {
+     "term": "TABLET",
+     "count": 182
+    },
+    {
+     "term": "TABLET, EXTENDED RELEASE",
+     "count": 174
+    }
+   ]
+  },
+  "bytes": 648,
+  "truncated": false,
+  "note": null
+ }
+}

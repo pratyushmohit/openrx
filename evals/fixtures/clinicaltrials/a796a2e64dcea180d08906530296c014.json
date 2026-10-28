@@ -1,0 +1,542 @@
+{
+ "version": 1,
+ "request": {
+  "source": "clinicaltrials",
+  "endpoint": "search_studies",
+  "url": "https://clinicaltrials.gov/api/v2/studies",
+  "params": {
+   "query.cond": "obesity",
+   "filter.overallStatus": "RECRUITING",
+   "filter.advanced": "AREA[StudyType]INTERVENTIONAL",
+   "countTotal": true,
+   "pageSize": 1
+  },
+  "fixed": {
+   "format": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:27+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "totalCount": 1137,
+   "studies": [
+    {
+     "protocolSection": {
+      "identificationModule": {
+       "nctId": "NCT07770711",
+       "orgStudyIdInfo": {
+        "id": "DU-BVD-EU-01"
+       },
+       "organization": {
+        "fullName": "Dicle University",
+        "class": "OTHER"
+       },
+       "briefTitle": "Inositol and Metformin Administration in Mediterranean Diet and Low-Carbohydrate Diets in Women With PCOS",
+       "officialTitle": "Comparison of Inositol and Metformin Administration in Mediterranean Diet and Low-Carbohydrate Diets in Women With Polycystic Ovary Syndrome"
+      },
+      "statusModule": {
+       "statusVerifiedDate": "2026-10",
+       "overallStatus": "RECRUITING",
+       "expandedAccessInfo": {
+        "hasExpandedAccess": false
+       },
+       "startDateStruct": {
+        "date": "2026-08-13",
+        "type": "ACTUAL"
+       },
+       "primaryCompletionDateStruct": {
+        "date": "2027-09",
+        "type": "ESTIMATED"
+       },
+       "completionDateStruct": {
+        "date": "2027-09",
+        "type": "ESTIMATED"
+       },
+       "studyFirstSubmitDate": "2026-08-07",
+       "studyFirstSubmitQcDate": "2026-08-13",
+       "studyFirstPostDateStruct": {
+        "date": "2026-08-18",
+        "type": "ACTUAL"
+       },
+       "lastUpdateSubmitDate": "2026-10-12",
+       "lastUpdatePostDateStruct": {
+        "date": "2026-10-16",
+        "type": "ACTUAL"
+       }
+      },
+      "sponsorCollaboratorsModule": {
+       "responsibleParty": {
+        "type": "PRINCIPAL_INVESTIGATOR",
+        "investigatorFullName": "Esra UCAR",
+        "investigatorTitle": "Principal Investigator",
+        "investigatorAffiliation": "Dicle University"
+       },
+       "leadSponsor": {
+        "name": "Dicle University",
+        "class": "OTHER"
+       }
+      },
+      "oversightModule": {
+       "oversightHasDmc": true,
+       "isFdaRegulatedDrug": false,
+       "isFdaRegulatedDevice": false,
+       "isUsExport": false
+      },
+      "descriptionModule": {
+       "briefSummary": "Polycystic ovary syndrome (PCOS) is a common endocrine disorder frequently associated with obesity, insulin resistance (IR), and metabolic dysfunction. Although lifestyle modification is recommended as first-line therapy, the optimal dietary approach for women with PCOS remains uncertain. This randomized, controlled, open-label, parallel-group trial aims to compare the effects of a Mediterranean diet (MD) and a low-carbohydrate diet (LCD), each combined with metformin, inositol, or folic acid (active control), in obese women with PCOS and IR. A total of 102 participants will be randomly assigned to one of six intervention groups and followed for two months. Anthropometric measurements, body composition, biochemical parameters, and hedonic hunger will be assessed at baseline and after the intervention. The primary outcome is the change in insulin resistance, assessed by the Homeostatic Model Assessment for Insulin Resistance (HOMA-IR), from baseline to 2 months. Secondary outcomes include changes in body composition, metabolic and biochemical parameters, and hedonic hunger.",
+       "detailedDescription": "Polycystic ovary syndrome (PCOS) is a complex and widespread endocrine disorder of unknown etiology, affecting 5-20% of women of reproductive age worldwide according to different diagnostic criteria. According to the Rotterdam criteria, PCOS is characterized by the presence of two of the following: hyperandrogenism, chronic anovulation, and polycystic ovary morphology. While the causes of PCOS are not yet fully defined, insulin resistance (IR) is considered one of the key etiological components. IR, frequently observed in PCOS, often mediates increased total and abdominal fat accumulation. The close relationship between PCOS, hyperandrogenism, hyperinsulinemia, and IR also increases the risk of metabolic syndrome. As a result of the lifelong pathological condition of PCOS, these women are at high risk for obesity, metabolic dysfunction, vascular dysfunction, malignancy, reproductive complications, and mood disorders. For many years, effective methods have been sought to treat hormonal imbalances associated with PCOS in order to restore regular menstrual cycles and ovulation. It has been reported that women with PCOS should reduce their energy intake through diet and implement dietary models that promote weight loss. While various dietary interventions in the literature, such as the ketogenic diet (KD), low-carbohydrate diet (LCD), and Mediterranean diet (MD), have shown positive effects on PCOS as a first-line treatment method, the definition of PCOS-specific medical nutritional therapy is not clear. Since PCOS is a chronic disease requiring lifelong management, and considering the side effect profile and difficulty of implementing the ketogenic diet, which appears promising in the short term, this study will evaluate the effects of the Mediterranean diet and a non-ketogenic low-carbohydrate diet. Metformin and inositol treatments will also be included in this comparison, and thanks to an active control group (folic acid), the effect of these dietary models alone against these pharmacological treatments can also be examined. This will allow for the evaluation of the effects of existing treatment approaches both individually and in combination. The study is designed as a randomized controlled, open-label, parallel design. The study will include 102 obese women diagnosed with PCOS and insulin resistance, who will be randomly assigned to two diet groups (AD and DKD). Each diet group will be further divided into three subgroups, and these subgroups will also receive metformin, inositol, or active control (folic acid) treatments. The intervention period of the study is two months, and adherence to diet and medication will be monitored at regular intervals. Biochemical findings, anthropometric measurements, body composition measurements, and the Nutritional Power Scale will be repeated at the beginning and end of the two-month study. The findings of this study will contribute to determining the optimal sequence or combination of dietary models, increasingly common food supplements, and existing medical agents in terms of treatment effectiveness."
+      },
+      "conditionsModule": {
+       "conditions": [
+        "PCOS (Polycystic Ovary Syndrome)",
+        "Insulin Resistance",
+        "Obesity (BMI>30)"
+       ],
+       "keywords": [
+        "Mediterranean diet",
+        "low-carbohydrate diet",
+        "insulin resistance",
+        "inositol",
+        "pcos"
+       ]
+      },
+      "designModule": {
+       "studyType": "INTERVENTIONAL",
+       "phases": [
+        "NA"
+       ],
+       "designInfo": {
+        "allocation": "RANDOMIZED",
+        "interventionModel": "PARALLEL",
+        "interventionModelDescription": "Participants will be randomized in a 2×3 factorial, parallel-group design. Participants will first be allocated to one of two hypocaloric dietary interventions (Mediterranean diet or low-carbohydrate diet). Within each dietary group, participants will be further randomized to receive metformin, inositol, or folic acid (active control), resulting in six intervention arms. Randomization will be performed using computer-generated permuted block randomization with variable block sizes (6 and 12), stratified by age (\\<30 vs. ≥30 years) and body mass index (30.0-34.9 vs. ≥35.0 kg/m²). Allocation concealment will be maintained until randomization, after which the study will be conducted as an open-label trial.",
+        "primaryPurpose": "TREATMENT",
+        "maskingInfo": {
+         "masking": "NONE"
+        }
+       },
+       "enrollmentInfo": {
+        "count": 90,
+        "type": "ESTIMATED"
+       }
+      },
+      "armsInterventionsModule": {
+       "armGroups": [
+        {
+         "label": "Group Receiving Mediterranean Diet and Inositol Supplement",
+         "type": "EXPERIMENTAL",
+         "description": "Participants in this arm will receive a hypocaloric Mediterranean diet combined with a myo-inositol supplement containing folic acid. The supplement will be administered orally as two sachets daily, providing a total daily dose of 4000 mg myo-inositol and 400 µg folic acid. The intervention period will be 2 months.",
+         "interventionNames": [
+          "Dietary Supplement: İnositol",
+          "Other: Mediterranean diet"
+         ]
+        },
+        {
+         "label": "Group Receiving Mediterranean Diet and Metformin Treatment",
+         "type": "EXPERIMENTAL",
+         "description": "Participants in this arm will receive a hypocaloric Mediterranean diet combined with metformin and folic acid supplementation. Metformin will be administered orally at a dose of 500 mg once daily during the first week and increased to 1000 mg/day (500 mg twice daily) from the second week onward, as tolerated. Folic acid will be administered orally at a dose of 400 µg once daily. Folic acid is included to standardize folate intake across intervention groups, as the myo-inositol supplement used in the inositol groups also contains folic acid. The intervention period will be 2 months.",
+         "interventionNames": [
+          "Drug: Metformin",
+          "Dietary Supplement: Folic Acid",
+          "Other: Mediterranean diet"
+         ]
+        },
+        {
+         "label": "Mediterranean Diet Active Control Group",
+         "type": "ACTIVE_COMPARATOR",
+         "description": "Participants in this arm will receive a hypocaloric Mediterranean diet together with folic acid supplementation. Folic acid will be administered orally at a dose of 400 µg once daily. No metformin or myo-inositol supplementation will be provided. Folic acid is included to standardize folate intake across intervention groups, as the myo-inositol supplement used in the inositol groups also contains folic acid. The intervention period will be 2 months.",
+         "interventionNames": [
+          "Dietary Supplement: Folic Acid",
+          "Other: Mediterranean diet"
+         ]
+        },
+        {
+         "label": "Group Receiving Low-Carbohydrate Diet and Inositol Supplement",
+         "type": "EXPERIMENTAL",
+         "description": "Participants in this arm will receive a hypocaloric low-carbohydrate diet combined with a myo-inositol supplement containing folic acid. The supplement will be administered orally as two sachets daily, providing a total daily dose of 4000 mg myo-inositol and 400 µg folic acid. The intervention period will be 2 months.",
+         "interventionNames": [
+          "Dietary Supplement: İnositol",
+          "Other: Low-Carbohydrate Diet"
+         ]
+        },
+        {
+         "label": "Group Receiving Low-Carbohydrate Diet and Metformin Treatment",
+         "type": "EXPERIMENTAL",
+         "description": "Participants in this arm will receive a hypocaloric low-carbohydrate diet combined with metformin and folic acid supplementation. Metformin will be administered orally at a dose of 500 mg once daily during the first week and increased to 1000 mg/day (500 mg twice daily) from the second week onward, as tolerated. Folic acid will be administered orally at a dose of 400 µg once daily. Folic acid is included to standardize folate intake across intervention groups, as the myo-inositol supplement used in the inositol groups also contains folic acid. The intervention period will be 2 months.",
+         "interventionNames": [
+          "Drug: Metformin",
+          "Dietary Supplement: Folic Acid",
+          "Other: Low-Carbohydrate Diet"
+         ]
+        },
+        {
+         "label": "Low-Carbohydrate Diet Active Control Group",
+         "type": "ACTIVE_COMPARATOR",
+         "description": "Participants in this arm will receive a hypocaloric low-carbohydrate diet together with folic acid supplementation. Folic acid will be administered orally at a dose of 400 µg once daily. No metformin or myo-inositol supplementation will be provided. Folic acid is included to standardize folate intake across intervention groups, as the myo-inositol supplement used in the inositol groups also contains folic acid. The intervention period will be 2 months.",
+         "interventionNames": [
+          "Dietary Supplement: Folic Acid",
+          "Other: Low-Carbohydrate Diet"
+         ]
+        }
+       ],
+       "interventions": [
+        {
+         "type": "DRUG",
+         "name": "Metformin",
+         "description": "Metformin will be administered orally for 2 months. Treatment will begin at 500 mg once daily during the first week and will be increased to 1000 mg/day (500 mg twice daily) from the second week onward, as tolerated. Dose escalation is intended to improve gastrointestinal tolerability while achieving the target maintenance dose.",
+         "armGroupLabels": [
+          "Group Receiving Low-Carbohydrate Diet and Metformin Treatment",
+          "Group Receiving Mediterranean Diet and Metformin Treatment"
+         ]
+        },
+        {
+         "type": "DIETARY_SUPPLEMENT",
+         "name": "İnositol",
+         "description": "Myo-inositol will be administered orally as a powdered sachet formulation. Participants will receive two sachets daily for 2 months, providing a total daily dose of 4000 mg myo-inositol and 400 µg folic acid.",
+         "armGroupLabels": [
+          "Group Receiving Low-Carbohydrate Diet and Inositol Supplement",
+          "Group Receiving Mediterranean Diet and Inositol Supplement"
+         ]
+        },
+        {
+         "type": "DIETARY_SUPPLEMENT",
+         "name": "Folic Acid",
+         "description": "Folic acid will be administered orally at a dose of 400 µg once daily for 2 months. Folic acid is provided to participants in the metformin and control groups to standardize folate intake across intervention groups, as the myo-inositol supplement administered in the inositol groups also contains 400 µg of folic acid per day.",
+         "armGroupLabels": [
+          "Group Receiving Low-Carbohydrate Diet and Metformin Treatment",
+          "Group Receiving Mediterranean Diet and Metformin Treatment",
+          "Low-Carbohydrate Diet Active Control Group",
+          "Mediterranean Diet Active Control Group"
+         ]
+        },
+        {
+         "type": "OTHER",
+         "name": "Mediterranean diet",
+         "description": "Participants will receive individualized hypocaloric Mediterranean diet counseling for 2 months. Daily energy requirements will be calculated individually, and meal plans will be prescribed with an energy deficit of approximately 500 kcal/day to promote weight loss. The dietary pattern will emphasize vegetables, fruits, whole grains, legumes, nuts, olive oil as the principal source of fat, moderate consumption of fish, poultry, and low-fat dairy products, and limited consumption of red and processed meat, refined grains, and foods high in added sugars and saturated fat. Dietary adherence will be monitored at regular follow-up visits throughout the intervention period.",
+         "armGroupLabels": [
+          "Group Receiving Mediterranean Diet and Inositol Supplement",
+          "Group Receiving Mediterranean Diet and Metformin Treatment",
+          "Mediterranean Diet Active Control Group"
+         ]
+        },
+        {
+         "type": "OTHER",
+         "name": "Low-Carbohydrate Diet",
+         "description": "Participants will receive individualized hypocaloric low-carbohydrate diet counseling for 2 months. Daily energy requirements will be calculated individually, and meal plans will be prescribed with an energy deficit of approximately 500 kcal/day to promote weight loss. The diet will provide 50-130 g/day of carbohydrates or approximately 25-30% of total daily energy from carbohydrates. After achieving the carbohydrate target, the remaining energy intake will be distributed to provide approximately 15-30% of total energy from protein and 35-50% from fat, according to individual energy requirements. Dietary adherence will be monitored at regular follow-up visits throughout the intervention period.",
+         "armGroupLabels": [
+          "Group Receiving Low-Carbohydrate Diet and Inositol Supplement",
+          "Group Receiving Low-Carbohydrate Diet and Metformin Treatment",
+          "Low-Carbohydrate Diet Active Control Group"
+         ]
+        }
+       ]
+      },
+      "outcomesModule": {
+       "primaryOutcomes": [
+        {
+         "measure": "Change in Homeostatic Model Assessment for Insulin Resistance (HOMA-IR) from Baseline to 2 Months",
+         "description": "Insulin resistance will be assessed using the Homeostatic Model Assessment for Insulin Resistance (HOMA-IR), calculated from fasting plasma glucose and fasting serum insulin concentrations. The primary outcome will be the change in HOMA-IR from baseline to 2 months. Lower HOMA-IR values indicate improved insulin sensitivity.",
+         "timeFrame": "Baseline and 2 months"
+        }
+       ],
+       "secondaryOutcomes": [
+        {
+         "measure": "Change in Body Weight From Baseline to 2 Months",
+         "description": "Body weight will be measured in kilograms (kg). Change in body weight will be calculated as the value at 2 months minus the baseline value.",
+         "timeFrame": "Baseline and 2 months"
+        },
+        {
+         "measure": "Change in Body Mass Index From Baseline to 2 Months",
+         "description": "Body mass index (BMI) will be calculated as body weight in kilograms divided by height in meters squared (kg/m²). Change in BMI will be calculated as the value at 2 months minus the baseline value.",
+         "timeFrame": "Baseline and 2 months"
+        },
+        {
+         "measure": "Change in Body Fat Percentage From Baseline to 2 Months",
+         "description": "Body fat percentage will be assessed by bioelectrical impedance analysis (BIA) and reported as a percentage (%). Change in body fat percentage will be calculated as the value at 2 months minus the baseline value.",
+         "timeFrame": "Baseline to 2 Months"
+        },
+        {
+         "measure": "Change in Body Fat Mass From Baseline to 2 Months",
+         "description": "Body fat mass will be assessed by bioelectrical impedance analysis (BIA) and reported in kilograms (kg). Change in body fat mass will be calculated as the value at 2 months minus the baseline value.",
+         "timeFrame": "Baseline to 2 Months"
+        },
+        {
+         "measure": "Change in Fasting Serum Visfatin Concentration (ng/mL) From Baseline to 2 Months",
+         "description": "Fasting serum visfatin concentration will be measured in nanograms per milliliter (ng/mL) using an enzyme-linked immunosorbent assay (ELISA). The outcome will be reported as the change in serum visfatin concentration from baseline to 2 months, calculated as the 2-month value minus the baseline value.",
+         "timeFrame": "Baseline to 2 Months"
+        }
+       ]
+      },
+      "eligibilityModule": {
+       "eligibilityCriteria": "Inclusion Criteria:\n\n* Women aged 20-40\n* Diagnosed with PCOS (Rotterdam, 2004)\n* Insulin resistant (newly diagnosed or diagnosed within the last 3 months)\n* Obese according to the World Health Organization (2006) in grades 1 and 2 (BMI: 30-40 kg/m²)\n\nExclusion Criteria:\n\n* Pregnant or breastfeeding women\n* Those undergoing/contemplating IVF treatment\n* Early menopause diagnosis\n* Diabetes diagnosis, use of oral antidiabetic agents\n* Chronic diseases (liver, kidney diseases, cancer)\n* Psychiatric illnesses\n* Those taking routine medication for any reason\n* Use of hormonal contraceptive methods within the last 3 months\n* Active smokers and alcohol users or social drinkers\n* Change in body weight of more than 10% in the last 6 months for any reason",
+       "healthyVolunteers": false,
+       "sex": "FEMALE",
+       "minimumAge": "20 Years",
+       "maximumAge": "40 Years",
+       "stdAges": [
+        "ADULT"
+       ]
+      },
+      "contactsLocationsModule": {
+       "centralContacts": [
+        {
+         "name": "Esra Ucar, MSc",
+         "role": "CONTACT",
+         "phone": "+90 555 993 1894",
+         "email": "esra.ucar@dicle.edu.tr"
+        }
+       ],
+       "locations": [
+        {
+         "facility": "Dicle University Hospital",
+         "status": "RECRUITING",
+         "city": "Diyarbakır",
+         "state": "Diyarbakır",
+         "zip": "21280",
+         "country": "Turkey (Türkiye)",
+         "contacts": [
+          {
+           "name": "Elif Agacayak, MD",
+           "role": "CONTACT",
+           "phone": "+90 505 943 3449",
+           "email": "drelifagacayak@gmail.com"
+          }
+         ],
+         "geoPoint": {
+          "lat": 37.91363,
+          "lon": 40.21721
+         }
+        }
+       ]
+      },
+      "ipdSharingStatementModule": {
+       "ipdSharing": "NO"
+      }
+     },
+     "derivedSection": {
+      "miscInfoModule": {
+       "versionHolder": "2026-10-28"
+      },
+      "conditionBrowseModule": {
+       "meshes": [
+        {
+         "id": "D011085",
+         "term": "Polycystic Ovary Syndrome"
+        },
+        {
+         "id": "D007333",
+         "term": "Insulin Resistance"
+        },
+        {
+         "id": "D009765",
+         "term": "Obesity"
+        }
+       ],
+       "ancestors": [
+        {
+         "id": "D010048",
+         "term": "Ovarian Cysts"
+        },
+        {
+         "id": "D003560",
+         "term": "Cysts"
+        },
+        {
+         "id": "D009369",
+         "term": "Neoplasms"
+        },
+        {
+         "id": "D010049",
+         "term": "Ovarian Diseases"
+        },
+        {
+         "id": "D000291",
+         "term": "Adnexal Diseases"
+        },
+        {
+         "id": "D005831",
+         "term": "Genital Diseases, Female"
+        },
+        {
+         "id": "D052776",
+         "term": "Female Urogenital Diseases"
+        },
+        {
+         "id": "D005261",
+         "term": "Female Urogenital Diseases and Pregnancy Complications"
+        },
+        {
+         "id": "D000091642",
+         "term": "Urogenital Diseases"
+        },
+        {
+         "id": "D000091662",
+         "term": "Genital Diseases"
+        },
+        {
+         "id": "D006058",
+         "term": "Gonadal Disorders"
+        },
+        {
+         "id": "D004700",
+         "term": "Endocrine System Diseases"
+        },
+        {
+         "id": "D006946",
+         "term": "Hyperinsulinism"
+        },
+        {
+         "id": "D044882",
+         "term": "Glucose Metabolism Disorders"
+        },
+        {
+         "id": "D008659",
+         "term": "Metabolic Diseases"
+        },
+        {
+         "id": "D009750",
+         "term": "Nutritional and Metabolic Diseases"
+        },
+        {
+         "id": "D050177",
+         "term": "Overweight"
+        },
+        {
+         "id": "D044343",
+         "term": "Overnutrition"
+        },
+        {
+         "id": "D009748",
+         "term": "Nutrition Disorders"
+        },
+        {
+         "id": "D001835",
+         "term": "Body Weight"
+        },
+        {
+         "id": "D012816",
+         "term": "Signs and Symptoms"
+        },
+        {
+         "id": "D013568",
+         "term": "Pathological Conditions, Signs and Symptoms"
+        }
+       ]
+      },
+      "interventionBrowseModule": {
+       "meshes": [
+        {
+         "id": "D008687",
+         "term": "Metformin"
+        },
+        {
+         "id": "D007294",
+         "term": "Inositol"
+        },
+        {
+         "id": "D005492",
+         "term": "Folic Acid"
+        },
+        {
+         "id": "D038441",
+         "term": "Diet, Mediterranean"
+        },
+        {
+         "id": "D050528",
+         "term": "Diet, Carbohydrate-Restricted"
+        }
+       ],
+       "ancestors": [
+        {
+         "id": "D001645",
+         "term": "Biguanides"
+        },
+        {
+         "id": "D006146",
+         "term": "Guanidines"
+        },
+        {
+         "id": "D000578",
+         "term": "Amidines"
+        },
+        {
+         "id": "D009930",
+         "term": "Organic Chemicals"
+        },
+        {
+         "id": "D013402",
+         "term": "Sugar Alcohols"
+        },
+        {
+         "id": "D000438",
+         "term": "Alcohols"
+        },
+        {
+         "id": "D002241",
+         "term": "Carbohydrates"
+        },
+        {
+         "id": "D011622",
+         "term": "Pterins"
+        },
+        {
+         "id": "D011621",
+         "term": "Pteridines"
+        },
+        {
+         "id": "D006574",
+         "term": "Heterocyclic Compounds, 2-Ring"
+        },
+        {
+         "id": "D000072471",
+         "term": "Heterocyclic Compounds, Fused-Ring"
+        },
+        {
+         "id": "D006571",
+         "term": "Heterocyclic Compounds"
+        },
+        {
+         "id": "D000095500",
+         "term": "Diet, Plant-Based"
+        },
+        {
+         "id": "D004035",
+         "term": "Diet Therapy"
+        },
+        {
+         "id": "D044623",
+         "term": "Nutrition Therapy"
+        },
+        {
+         "id": "D013812",
+         "term": "Therapeutics"
+        },
+        {
+         "id": "D004032",
+         "term": "Diet"
+        },
+        {
+         "id": "D009747",
+         "term": "Nutritional Physiological Phenomena"
+        },
+        {
+         "id": "D000066888",
+         "term": "Diet, Food, and Nutrition"
+        },
+        {
+         "id": "D010829",
+         "term": "Physiological Phenomena"
+        }
+       ]
+      }
+     },
+     "hasResults": false
+    }
+   ],
+   "nextPageToken": "ZVJ76sWHmqU2wRk2CJf6_LLvypbYPpVrd7KrgP4bmT2atA"
+  },
+  "bytes": 20498,
+  "truncated": false,
+  "note": null
+ }
+}

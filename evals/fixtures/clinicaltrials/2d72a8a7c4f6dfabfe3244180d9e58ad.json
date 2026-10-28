@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "request": {
+  "source": "clinicaltrials",
+  "endpoint": "study",
+  "url": "https://clinicaltrials.gov/api/v2/studies/NCT03548935",
+  "params": {
+   "fields": "InterventionName"
+  },
+  "fixed": {
+   "format": "json"
+  }
+ },
+ "recorded_at": "2026-10-28T15:31:14+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "protocolSection": {
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "name": "Semaglutide"
+      },
+      {
+       "name": "Placebo (semaglutide)"
+      }
+     ]
+    }
+   }
+  },
+  "bytes": 123,
+  "truncated": false,
+  "note": null
+ }
+}

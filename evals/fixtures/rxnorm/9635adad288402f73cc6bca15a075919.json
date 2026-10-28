@@ -1,0 +1,26 @@
+{
+ "version": 1,
+ "request": {
+  "source": "rxnorm",
+  "endpoint": "rxcui_by_name",
+  "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json",
+  "params": {
+   "name": "atorvastatin"
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:15:02+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "idGroup": {
+    "rxnormId": [
+     "83367"
+    ]
+   }
+  },
+  "bytes": 34,
+  "truncated": false,
+  "note": null
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "version": 1,
+ "request": {
+  "source": "openfda",
+  "endpoint": "drug_enforcement",
+  "url": "https://api.fda.gov/drug/enforcement.json",
+  "params": {
+   "search": "classification:\"Class I\" AND report_date:[20250101 TO 20251231]",
+   "count": "recalling_firm.exact",
+   "limit": 3
+  },
+  "fixed": {}
+ },
+ "recorded_at": "2026-10-28T15:31:19+00:00",
+ "response": {
+  "status": 200,
+  "data": {
+   "meta": {
+    "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+    "terms": "https://open.fda.gov/terms/",
+    "license": "https://open.fda.gov/license/",
+    "last_updated": "2026-10-21"
+   },
+   "results": [
+    {
+     "term": "SAINI TRADE INC",
+     "count": 5
+    },
+    {
+     "term": "DermaRite Industries, LLC",
+     "count": 4
+    },
+    {
+     "term": "Endo USA, Inc.",
+     "count": 4
+    }
+   ]
+  },
+  "bytes": 647,
+  "truncated": false,
+  "note": null
+ }
+}

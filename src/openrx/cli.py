@@ -224,3 +224,66 @@ def ask_command(
         f"{totals['input_tokens']:,} in / {totals['output_tokens']:,} out tokens), "
         f"{totals['tool_calls']} tool calls ({totals['tool_seconds']}s){reduction}]"
     )
+
+
+fixtures_app = typer.Typer(help="Move eval fixtures between Floci's S3 and the repo.")
+eval_app.add_typer(fixtures_app, name="fixtures")
+
+
+@fixtures_app.command("export")
+def fixtures_export() -> None:
+    """Copy recorded fixtures from Floci's S3 into evals/fixtures/ (to commit)."""
+    from openrx.evals.deployed import FIXTURE_BUCKET, s3_client
+    from openrx.evals.fixtures import FIXTURES_DIR, export_fixtures
+
+    count = export_fixtures(s3_client(), FIXTURE_BUCKET)
+    typer.echo(f"exported {count} fixture(s) to {FIXTURES_DIR}")
+
+
+@fixtures_app.command("import")
+def fixtures_import() -> None:
+    """Upload evals/fixtures/ into Floci's S3 (after `make up`)."""
+    from openrx.evals.deployed import FIXTURE_BUCKET, s3_client
+    from openrx.evals.fixtures import import_fixtures
+
+    count = import_fixtures(s3_client(), FIXTURE_BUCKET)
+    typer.echo(f"imported {count} fixture(s) into s3://{FIXTURE_BUCKET}")
+
+
+@eval_app.command("record")
+def eval_record() -> None:
+    """Run every task's reference, recording the data it needs; save fixtures and answers."""
+    from openrx.evals.deployed import (
+        FIXTURE_BUCKET,
+        lambda_client,
+        run_code,
+        s3_client,
+        set_bridge_mode,
+    )
+    from openrx.evals.expected import save_expected, shape_problem
+    from openrx.evals.fixtures import export_fixtures
+    from openrx.evals.tasks import load_tasks
+
+    lam = lambda_client()
+    expected: dict[str, object] = {}
+    failed = 0
+    set_bridge_mode(lam, "replay_or_record")
+    try:
+        for task in load_tasks():
+            result = run_code(lam, task.reference)
+            problem = result["error"]["message"][:200] if result.get("error") else None
+            problem = problem or shape_problem(task, result.get("result"))
+            if problem:
+                failed += 1
+                typer.echo(f"FAILED {task.id}: {problem}", err=True)
+            else:
+                expected[task.id] = result["result"]
+                typer.echo(f"ok     {task.id} ({result['request_calls']} request(s))")
+    finally:
+        set_bridge_mode(lam, "live")
+    count = export_fixtures(s3_client(), FIXTURE_BUCKET)
+    typer.echo(f"exported {count} fixture(s)")
+    if failed:
+        raise typer.Exit(code=1)
+    save_expected(expected)
+    typer.echo(f"saved {len(expected)} expected answer(s) to evals/expected.json")
