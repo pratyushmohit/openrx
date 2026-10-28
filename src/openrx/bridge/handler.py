@@ -89,7 +89,9 @@ class Bridge:
         if not answer["ok"]:
             log["error_code"] = answer["error"]["code"]
             log["error_class"] = answer["error"]["class"]
-        log["total_ms"] = round((self._clock() - started) * 1000, 2)
+        # Time spent inside the bridge, upstream included; the SLO measures it in
+        # replay mode, where "upstream" is one S3 read (docs/slos.md).
+        answer["bridge_ms"] = log["total_ms"] = round((self._clock() - started) * 1000, 2)
         self._log(json.dumps(log, default=str))
         return answer
 

@@ -20,7 +20,7 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help check lint lint-catalog typecheck test test-integration deploy up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge deploy up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -42,6 +42,9 @@ test: ## Run unit tests with coverage
 
 test-integration: ## Run tests against the deployed Lambdas on Floci (needs make up + deploy)
 	uv run pytest -m integration -p no:cacheprovider
+
+bench-bridge: ## Measure the deployed bridge's overhead in replay mode (docs/slos.md)
+	uv run python scripts/bench_bridge.py
 
 # Floci keeps state in memory, so recreating the container wipes every AWS
 # resource. Terraform's state must be wiped too, or it would believe the old

@@ -30,7 +30,7 @@ flowchart LR
       execute["execute-runner<br/>Monty + catalog_*() + request()<br/>IAM: invoke bridge only<br/><i>M3</i>"]
     end
     subgraph creds["Credentials live here"]
-      bridge["bridge<br/>validate vs catalog · budget · rate limit<br/>add API key · record/replay<br/><i>M2</i>"]
+      bridge["bridge<br/>validate vs catalog · budget · rate limit<br/>add API key · record/replay"]
       secrets["Secrets Manager<br/>openrx/openfda_api_key"]
     end
     bedrock["Bedrock Runtime<br/>proxy mode · Converse"]
@@ -49,8 +49,8 @@ flowchart LR
 
   classDef built stroke:#333,stroke-width:1.5px
   classDef planned stroke:#333,stroke-width:1.5px,stroke-dasharray:5 4
-  class secrets,bedrock,ollama,apis built
-  class client,server,search,execute,bridge planned
+  class secrets,bedrock,ollama,apis,bridge built
+  class client,server,search,execute planned
   style sandbox fill:#fbf1e1,stroke:#a8640a,color:#111
   style creds fill:#fbe9eb,stroke:#ad2a3c,color:#111
   style floci fill:#eef1f6,stroke:#586170,color:#111
@@ -145,7 +145,7 @@ enforcement on.
 | Catalog loader, lint, example capture | M1 | Built |
 | Catalog sources: openFDA, PubMed, RxNorm, DailyMed, ClinicalTrials.gov (23 endpoints) | M1 | Built |
 | `catalog_*()` functions | M1 | Built |
-| Bridge | M2 | Planned |
+| Bridge (validation, keys, limits, record/replay, Lambda) | M2 | Built |
 | search-runner, execute-runner | M3 | Planned |
 | MCP server, LangGraph agent | M4 | Planned |
 | Eval harness and report | M5 | Planned |

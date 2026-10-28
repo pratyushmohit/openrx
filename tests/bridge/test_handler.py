@@ -135,6 +135,7 @@ def test_rejections_are_structured(event, code, error_class):
 
     answer = bridge.handle(event)
 
+    assert isinstance(answer.pop("bridge_ms"), float)
     assert answer == {
         "ok": False,
         "error": {"code": code, "message": answer["error"]["message"], "class": error_class},

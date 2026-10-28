@@ -43,6 +43,7 @@ def test_live_request_reaches_the_api(lam):
 def test_attacks_are_rejected_inside_the_lambda(lam):
     answer = invoke(lam, source="openfda", path="https://evil.example/steal")
 
+    answer.pop("bridge_ms")
     assert answer == {
         "ok": False,
         "error": {
