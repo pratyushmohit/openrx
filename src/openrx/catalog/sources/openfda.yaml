@@ -53,7 +53,8 @@ guide: |
     - Date fields return [{"time": "YYYYMMDD", "count": ...}] instead.
 
   limit, skip, sort
-    - limit: 1 to 1000 records (default 1). skip: at most 25000.
+    - limit: 1 to 999 records (default 1); limit=1000 needs an API key and fails
+      with API_KEY_MISSING without one. skip: at most 25000.
     - sort: receivedate:desc
 
   Responses
@@ -78,7 +79,7 @@ endpoints:
         description: Count the most common values of a field instead of returning records.
         example: patient.reaction.reactionmeddrapt.exact
       - &sort {name: sort, description: "Sort by a field, e.g. receivedate:desc."}
-      - &limit {name: limit, type: integer, description: "Records (or count terms) to return, 1-1000.", example: 5}
+      - &limit {name: limit, type: integer, description: "Records (or count terms) to return, 1-999 (1000 needs an API key).", example: 5}
       - &skip {name: skip, type: integer, description: "Records to skip for paging, at most 25000."}
     example_params: {search: *drug_event_search, limit: 2}
     response_notes: >-
