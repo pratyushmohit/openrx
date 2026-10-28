@@ -143,7 +143,7 @@ enforcement on.
 | Package + CLI skeleton | M1 | Built |
 | Catalog schema | M1 | Built |
 | Catalog loader, lint, example capture | M1 | Built |
-| Catalog sources: openFDA, PubMed, RxNorm, DailyMed (ClinicalTrials.gov next) | M1 | 4 of 5 built |
+| Catalog sources: openFDA, PubMed, RxNorm, DailyMed, ClinicalTrials.gov (23 endpoints) | M1 | Built |
 | `catalog_*()` functions | M1 | Planned |
 | Bridge | M2 | Planned |
 | search-runner, execute-runner | M3 | Planned |

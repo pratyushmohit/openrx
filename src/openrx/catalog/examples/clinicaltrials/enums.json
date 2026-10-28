@@ -1,0 +1,46 @@
+{
+  "request": {
+    "url": "https://clinicaltrials.gov/api/v2/studies/enums",
+    "params": {}
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": [
+    {
+      "type": "OrgStudyIdType",
+      "values": [
+        {
+          "value": "NIH",
+          "legacyValue": "U.S. NIH Grant/Contract"
+        },
+        {
+          "value": "FDA",
+          "legacyValue": "U.S. FDA Grant/Contract"
+        }
+      ],
+      "pieces": [
+        "OrgStudyIdType"
+      ]
+    },
+    {
+      "type": "SecondaryIdType",
+      "values": [
+        {
+          "value": "NIH",
+          "legacyValue": "U.S. NIH Grant/Contract"
+        },
+        {
+          "value": "FDA",
+          "legacyValue": "U.S. FDA Grant/Contract"
+        }
+      ],
+      "pieces": [
+        "SecondaryIdType"
+      ]
+    }
+  ]
+}

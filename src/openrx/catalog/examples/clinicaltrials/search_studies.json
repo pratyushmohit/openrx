@@ -1,0 +1,67 @@
+{
+  "request": {
+    "url": "https://clinicaltrials.gov/api/v2/studies",
+    "params": {
+      "query.intr": "semaglutide",
+      "filter.advanced": "AREA[Phase]PHASE3",
+      "fields": "NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName",
+      "countTotal": true,
+      "pageSize": 2,
+      "format": "json"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "totalCount": 185,
+    "studies": [
+      {
+        "protocolSection": {
+          "identificationModule": {
+            "nctId": "NCT05819138",
+            "briefTitle": "Type 1 Diabetes Impacts of Semaglutide on Cardiovascular Outcomes"
+          },
+          "statusModule": {
+            "overallStatus": "RECRUITING"
+          },
+          "sponsorCollaboratorsModule": {
+            "leadSponsor": {
+              "name": "University of Colorado, Denver"
+            }
+          },
+          "designModule": {
+            "phases": [
+              "PHASE3"
+            ]
+          }
+        }
+      },
+      {
+        "protocolSection": {
+          "identificationModule": {
+            "nctId": "NCT04074161",
+            "briefTitle": "Research Study to Investigate How Well Semaglutide Works Compared to Liraglutide in People Living With Overweight or Obesity"
+          },
+          "statusModule": {
+            "overallStatus": "COMPLETED"
+          },
+          "sponsorCollaboratorsModule": {
+            "leadSponsor": {
+              "name": "Novo Nordisk A/S"
+            }
+          },
+          "designModule": {
+            "phases": [
+              "PHASE3"
+            ]
+          }
+        }
+      }
+    ],
+    "nextPageToken": "ZVNj7o2Elu8o3lpzTd6s47mtmpOQJJxsZ_ek3fg"
+  }
+}

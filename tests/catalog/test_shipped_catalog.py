@@ -50,14 +50,15 @@ def test_shipped_catalog_passes_lint():
     assert lint_catalog() == []
 
 
-def test_every_endpoint_has_example_params():
+def test_every_endpoint_with_params_has_example_params():
     for source in catalog:
         for endpoint in source.endpoints:
-            assert endpoint.example_params, f"{source.id}.{endpoint.id}: no example_params"
+            if endpoint.params:
+                assert endpoint.example_params, f"{source.id}.{endpoint.id}: no example_params"
 
 
 def test_shipped_sources():
-    assert [s.id for s in catalog] == ["dailymed", "openfda", "pubmed", "rxnorm"]
+    assert [s.id for s in catalog] == ["clinicaltrials", "dailymed", "openfda", "pubmed", "rxnorm"]
 
 
 def test_pubmed_identifies_itself_without_committing_an_email():

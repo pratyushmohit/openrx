@@ -1,0 +1,209 @@
+# GENERATED FILE: do not edit. Change openapi/clinicaltrials.yaml instead, then run
+#   openrx catalog import-openapi clinicaltrials
+# Generated from the ClinicalTrials.gov OpenAPI spec, version 2.0.5.
+
+id: clinicaltrials
+name: ClinicalTrials.gov
+base_url: https://clinicaltrials.gov/api/v2
+rate_limit:
+  per_second: 0.8
+guide: |
+  Each study has an NCT id (e.g. NCT03548935). search_studies finds studies;
+  study returns one in full.
+
+  Searching (search_studies)
+    - query.cond (condition), query.intr (intervention/drug), query.spons
+      (sponsor), query.term (anything), query.titles, query.locn. Plain spaces;
+      AND / OR / NOT work inside a query.
+    - filter.overallStatus: RECRUITING, COMPLETED, ACTIVE_NOT_RECRUITING, ...
+      (several: RECRUITING|COMPLETED).
+    - filter.advanced uses AREA[Field]value for any field, e.g.
+      AREA[Phase]PHASE3, AREA[StudyType]INTERVENTIONAL,
+      AREA[StartDate]RANGE[2023-01-01,MAX]. Combine with AND.
+    - fields: return only these fields to keep responses small, e.g.
+      NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName.
+    - countTotal=true adds totalCount (left out otherwise).
+    - pageSize up to 1000 (default 10). If nextPageToken is present, pass it
+      as pageToken for the next page.
+
+  Phase values: EARLY_PHASE1, PHASE1, PHASE2, PHASE3, PHASE4, NA. A Phase 2/3
+  study lists both PHASE2 and PHASE3. Use enums for every allowed value.
+
+  Responses
+    - No matches: HTTP 200 with an empty studies list (and totalCount 0).
+    - A bad parameter value is HTTP 400 with a plain-text message naming it.
+    - An unknown NCT id is HTTP 404.
+endpoints:
+- id: search_studies
+  path: /studies
+  description: Search clinical studies by condition, intervention, sponsor, status, phase
+    and other fields; returns matching studies page by page.
+  fixed_params:
+    format: json
+  params:
+  - name: query.cond
+    description: '"Conditions or disease" query in Essie expression syntax. See "ConditionSearch
+      Area" on Search Areas for more details.'
+    example: lung cancer
+  - name: query.term
+    description: '"Other terms" query in Essie expression syntax. See "BasicSearch Area" on
+      Search Areas for more details.'
+    example: AREA[LastUpdatePostDate]RANGE[2023-01-15,MAX]
+  - name: query.locn
+    description: '"Location terms" query in Essie expression syntax. See "LocationSearch Area"
+      on Search Areas for more details.'
+  - name: query.titles
+    description: '"Title / acronym" query in Essie expression syntax. See "TitleSearch Area"
+      on Search Areas for more details.'
+  - name: query.intr
+    description: '"Intervention / treatment" query in Essie expression syntax. See "InterventionSearch
+      Area" on Search Areas for more details.'
+  - name: query.outc
+    description: '"Outcome measure" query in Essie expression syntax. See "OutcomeSearch Area"
+      on Search Areas for more details.'
+  - name: query.spons
+    description: '"Sponsor / collaborator" query in Essie expression syntax. See "SponsorSearch
+      Area" on Search Areas for more details.'
+  - name: query.lead
+    description: Searches in "LeadSponsorName" field. See Study Data Structure for more details.
+      The query is in Essie expression syntax.
+  - name: query.id
+    description: '"Study IDs" query in Essie expression syntax. See "IdSearch Area" on Search
+      Areas for more details.'
+  - name: query.patient
+    description: See "PatientSearch Area" on Search Areas for more details.
+  - name: filter.overallStatus
+    description: 'Filter by comma- or pipe-separated list of statuses. Allowed: ACTIVE_NOT_RECRUITING,
+      COMPLETED, ENROLLING_BY_INVITATION, NOT_YET_RECRUITING, RECRUITING, SUSPENDED, TERMINATED,
+      WITHDRAWN, AVAILABLE, NO_LONGER_AVAILABLE, TEMPORARILY_NOT_AVAILABLE, APPROVED_FOR_MARKETING,
+      WITHHELD, UNKNOWN. Several values: separate with |.'
+    example: NOT_YET_RECRUITING|RECRUITING
+  - name: filter.geo
+    description: 'Filter by geo-function. Currently only distance function is supported. Format:
+      `distance(latitude,longitude,distance)`.'
+    example: distance(39.0035707,-77.1013313,50mi)
+  - name: filter.ids
+    description: 'Filter by comma- or pipe-separated list of NCT IDs (a.k.a. ClinicalTrials.gov
+      identifiers). The provided IDs will be searched in NCTId and NCTIdAlias fields. Several
+      values: separate with |.'
+    example: NCT04852770|NCT01728545|NCT02109302
+  - name: filter.advanced
+    description: Filter by query in Essie expression syntax.
+    example: AREA[StartDate]2022
+  - name: filter.synonyms
+    description: 'Filter by comma- or pipe-separated list of `area`:`synonym_id` pairs. Several
+      values: separate with |.'
+    example: ConditionSearch:1651367|BasicSearch:2013558
+  - name: aggFilters
+    description: Apply aggregation filters, aggregation counts will not be provided. The value
+      is comma- or pipe-separated list of pairs `filter_id`:`space-separated list of option
+      keys` for the checked options.
+    example: results:with,status:com
+  - name: fields
+    description: 'If specified, must be non-empty comma- or pipe-separated list of fields
+      to return. If unspecified, all fields will be returned. Order of the fields does not
+      matter. For `csv` format, specify list of columns. The column names are available on
+      CSV Download. For `json` format, every list item is either area name, piece name, field
+      name, or special name. If a piece or a field is a branch node, all descendant fields
+      will be included. All area names are available on Search Areas, the piece and field
+      names — on Data Structure and also can be retrieved at `/studies/metadata` endpoint.
+      There is a special name, `@query`, which expands to all fields queried by search. Several
+      values: separate with |.'
+    example: NCTId|BriefTitle|OverallStatus|HasResults
+  - name: sort
+    description: 'Comma- or pipe-separated list of sorting options of the studies. The returning
+      studies are not sorted by default for a performance reason. Every list item contains
+      a field/piece name and an optional sort direction (`asc` for ascending or `desc` for
+      descending) after colon character. All piece and field names can be found on Data Structure
+      and also can be retrieved at `/studies/metadata` endpoint. Currently, only date and
+      numeric fields are allowed for sorting. There is a special "field" `@relevance` to sort
+      by relevance to a search query. Studies missing sort field are always last. Default
+      sort direction: * Date field - `desc` * Numeric field - `asc` * `@relevance` - `desc`.
+      Several values: separate with |.'
+    example: '@relevance'
+  - name: countTotal
+    type: boolean
+    description: Count total number of studies in all pages and return `totalCount` field
+      with first page, if `true`. For CSV, the result can be found in `x-total-count` response
+      header. The parameter is ignored for the subsequent pages.
+  - name: pageSize
+    type: integer
+    description: Page size is maximum number of studies to return in response. It does not
+      have to be the same for every page. If not specified or set to 0, the default value
+      will be used. It will be coerced down to 1,000, if greater than that.
+    example: 2
+  - name: pageToken
+    description: Token to get next page. Set it to a `nextPageToken` value returned with the
+      previous page in JSON format. For CSV, it can be found in `x-next-page-token` response
+      header. Do not specify it for first page.
+  example_params:
+    query.intr: semaglutide
+    filter.advanced: AREA[Phase]PHASE3
+    fields: NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName
+    countTotal: true
+    pageSize: 2
+  response_notes: studies is a list in the same shape as the study endpoint (only the requested
+    fields when fields is set); totalCount is present only with countTotal=true; nextPageToken
+    is present when there are more pages.
+- id: study
+  path: /studies/{nctId}
+  description: 'One study in full by NCT id: identification, status, sponsor, design and phase,
+    arms and interventions, outcomes, eligibility, locations, and results when posted.'
+  fixed_params:
+    format: json
+  params:
+  - name: nctId
+    in: path
+    required: true
+    description: NCT Number of a study. If found in NCTIdAlias field, 301 HTTP redirect to
+      the actual study will be returned.
+    example: NCT00841061
+  - name: fields
+    description: 'If specified, must be non-empty comma- or pipe-separated list of fields
+      to return. If unspecified, all fields will be returned. Order of the fields does not
+      matter. For `csv` format, specify list of columns. The column names are available on
+      CSV Download. For `json` and `json.zip` formats, every list item is either area name,
+      piece name, or field name. If a piece or a field is a branch node, all descendant fields
+      will be included. All area names are available on Search Areas, the piece and field
+      names - on Data Structure and also can be retrieved at `/studies/metadata` endpoint.
+      For `fhir.json` format, all available fields are returned and this parameter must be
+      unspecified. For `ris` format, specify list of tags. The tag names are available on
+      RIS Download. Several values: separate with |.'
+    example: NCTId|BriefTitle|Reference
+  example_params:
+    nctId: NCT03548935
+    fields: NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName|HasResults
+  response_notes: 'protocolSection holds modules: identificationModule (nctId, briefTitle),
+    statusModule (overallStatus, startDateStruct, completionDateStruct), sponsorCollaboratorsModule
+    (leadSponsor {name, class}), designModule (phases[], studyType), armsInterventionsModule
+    (interventions[]), conditionsModule, eligibilityModule, contactsLocationsModule. hasResults
+    is true when results are posted; resultsSection then holds outcomeMeasuresModule and adverseEventsModule
+    (adverse events reported in the trial). Use fields to fetch only what you need: a full
+    study is large.'
+- id: field_values
+  path: /stats/field/values
+  description: How often each value of a field occurs across all studies, e.g. how many studies
+    are in each phase.
+  params:
+  - name: types
+    description: 'Filter by field types. Allowed: ENUM, STRING, DATE, INTEGER, NUMBER, BOOLEAN.
+      Several values: separate with |.'
+    example: ENUM|BOOLEAN
+  - name: fields
+    description: 'Filter by piece names or field paths of leaf fields. See Data Structure
+      for the available values. If specified, must be non-empty comma- or pipe-separated list
+      of fields to return. Several values: separate with |.'
+    example: Phase
+  example_params:
+    fields: Phase
+  response_notes: 'A list with one entry per field: {field, piece, type, uniqueValuesCount,
+    missingStudiesCount, topValues: [{value, studiesCount}]}. Counts cover the whole registry,
+    not a search; for counts within a search use search_studies with countTotal=true.'
+- id: enums
+  path: /studies/enums
+  description: Every enumerated field type and its allowed values (statuses, phases, study
+    types, sponsor classes, ...).
+  params: []
+  response_notes: 'A list of {type, pieces[], values: [{value, legacyValue}]}. value is what
+    queries and filters use (e.g. PHASE3); legacyValue is the older display text (e.g. "Phase
+    3").'

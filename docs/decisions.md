@@ -253,3 +253,34 @@ truth.
 
 **Cost:** the bridge must apply the same merge and expansion (M2); `expand_placeholders`
 in `schema.py` is shared so both use one implementation.
+
+---
+
+## D-011: Generate ClinicalTrials.gov from a saved spec plus a hand-written overlay
+
+**Date:** 2026-10-28 · **Status:** Accepted
+
+**Context:** ClinicalTrials.gov publishes an OpenAPI spec, so its catalog entry can be
+generated instead of hand-copied (README FR-16). The spec has no guide, notes or example
+requests, and it lists parameters we don't want to expose (`format`, duplicates).
+
+**Options:**
+1. Generate once, then edit the generated YAML by hand.
+2. Generate directly from the live spec on every run of the command.
+3. Generate from a committed copy of the spec plus a hand-written overlay.
+
+**Decision:** Option 3.
+- `openapi/clinicaltrials.yaml` (hand-written): which operations to import, our endpoint
+  ids, descriptions, guide, notes, example requests, fixed and excluded parameters.
+- `openapi/clinicaltrials.spec.yaml`: the upstream spec, refreshed only on purpose with
+  `--fetch`.
+- `sources/clinicaltrials.yaml`: generated, marked "do not edit".
+- A test regenerates the source and compares it with the committed file.
+
+**Why:** Option 1 mixes generated and hand-written text, so the next import overwrites
+the hand edits (same reasoning as D-009). Option 2 makes the output depend on whatever the
+upstream server says that day, so the same commit could generate different files. With a
+saved spec the output is reproducible, an upstream change shows up as a reviewable diff
+of the saved spec, and the sync test catches both hand edits and forgotten regeneration.
+
+**Cost:** three files for one source, and an 81 KB spec copy in the repo (and package).

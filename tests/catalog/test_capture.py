@@ -31,7 +31,13 @@ SOURCE = Source.model_validate(
                 "params": [{"name": "nctId", "in": "path", "required": True, "description": "Id."}],
                 "example_params": {"nctId": "NCT 1/2"},
             },
-            {"id": "draft", "path": "/draft", "description": "No example yet."},
+            {
+                "id": "draft",
+                "path": "/draft",
+                "description": "No example yet.",
+                "params": [{"name": "q", "description": "Query."}],
+            },
+            {"id": "version", "path": "/version", "description": "Takes no parameters."},
         ],
     }
 )
@@ -157,10 +163,17 @@ def test_non_json_response_is_reported(tmp_path):
     assert result.error == "response is not JSON"
 
 
-def test_endpoint_without_example_params_is_skipped(tmp_path):
+def test_endpoint_with_params_but_no_example_params_is_skipped(tmp_path):
     [result] = capture_source(SOURCE, fake_client(ok), root=tmp_path, only="draft")
 
     assert result.error == "no example_params in the YAML"
+
+
+def test_endpoint_without_params_is_captured_as_is(tmp_path):
+    [result] = capture_source(SOURCE, fake_client(ok), root=tmp_path, only="version")
+
+    assert result.error is None
+    assert example_path(tmp_path, "trials", "version").exists()
 
 
 def test_unknown_endpoint_is_reported(tmp_path):
@@ -174,8 +187,8 @@ def test_requests_are_spaced_by_the_rate_limit(tmp_path):
 
     results = capture_source(SOURCE, fake_client(ok), root=tmp_path, sleep=pauses.append)
 
-    assert [r.endpoint_id for r in results] == ["search", "study", "draft"]
-    assert pauses == pytest.approx([0.25, 0.25])  # 4 per second, none before the first
+    assert [r.endpoint_id for r in results] == ["search", "study", "draft", "version"]
+    assert pauses == pytest.approx([0.25, 0.25, 0.25])  # 4 per second, none before the first
 
 
 # --- fixed params and text responses ----------------------------------------------

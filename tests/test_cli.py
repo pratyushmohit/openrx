@@ -2,6 +2,8 @@ import tomllib
 from pathlib import Path
 
 import httpx
+import yaml
+from samples import OPENAPI_OVERLAY, OPENAPI_SPEC
 from typer.testing import CliRunner
 
 from openrx import __version__, cli
@@ -112,3 +114,61 @@ def test_capture_examples_reports_a_broken_source_file(tmp_path):
 
     assert result.exit_code == 1
     assert "must be an https URL" in result.output
+
+
+def write_openapi_inputs(root):
+    (root / "openapi").mkdir()
+    (root / "sources").mkdir(exist_ok=True)
+    (root / "openapi" / "trials.yaml").write_text(yaml.safe_dump(OPENAPI_OVERLAY), encoding="utf-8")
+    return OPENAPI_SPEC
+
+
+def test_import_openapi_generates_from_the_saved_spec(tmp_path):
+    spec = write_openapi_inputs(tmp_path)
+    (tmp_path / "openapi" / "trials.spec.yaml").write_text(yaml.safe_dump(spec), encoding="utf-8")
+
+    result = runner.invoke(app, ["catalog", "import-openapi", "trials", "--dir", str(tmp_path)])
+
+    assert result.exit_code == 0, result.output
+    assert (tmp_path / "sources" / "trials.yaml").exists()
+
+
+def test_import_openapi_fetch_saves_the_spec_with_lf_endings(tmp_path, monkeypatch):
+    spec = write_openapi_inputs(tmp_path)
+    body = yaml.safe_dump(spec).replace("\n", "\r\n")
+    transport = httpx.MockTransport(lambda request: httpx.Response(200, text=body))
+    monkeypatch.setattr(cli, "_http_client", lambda headers: httpx.Client(transport=transport))
+
+    args = ["catalog", "import-openapi", "trials", "--fetch", "--dir", str(tmp_path)]
+    result = runner.invoke(app, args)
+
+    assert result.exit_code == 0, result.output
+    assert b"\r\n" not in (tmp_path / "openapi" / "trials.spec.yaml").read_bytes()
+
+
+def test_import_openapi_fetch_failure(tmp_path, monkeypatch):
+    write_openapi_inputs(tmp_path)
+    transport = httpx.MockTransport(lambda request: httpx.Response(503))
+    monkeypatch.setattr(cli, "_http_client", lambda headers: httpx.Client(transport=transport))
+
+    args = ["catalog", "import-openapi", "trials", "--fetch", "--dir", str(tmp_path)]
+    result = runner.invoke(app, args)
+
+    assert result.exit_code == 1
+    assert "HTTP 503" in result.output
+
+
+def test_import_openapi_without_saved_spec_fails_cleanly(tmp_path):
+    write_openapi_inputs(tmp_path)
+
+    result = runner.invoke(app, ["catalog", "import-openapi", "trials", "--dir", str(tmp_path)])
+
+    assert result.exit_code == 1
+    assert "FAILED" in result.output
+
+
+def test_import_openapi_unknown_source(tmp_path):
+    result = runner.invoke(app, ["catalog", "import-openapi", "nope", "--dir", str(tmp_path)])
+
+    assert result.exit_code == 1
+    assert "no overlay" in result.output

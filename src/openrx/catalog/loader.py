@@ -99,6 +99,15 @@ def lint_catalog(root: Path = CATALOG_DIR) -> list[Problem]:
     return problems
 
 
+def read_yaml(path: Path) -> Any:
+    """Parse a YAML file safely (no Python objects) and reject duplicate keys.
+
+    Raises:
+        yaml.YAMLError: if the file is not valid YAML or repeats a key.
+    """
+    return yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader)
+
+
 def example_path(root: Path, source_id: str, endpoint_id: str) -> Path:
     """Where the example response for an endpoint is stored."""
     return root / "examples" / source_id / f"{endpoint_id}.json"
@@ -117,7 +126,7 @@ def load_source(path: Path, examples_root: Path | None = None) -> Source:
             of its example files is broken.
     """
     try:
-        data = yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader)
+        data = read_yaml(path)
     except yaml.YAMLError as e:
         raise CatalogError([Problem(path.name, "", f"invalid YAML: {_yaml_message(e)}")]) from None
     if not isinstance(data, dict):

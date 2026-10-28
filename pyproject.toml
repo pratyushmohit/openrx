@@ -64,6 +64,8 @@ typeCheckingMode = "standard"
 testpaths = ["tests"]
 # importlib: test files in different folders may share a name without clashing.
 addopts = ["--strict-markers", "--import-mode=importlib"]
+# Lets tests import shared sample data from tests/samples.py.
+pythonpath = ["tests"]
 
 [tool.coverage.run]
 source = ["openrx"]

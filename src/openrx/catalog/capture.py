@@ -81,8 +81,9 @@ def capture_source(
 ) -> list[Captured]:
     """Capture examples for every endpoint of `source` (or just `only`).
 
-    Endpoints without `example_params` are skipped with an error, and so are failed
-    requests: an example must be real data, so nothing is written for them.
+    Endpoints that take parameters but have no `example_params` are skipped with an
+    error, and so are failed requests: an example must be real data, so nothing is
+    written for them. An endpoint without parameters is called as it is.
     """
     endpoints = [e for e in source.endpoints if only is None or e.id == only]
     if only is not None and not endpoints:
@@ -99,7 +100,7 @@ def capture_source(
 def _capture_one(
     source: Source, endpoint: Endpoint, client: httpx.Client, root: Path, env: Mapping[str, str]
 ) -> Captured:
-    if not endpoint.example_params:
+    if endpoint.params and not endpoint.example_params:
         return Captured(endpoint.id, None, "no example_params in the YAML")
 
     url, query = example_request(source, endpoint)

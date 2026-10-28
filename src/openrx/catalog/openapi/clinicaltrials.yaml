@@ -1,0 +1,116 @@
+# Hand-written input for the generated sources/clinicaltrials.yaml.
+# Regenerate with:   openrx catalog import-openapi clinicaltrials
+# Refresh the spec:  openrx catalog import-openapi clinicaltrials --fetch
+#
+# The saved spec copy is clinicaltrials.spec.yaml. Parameters, their types and
+# descriptions come from the spec; everything below is ours. Checked against the
+# live API on 2026-10-28.
+
+spec_url: https://clinicaltrials.gov/api/oas/v2
+
+source:
+  id: clinicaltrials
+  name: ClinicalTrials.gov
+  # No official limit is published; the commonly reported figure is about 50
+  # requests per minute per IP, and HTTP 429 above it.
+  rate_limit:
+    per_second: 0.8
+  guide: |
+    Each study has an NCT id (e.g. NCT03548935). search_studies finds studies;
+    study returns one in full.
+
+    Searching (search_studies)
+      - query.cond (condition), query.intr (intervention/drug), query.spons
+        (sponsor), query.term (anything), query.titles, query.locn. Plain spaces;
+        AND / OR / NOT work inside a query.
+      - filter.overallStatus: RECRUITING, COMPLETED, ACTIVE_NOT_RECRUITING, ...
+        (several: RECRUITING|COMPLETED).
+      - filter.advanced uses AREA[Field]value for any field, e.g.
+        AREA[Phase]PHASE3, AREA[StudyType]INTERVENTIONAL,
+        AREA[StartDate]RANGE[2023-01-01,MAX]. Combine with AND.
+      - fields: return only these fields to keep responses small, e.g.
+        NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName.
+      - countTotal=true adds totalCount (left out otherwise).
+      - pageSize up to 1000 (default 10). If nextPageToken is present, pass it
+        as pageToken for the next page.
+
+    Phase values: EARLY_PHASE1, PHASE1, PHASE2, PHASE3, PHASE4, NA. A Phase 2/3
+    study lists both PHASE2 and PHASE3. Use enums for every allowed value.
+
+    Responses
+      - No matches: HTTP 200 with an empty studies list (and totalCount 0).
+      - A bad parameter value is HTTP 400 with a plain-text message naming it.
+      - An unknown NCT id is HTTP 404.
+
+operations:
+  - operation: listStudies
+    id: search_studies
+    description: >-
+      Search clinical studies by condition, intervention, sponsor, status, phase
+      and other fields; returns matching studies page by page.
+    fixed_params: {format: json}
+    # postFilter.* repeat filter.*; geoDecay and markupFormat aren't needed.
+    exclude_params:
+      - markupFormat
+      - postFilter.overallStatus
+      - postFilter.geo
+      - postFilter.ids
+      - postFilter.advanced
+      - postFilter.synonyms
+      - geoDecay
+    example_params:
+      query.intr: semaglutide
+      filter.advanced: AREA[Phase]PHASE3
+      fields: NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName
+      countTotal: true
+      pageSize: 2
+    response_notes: >-
+      studies is a list in the same shape as the study endpoint (only the
+      requested fields when fields is set); totalCount is present only with
+      countTotal=true; nextPageToken is present when there are more pages.
+
+  - operation: fetchStudy
+    id: study
+    description: >-
+      One study in full by NCT id: identification, status, sponsor, design and
+      phase, arms and interventions, outcomes, eligibility, locations, and
+      results when posted.
+    fixed_params: {format: json}
+    exclude_params: [markupFormat]
+    example_params:
+      nctId: NCT03548935
+      fields: NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName|HasResults
+    response_notes: >-
+      protocolSection holds modules: identificationModule (nctId, briefTitle),
+      statusModule (overallStatus, startDateStruct, completionDateStruct),
+      sponsorCollaboratorsModule (leadSponsor {name, class}), designModule
+      (phases[], studyType), armsInterventionsModule (interventions[]),
+      conditionsModule, eligibilityModule, contactsLocationsModule.
+      hasResults is true when results are posted; resultsSection then holds
+      outcomeMeasuresModule and adverseEventsModule (adverse events reported
+      in the trial). Use fields to fetch only what you need: a full study is
+      large.
+
+  - operation: fieldValuesStats
+    id: field_values
+    description: >-
+      How often each value of a field occurs across all studies, e.g. how many
+      studies are in each phase.
+    example_params:
+      fields: Phase
+    response_notes: >-
+      A list with one entry per field: {field, piece, type, uniqueValuesCount,
+      missingStudiesCount, topValues: [{value, studiesCount}]}. Counts cover
+      the whole registry, not a search; for counts within a search use
+      search_studies with countTotal=true.
+
+  - operation: enums
+    id: enums
+    description: >-
+      Every enumerated field type and its allowed values (statuses, phases,
+      study types, sponsor classes, ...).
+    example_params: {}
+    response_notes: >-
+      A list of {type, pieces[], values: [{value, legacyValue}]}. value is
+      what queries and filters use (e.g. PHASE3); legacyValue is the older
+      display text (e.g. "Phase 3").

@@ -1,0 +1,37 @@
+{
+  "request": {
+    "url": "https://clinicaltrials.gov/api/v2/studies/NCT03548935",
+    "params": {
+      "fields": "NCTId|BriefTitle|OverallStatus|Phase|LeadSponsorName|HasResults",
+      "format": "json"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": {
+    "protocolSection": {
+      "identificationModule": {
+        "nctId": "NCT03548935",
+        "briefTitle": "STEP 1: Research Study Investigating How Well Semaglutide Works in People Suffering From Overweight or Obesity"
+      },
+      "statusModule": {
+        "overallStatus": "COMPLETED"
+      },
+      "sponsorCollaboratorsModule": {
+        "leadSponsor": {
+          "name": "Novo Nordisk A/S"
+        }
+      },
+      "designModule": {
+        "phases": [
+          "PHASE3"
+        ]
+      }
+    },
+    "hasResults": true
+  }
+}

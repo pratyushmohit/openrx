@@ -8,7 +8,21 @@ import typer
 
 from openrx import __version__
 from openrx.catalog.capture import capture_source
-from openrx.catalog.loader import CATALOG_DIR, CatalogError, lint_catalog, load_catalog, load_source
+from openrx.catalog.loader import (
+    CATALOG_DIR,
+    CatalogError,
+    lint_catalog,
+    load_catalog,
+    load_source,
+    read_yaml,
+)
+from openrx.catalog.openapi import (
+    OpenAPIImportError,
+    Overlay,
+    overlay_path,
+    spec_path,
+    write_source,
+)
 
 app = typer.Typer(
     name="openrx",
@@ -96,3 +110,38 @@ def catalog_capture_examples(
 def _http_client(headers: dict[str, str]) -> httpx.Client:
     # A function so tests can swap in a client with a fake transport.
     return httpx.Client(headers=headers, timeout=30)
+
+
+@catalog_app.command("import-openapi")
+def catalog_import_openapi(
+    source_id: Annotated[str, typer.Argument(help="Source id, e.g. clinicaltrials.")],
+    fetch: Annotated[
+        bool, typer.Option("--fetch", help="Download the latest spec first and save it.")
+    ] = False,
+    directory: CatalogDir = CATALOG_DIR,
+) -> None:
+    """Regenerate a source's YAML from its OpenAPI spec and hand-written overlay."""
+    overlay_file = overlay_path(directory, source_id)
+    if not overlay_file.is_file():
+        typer.echo(f"no overlay {overlay_file}", err=True)
+        raise typer.Exit(code=1)
+
+    if fetch:
+        spec_url = Overlay.model_validate(read_yaml(overlay_file)).spec_url
+        headers = {"User-Agent": f"openrx/{__version__} (catalog import)"}
+        with _http_client(headers) as client:
+            response = client.get(spec_url)
+        if response.status_code != 200:
+            typer.echo(f"fetching {spec_url} failed: HTTP {response.status_code}", err=True)
+            raise typer.Exit(code=1)
+        # Normalize line endings: the saved copy is committed (LF, .gitattributes).
+        text = response.text.replace("\r\n", "\n")
+        spec_path(directory, source_id).write_text(text, encoding="utf-8", newline="\n")
+        typer.echo(f"saved  {spec_path(directory, source_id)}")
+
+    try:
+        out = write_source(directory, source_id)
+    except (OpenAPIImportError, FileNotFoundError) as e:
+        typer.echo(f"FAILED: {e}", err=True)
+        raise typer.Exit(code=1) from None
+    typer.echo(f"wrote  {out}")

@@ -1,0 +1,33 @@
+{
+  "request": {
+    "url": "https://clinicaltrials.gov/api/v2/stats/field/values",
+    "params": {
+      "fields": "Phase"
+    }
+  },
+  "captured_at": "2026-10-28",
+  "trimmed": {
+    "max_items": 2,
+    "max_string": 200,
+    "max_text": 2000
+  },
+  "response": [
+    {
+      "type": "ENUM",
+      "piece": "Phase",
+      "field": "protocolSection.designModule.phases",
+      "missingStudiesCount": 144395,
+      "uniqueValuesCount": 6,
+      "topValues": [
+        {
+          "value": "NA",
+          "studiesCount": 239837
+        },
+        {
+          "value": "PHASE2",
+          "studiesCount": 90749
+        }
+      ]
+    }
+  ]
+}
