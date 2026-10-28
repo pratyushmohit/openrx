@@ -88,6 +88,19 @@ def test_ordered_fails_out_of_order_with_partial_credit():
     assert score.score == pytest.approx(2 / 3)
 
 
+def test_ordered_ignores_an_early_mention_before_the_ranking():
+    answer = "Drugs in semaglutide's class, ranked: 1. liraglutide 2. semaglutide 3. exenatide"
+
+    assert score_answer(answer, ["liraglutide", "semaglutide", "exenatide"], ORDERED).passed
+
+
+def test_ordered_items_inside_longer_items():
+    answer = "1. TABLET, FILM COATED (217) 2. TABLET (182) 3. TABLET, EXTENDED RELEASE (174)"
+    expected = ["TABLET, FILM COATED", "TABLET", "TABLET, EXTENDED RELEASE"]
+
+    assert score_answer(answer, expected, ORDERED).passed
+
+
 def test_ordered_reports_missing_items():
     score = score_answer("Nausea", ["NAUSEA", "FATIGUE"], ORDERED)
 
@@ -130,6 +143,8 @@ def test_number_wrong_value_fails():
             True,
         ),
         ("No matches were found, so the label has no boxed warning.", False, True),
+        ("Semaglutide does have a boxed warning: risk has not been determined.", True, True),
+        ("The label does not carry one; it has other warnings.", False, True),
         ("I could not tell.", True, False),
     ],
 )

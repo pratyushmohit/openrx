@@ -80,11 +80,16 @@ def normalize_item(item: str) -> str:
     return " ".join(words)
 
 
-def _find(item: str, answer: str) -> int:
-    """Position of `item` in `answer` as whole words (a plural is fine), or -1."""
+def _search(item: str, answer: str, start: int = 0) -> re.Match[str] | None:
+    """`item` in `answer` as whole words (a plural is fine), from `start` on."""
     words = [re.escape(word) + "(?:s|es)?" for word in normalize_item(item).split()]
-    pattern = rf"(?<![a-z0-9]){' '.join(words)}(?![a-z0-9])"
-    match = re.search(pattern, answer)
+    pattern = re.compile(rf"(?<![a-z0-9]){' '.join(words)}(?![a-z0-9])")
+    return pattern.search(answer, start)
+
+
+def _find(item: str, answer: str) -> int:
+    """Position of `item`'s first mention in `answer`, or -1."""
+    match = _search(item, answer)
     return match.start() if match else -1
 
 
@@ -112,10 +117,17 @@ def score_answer(answer: str, expected: Any, scoring: Scoring) -> Score:
     if scoring.type == "contains_all":
         found = len(items) - len(missing)
         return Score(not missing, found / len(items) if items else 1.0, _missing(missing))
-    # ordered: every item present, in order. Partial: the longest in-order run of the
-    # items that were found, as a share of all items.
-    in_order = _longest_increasing([p for p in positions if p >= 0])
-    passed = not missing and in_order == len(items)
+    # ordered: every item present, in order. Items are looked for one after another
+    # through the answer, so an early mention ("semaglutide's ATC class ...") before the
+    # ranking doesn't count as the item's place. Partial: the most items found in order.
+    in_order_scan, start = 0, 0
+    for item in items:
+        match = _search(item, text, start)
+        if match is None:
+            break
+        in_order_scan, start = in_order_scan + 1, match.end()
+    in_order = max(in_order_scan, _longest_increasing([p for p in positions if p >= 0]))
+    passed = not missing and in_order_scan == len(items)
     detail = _missing(missing) or ("" if passed else "out of order")
     return Score(passed, in_order / len(items) if items else 1.0, detail)
 
@@ -126,24 +138,26 @@ def _score_number(answer: str, expected: float, tolerance: float) -> Score:
     return Score(hit, 1.0 if hit else 0.0, "" if hit else f"expected {expected:g}")
 
 
-# An explicit "Yes"/"No" (as a word on its own, e.g. "**Yes**, it has ...") decides;
-# otherwise a negation anywhere means no, and an affirmation means yes.
+# An explicit "Yes"/"No" (as a word on its own, e.g. "**Yes**, it has ...") decides.
+# Otherwise the earliest verdict phrase does: answers state the verdict first and quote
+# or explain after ("semaglutide does have a boxed warning: ... has not been shown").
+# At one position negations are tried first, so "does not" is a no, not a "does".
 _VERDICT = re.compile(r"\b(yes|no)\b(?! (?:longer|matches|data|results?)\b)")
-_NO = re.compile(
-    r"\b(not|none|isn t|is not|does not|doesn t|there is no|there are no|without|no)\b"
+_PHRASE = re.compile(
+    r"\b(?P<no>does not|doesn t|do not|is not|isn t|are not|there is no|there are no|"
+    r"has no|have no|not|none|without)\b"
+    r"|\b(?P<yes>does|do|is listed|there is|there are|has|have|carries|includes?)\b"
 )
-_YES = re.compile(r"\b(does|is listed|there is|there are|has|have|carries)\b")
 
 
 def _score_boolean(answer: str, expected: bool) -> Score:
     text = normalize(answer)
     verdict = _VERDICT.search(text)
+    phrase = _PHRASE.search(text)
     if verdict:
         said: bool | None = verdict.group(1) == "yes"
-    elif _NO.search(text):
-        said = False
-    elif _YES.search(text):
-        said = True
+    elif phrase:
+        said = phrase.group("yes") is not None
     else:
         said = None
     passed = said is expected

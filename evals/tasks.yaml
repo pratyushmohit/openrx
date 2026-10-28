@@ -209,10 +209,10 @@ tasks:
     category: fan_out
     difficulty: medium
     prompt: >-
-      Which 3 firms had the most Class I drug recalls with a report date in 2025, most
-      first?
+      Which 3 firms had the most Class I drug recalls with a report date in 2025?
     sources: [openfda]
-    scoring: {type: ordered}
+    # A set, not a ranking: the 2nd and 3rd firms are tied (4 recalls each).
+    scoring: {type: contains_all}
     reference: |
       r = await request("openfda", "/drug/enforcement.json", {
           "search": 'classification:"Class I" AND report_date:[20250101 TO 20251231]',
