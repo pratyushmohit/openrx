@@ -294,6 +294,9 @@ def eval_run(
     k: Annotated[int, typer.Option("-k", min=1, help="Attempts per task (pass^k).")] = 3,
     tasks: Annotated[str, typer.Option(help="Comma-separated task ids (default: all).")] = "",
     model: Annotated[str, typer.Option(help="Bedrock model id (OPENRX_MODEL_ID).")] = "",
+    resume: Annotated[
+        Path | None, typer.Option(help="A runs file to continue: trials in it are skipped.")
+    ] = None,
 ) -> None:
     """Run the agent on the task suite k times and save every trial (README §12.2)."""
     import asyncio
@@ -303,8 +306,16 @@ def eval_run(
     from openrx.agent.run import ask_question
     from openrx.evals.deployed import FIXTURE_BUCKET, lambda_client, s3_client, set_bridge_mode
     from openrx.evals.expected import load_expected
-    from openrx.evals.fixtures import export_fixtures, list_keys
-    from openrx.evals.run import RUNS_DIR, append_line, run_id, run_trial, trials
+    from openrx.evals.fixtures import list_keys
+    from openrx.evals.run import (
+        RUNS_DIR,
+        append_line,
+        pending,
+        read_runs,
+        run_id,
+        run_trial,
+        trials,
+    )
     from openrx.evals.tasks import load_tasks
 
     env = dict(os.environ)
@@ -320,7 +331,8 @@ def eval_run(
             raise typer.Exit(code=2)
         suite = [t for t in suite if t.id in wanted]
     expected = load_expected()
-    path = RUNS_DIR / f"{run_id(model_id)}.jsonl"
+    path = resume or RUNS_DIR / f"{run_id(model_id)}.jsonl"
+    done = read_runs(path) if resume else []
     s3, lam = s3_client(), lambda_client()
 
     async def ask(prompt: str):  # noqa: ANN202 - AgentResult, imported lazily
@@ -328,7 +340,7 @@ def eval_run(
 
     async def run_all() -> tuple[int, int, int]:
         passed = recorded = 0
-        plan = trials(suite, k)
+        plan = pending(trials(suite, k), done)
         for n, trial in enumerate(plan, 1):
             record = await run_trial(
                 trial, expected[trial.task.id], ask, model_id, lambda: list_keys(s3, FIXTURE_BUCKET)
@@ -348,8 +360,8 @@ def eval_run(
         passed, total, recorded = asyncio.run(run_all())
     finally:
         set_bridge_mode(lam, "live")
-    if recorded:  # data the agent fetched that no reference needed: keep it for replays
-        export_fixtures(s3, FIXTURE_BUCKET)
+    # Fixtures the agent added stay in Floci's S3 only: the repo keeps the ones the
+    # references need (evals/fixtures/), and a fresh setup re-records the rest once.
     typer.echo(f"{passed}/{total} trials passed; {recorded} new fixture(s); saved {path}")
 
 

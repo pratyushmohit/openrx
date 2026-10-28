@@ -47,6 +47,12 @@ def trials(tasks: Iterable[Task], k: int) -> list[Trial]:
     return [Trial(task, attempt) for attempt in range(1, k + 1) for task in tasks]
 
 
+def pending(plan: list[Trial], records: Iterable[dict[str, Any]]) -> list[Trial]:
+    """The trials in `plan` that `records` (a runs file being resumed) don't have yet."""
+    done = {(r["task"], r["attempt"]) for r in records}
+    return [t for t in plan if (t.task.id, t.attempt) not in done]
+
+
 def error_codes(output: str) -> list[str]:
     """Bridge and sandbox error codes named in a tool's output ("unknown_path: ...")."""
     try:

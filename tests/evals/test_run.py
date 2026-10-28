@@ -6,6 +6,7 @@ from openrx.evals.run import (
     Trial,
     append_line,
     error_codes,
+    pending,
     read_runs,
     rescore,
     run_id,
@@ -136,3 +137,12 @@ def test_rescore_leaves_crashed_trials_alone():
     crashed = {"answer": None, "passed": False}
 
     assert rescore(crashed, TASK) is crashed
+
+
+def test_pending_skips_trials_already_in_the_runs_file():
+    a, b = SUITE[:2]
+    done = [{"task": a.id, "attempt": 1}, {"task": b.id, "attempt": 1}]
+
+    left = pending(trials([a, b], 2), done)
+
+    assert [(t.task.id, t.attempt) for t in left] == [(a.id, 2), (b.id, 2)]
