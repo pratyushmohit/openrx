@@ -225,8 +225,8 @@ So locally, an escape from Monty (layer 1) would still be contained by layers 2�
 | Package manager | `uv` |
 | MCP server | `fastmcp` (standalone FastMCP, built on the official `mcp` SDK), stdio |
 | Code sandbox | Pydantic Monty (`pydantic-monty`), inside the runner Lambdas |
-| Agent | LangGraph (hand-built graph) + `langchain-mcp-adapters` |
-| LLM | Local Ollama via `langchain-ollama` (`ChatOllama`); model from config |
+| Agent | LangGraph (hand-built graph) + a small fastmcp-based tool adapter (D-016) |
+| LLM | Local Ollama (qwen3.5), reached through Bedrock's Converse API on Floci (`ChatBedrockConverse`, E1); model id from config |
 | AWS emulation | Floci (`floci/floci`, `http://127.0.0.1:4566`; not `localhost`, which adds ~43 ms per request on Windows, see E4) |
 | AWS SDK | `boto3`, `endpoint_url` from `AWS_ENDPOINT_URL`, dummy creds |
 | Infra-as-code | Terraform, `hashicorp/aws` provider with endpoints overridden to Floci, dummy creds, `skip_credentials_validation` / `skip_requesting_account_id` / `skip_metadata_api_check`. Modules shared between `envs/floci` and `envs/aws`. Local state for v1. Lambda zips built in the Makefile, including the Monty wheel for the right architecture. |
@@ -296,7 +296,7 @@ Input `{source, path, params, execution_id}`. It validates against the catalog, 
 
 ### 8.7 Reference agent
 
-Hand-built LangGraph graph → MCP via `langchain-mcp-adapters` → `ChatOllama`, temperature 0, `max_steps` 15. A short system prompt (search first, then execute, return focused results); all API knowledge comes from the tools. Callbacks log tokens (`usage_metadata`), latency, and tool calls.
+Hand-built LangGraph graph → MCP via a small fastmcp-client adapter (D-016) → `ChatBedrockConverse` on Floci's Bedrock, answered by Ollama (E1), temperature 0, `max_steps` 15. A short system prompt (search first, then execute, return focused results); all API knowledge comes from the tools. Callbacks log tokens (`usage_metadata`), latency, and tool calls.
 
 ## 9. Alternatives considered
 

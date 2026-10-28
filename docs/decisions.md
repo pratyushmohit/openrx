@@ -418,3 +418,29 @@ API surface to maintain. Revisit if evals show models repeatedly tripping on one
 **How it stays true:** `tests/python_features.py` records both lists, and the
 integration test fails in either direction, so a Monty upgrade that adds or drops a
 feature shows up and this page gets updated.
+
+---
+
+## D-016: Own MCP tool adapter for the agent instead of langchain-mcp-adapters
+
+**Date:** 2026-10-28 · **Status:** Accepted
+
+**Context:** The README planned `langchain-mcp-adapters` to give the LangGraph agent the
+MCP tools. Every release of it, including the latest (0.3.2), requires the MCP SDK below
+2.0; fastmcp 4 (D-002) depends on MCP SDK 2.3. The two can't be installed together:
+0.3.1 failed to import against SDK 2.3.
+
+**Options:**
+1. Downgrade fastmcp to a version on the 1.x SDK.
+2. A small adapter using fastmcp's own client.
+
+**Decision:** Option 2: `openrx.agent.mcp_tools` lists the server's tools over a fastmcp
+client and wraps each as a LangChain `StructuredTool` returning the ToolResult as JSON.
+`langchain-mcp-adapters` is removed.
+
+**Why:** OpenRx has exactly two tools with one `code` argument each, so the adapter is
+about 40 lines, tested against the real server in memory. Downgrading fastmcp would undo
+the modern-protocol server and its tests (M4 piece 1) for a dependency we need little of.
+
+**Cost:** one more small module to maintain; revisit when langchain-mcp-adapters supports
+the 2.x SDK.
