@@ -103,8 +103,9 @@ resource "aws_lambda_function" "execute_runner" {
 
   environment {
     variables = {
-      MONTY_BIN              = "/var/task/bin/monty"
-      OPENRX_BRIDGE_FUNCTION = aws_lambda_function.bridge.function_name
+      MONTY_BIN                 = "/var/task/bin/monty"
+      OPENRX_BRIDGE_FUNCTION    = aws_lambda_function.bridge.function_name
+      OPENRX_BRIDGE_CONCURRENCY = tostring(local.bridge_concurrency)
     }
   }
 }

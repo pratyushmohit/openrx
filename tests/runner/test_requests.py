@@ -115,9 +115,9 @@ def test_notes_are_collected_once():
     assert request.notes == ["secret 'x' has no value set"]
 
 
-def test_gathered_requests_run_in_parallel():
+def test_gathered_requests_run_in_parallel_when_the_bridge_allows():
     # boto3 is synchronous, so each call runs in a thread; three 0.2 s calls overlap.
-    request = RequestFunction(FakeBridge(delay=0.2))
+    request = RequestFunction(FakeBridge(delay=0.2), max_parallel=3)
 
     async def gathered():
         started = time.perf_counter()
@@ -125,6 +125,20 @@ def test_gathered_requests_run_in_parallel():
         return time.perf_counter() - started
 
     assert run(gathered()) < 0.45
+
+
+def test_calls_beyond_the_bridges_concurrency_wait_their_turn():
+    bridge = FakeBridge(delay=0.1)
+    request = RequestFunction(bridge, max_parallel=1)
+
+    async def gathered():
+        await asyncio.gather(*(request("a", "/x") for _ in range(3)))
+
+    started = time.perf_counter()
+    run(gathered())
+
+    assert time.perf_counter() - started >= 0.3  # one at a time
+    assert len(bridge.events) == 3 and request.calls == 3
 
 
 def test_request_matches_its_stub():
@@ -183,9 +197,29 @@ def test_busy_bridge_is_retried_with_growing_waits():
     sleeps = []
     client = FakeLambda(throttled(), throttled(), payload(OK))
 
-    answer = LambdaBridge(client, "b", sleep=sleeps.append).call({})
+    answer = LambdaBridge(client, "b", sleep=sleeps.append, jitter=lambda: 1.0).call({})
 
     assert answer == OK and sleeps == [0.1, 0.2]
+
+
+def test_waits_are_capped_and_jittered():
+    sleeps = []
+    client = FakeLambda(*[throttled()] * 9, payload(OK))
+
+    LambdaBridge(client, "b", sleep=sleeps.append, jitter=lambda: 0.5).call({})
+
+    # 0.1, 0.2, 0.4, 0.8, 1.6, then capped at 2.0; each halved by the jitter.
+    assert sleeps == pytest.approx([0.05, 0.1, 0.2, 0.4, 0.8, 1.0, 1.0, 1.0, 1.0])
+
+
+def test_default_jitter_stays_between_half_and_full_wait():
+    sleeps = []
+    client = FakeLambda(*[throttled()] * 5, payload(OK))
+
+    LambdaBridge(client, "b", sleep=sleeps.append).call({})
+
+    steps = [0.1, 0.2, 0.4, 0.8, 1.6]
+    assert all(step / 2 <= s <= step for s, step in zip(sleeps, steps, strict=True))
 
 
 def test_bridge_that_stays_busy_raises():

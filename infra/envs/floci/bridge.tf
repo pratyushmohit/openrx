@@ -59,6 +59,8 @@ resource "aws_iam_role_policy" "bridge" {
 
 locals {
   bridge_zip = "${path.module}/build/bridge.zip"
+  # Shared with the execute-runner, which sends at most this many calls at once.
+  bridge_concurrency = 1
 }
 
 resource "aws_lambda_function" "bridge" {
@@ -74,8 +76,8 @@ resource "aws_lambda_function" "bridge" {
   timeout = 90
 
   # One container at a time, so in-memory rate limits and the call budget see
-  # every request (D-012).
-  reserved_concurrent_executions = 1
+  # every request (D-012). The execute-runner queues its calls to match.
+  reserved_concurrent_executions = local.bridge_concurrency
 
   environment {
     variables = {

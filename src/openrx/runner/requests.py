@@ -17,6 +17,7 @@ would show up as a bare Exception. On success it returns
 
 import asyncio
 import json
+import random
 import time
 import uuid
 from collections.abc import Callable
@@ -25,8 +26,11 @@ from typing import Any, Protocol
 from botocore.exceptions import ClientError
 
 REQUEST_BUDGET = 50
-THROTTLE_ATTEMPTS = 6
-THROTTLE_BACKOFF_SECONDS = 0.1  # 0.1, 0.2, 0.4, ... between retries
+# Retries for a busy bridge: waits grow 0.1, 0.2, 0.4, ... s, capped at 2 s, for up to
+# about 10 s in all, which covers a bridge cold start with calls queued behind it.
+THROTTLE_ATTEMPTS = 10
+THROTTLE_BACKOFF_SECONDS = 0.1
+THROTTLE_MAX_WAIT_SECONDS = 2.0
 _THROTTLED = frozenset({"TooManyRequestsException", "ThrottlingException"})
 
 
@@ -53,9 +57,11 @@ class Bridge(Protocol):
 class LambdaBridge:
     """The bridge Lambda, invoked with boto3; retries when it is busy.
 
-    The bridge runs as one container (D-012). Real AWS rejects a synchronous invoke
-    beyond that with TooManyRequestsException rather than queueing it (Floci queues),
-    so throttled calls are retried here, with growing waits.
+    The bridge runs as one container (D-012). An invoke that finds it busy can be
+    rejected with TooManyRequestsException: on real AWS whenever it is busy, on Floci
+    at least while the container is starting. Throttled calls are retried here with
+    growing waits. Each wait is jittered (50-100% of its step), so parallel calls from
+    one asyncio.gather() spread out instead of colliding again at the same moment.
     """
 
     def __init__(
@@ -64,12 +70,14 @@ class LambdaBridge:
         function_name: str,
         attempts: int = THROTTLE_ATTEMPTS,
         sleep: Callable[[float], None] = time.sleep,
+        jitter: Callable[[], float] = lambda: random.uniform(0.5, 1.0),
     ) -> None:
         """Invoke `function_name` through `client`."""
         self._client = client
         self._function = function_name
         self._attempts = attempts
         self._sleep = sleep
+        self._jitter = jitter
 
     def call(self, event: dict[str, Any]) -> dict[str, Any]:
         """Invoke the bridge and return its answer."""
@@ -80,7 +88,8 @@ class LambdaBridge:
             except ClientError as e:
                 code = e.response.get("Error", {}).get("Code")
                 if code in _THROTTLED and attempt < self._attempts:
-                    self._sleep(THROTTLE_BACKOFF_SECONDS * 2 ** (attempt - 1))
+                    step = THROTTLE_BACKOFF_SECONDS * 2 ** (attempt - 1)
+                    self._sleep(min(step, THROTTLE_MAX_WAIT_SECONDS) * self._jitter())
                     continue
                 raise RequestError(f"bridge_unavailable: {code}") from None
             body = json.loads(response["Payload"].read())
@@ -94,11 +103,18 @@ class LambdaBridge:
 class RequestFunction:
     """The request() one run's code sees: counts calls and bytes for that run."""
 
-    def __init__(self, bridge: Bridge, budget: int = REQUEST_BUDGET) -> None:
-        """A fresh request() with its own execution id and counters."""
+    def __init__(self, bridge: Bridge, budget: int = REQUEST_BUDGET, max_parallel: int = 1) -> None:
+        """A fresh request() with its own execution id and counters.
+
+        `max_parallel` matches how many calls the bridge serves at once (its reserved
+        concurrency, D-012). Extra calls from asyncio.gather() wait their turn here:
+        sent anyway, they'd be throttled and lose far more time in retry waits (M3:
+        5 gathered replay calls took 794 ms that way instead of ~30 ms).
+        """
         self.execution_id = f"exe-{uuid.uuid4().hex}"
         self._bridge = bridge
         self._budget = budget
+        self._slots = asyncio.Semaphore(max_parallel)
         self.calls = 0  # calls sent to the bridge
         self.bytes_fetched = 0
         self.notes: list[str] = []
@@ -120,7 +136,8 @@ class RequestFunction:
             "params": params,
         }
         loop = asyncio.get_running_loop()
-        answer = await loop.run_in_executor(None, self._bridge.call, event)
+        async with self._slots:
+            answer = await loop.run_in_executor(None, self._bridge.call, event)
 
         if not answer.get("ok"):
             error = answer.get("error") or {}

@@ -147,11 +147,13 @@ def execute_runner(env: Mapping[str, str] = os.environ) -> Runner:
     config = Config(retries={"max_attempts": 1, "mode": "standard"}, read_timeout=100)
     client = cast(LambdaClient, boto3.client("lambda", config=config))
     bridge = LambdaBridge(client, env.get("OPENRX_BRIDGE_FUNCTION", "openrx-bridge"))
+    # How many calls the bridge serves at once (its reserved concurrency, D-012).
+    parallel = int(env.get("OPENRX_BRIDGE_CONCURRENCY", "1"))
     return Runner(
         "execute",
         SandboxHost("execute"),
         catalog_functions(load_catalog()),
-        request_factory=lambda: RequestFunction(bridge),
+        request_factory=lambda: RequestFunction(bridge, max_parallel=parallel),
     )
 
 

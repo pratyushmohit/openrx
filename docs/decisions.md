@@ -329,6 +329,13 @@ rely on silently.
 `request()` wrapper counts those exactly and is the primary budget; `max_suspensions`
 stays as an outer cap on all external calls (200), and the bridge as the backup.
 
+*Update 2026-10-28 (M3 piece 8):* Floci does throttle too, at least while the single
+bridge container is starting: gathered calls right after a bridge restart got
+TooManyRequestsException. The runner now (1) sends at most as many calls at once as
+the bridge serves (`OPENRX_BRIDGE_CONCURRENCY`, set from the same Terraform local as the
+bridge's reserved concurrency), so extra calls wait in the runner, and (2) retries
+throttled calls with jittered waits capped at 2 s, for calls from other runs.
+
 ---
 
 ## D-013: Replay fixtures live in S3
@@ -379,6 +386,10 @@ invocation would leave the pool on a closed loop), and the pool has to be create
 inside that running loop. With a single bridge container (D-012), parallel requests
 still queue at the bridge; the gain is natural code and overlapping waits, not more
 upstream throughput.
+
+*Update 2026-10-28 (M3 piece 8):* sending gathered calls at once to a one-container
+bridge was worse than queueing them: 5 replayed requests took 794 ms p50, mostly in
+throttle-retry waits. Queued in the runner (D-012 update) they take 46.6 ms.
 
 ---
 

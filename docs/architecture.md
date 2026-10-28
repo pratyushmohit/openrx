@@ -148,5 +148,6 @@ enforcement on.
 | Bridge (validation, keys, limits, record/replay, Lambda) | M2 | Built |
 | search-runner | M3 | Built |
 | execute-runner | M3 | Built |
+| Sandbox-escape suite (NFR-2) and end-to-end secret-exposure check (§6.5) | M3 | **Open: deferred** |
 | MCP server, LangGraph agent | M4 | Planned |
 | Eval harness and report | M5 | Planned |

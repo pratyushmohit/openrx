@@ -23,11 +23,11 @@ which adds ~43 ms per request; E4).
 
 | SLI | M0 baseline | p50 | p95 | p99 | Status |
 |---|---|---|---|---|---|
-| Sandbox overhead (host → runner invoke + Monty start + teardown, excluding code work) | ~6 ms est. (invoke 5.2 ms, E4; Monty run ~0.6 ms, E3a) | ≤ 100 ms | ≤ 250 ms | ≤ 500 ms | **Confirmed** (large headroom; re-measure end to end in M3) |
+| Sandbox overhead (host → runner invoke + Monty session + type check + teardown, trivial code) | **7.33 / 7.76 / 10.02 ms** round trip; 2.42 ms inside the runner (M3, n=100, `make bench-runners`; 5.53 ms / 0.78 ms without type checking) | ≤ 100 ms | ≤ 250 ms | ≤ 500 ms | **Met** (about 13× headroom) |
 | Bridge `request()` overhead: time inside the bridge, replay mode (`bridge_ms`) | **1.26 / 1.46 / 1.73 ms** (M2, real bridge, n=200; `make bench-bridge`) | ≤ 30 ms | ≤ 80 ms | ≤ 150 ms | **Met** (about 25× headroom) |
 | Runner → bridge invoke hop (inside the Docker network) | 4.2 / 4.9 / 5.3 ms (E4) | | | | Reported; adds to the above for each `request()` |
 | `search` call end to end, warm | not measured | ≤ 300 ms | ≤ 800 ms | ≤ 1.5 s | Provisional until M4 |
-| `execute` call end to end, warm, ≤ 5 requests | not measured | ≤ 1 s | ≤ 2.5 s | ≤ 5 s | Provisional until M4 |
+| `execute` call end to end, warm, ≤ 5 requests | Runner part, 5 gathered requests in replay: **46.6 / 48.9 / 50.2 ms** (M3, n=100) | ≤ 1 s | ≤ 2.5 s | ≤ 5 s | Runner part well within; provisional until M4 adds the MCP server |
 | Full task end to end with the local model | not measured | report | ≤ 90 s | report | Provisional; LLM speed is deferred to the end of the project |
 
 ## Reported, not targeted
