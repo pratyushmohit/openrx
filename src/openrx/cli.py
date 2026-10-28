@@ -392,4 +392,8 @@ def eval_report(
         json.dumps(metrics, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     chart_pass_by_category(metrics, RESULTS_DIR / "pass_by_category.png")
-    typer.echo(summary)
+    # Paths, not the summary itself: it has characters (≥, ×) a Windows console can't print.
+    typer.echo(
+        f"{len(records)} trial(s) from {source}; wrote results/summary.md, "
+        "metrics.json, failures.md and pass_by_category.png"
+    )
