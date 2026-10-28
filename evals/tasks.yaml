@@ -1,0 +1,356 @@
+# The OpenRx eval task suite (README §12.1). Schema: src/openrx/evals/tasks.py.
+#
+# Each task's `reference` is a plain solution in sandbox Python; running it in the
+# execute-runner against the recorded fixtures gives the expected answer. The 3
+# prompt-injection tasks of §12.1 are deferred with the other security suites.
+#
+# Categories (README §12.1 plans 6 fan-out; here 5): single_lookup 5, chained 6,
+# fan_out 5, aggregation 5, discovery 4. 25 tasks.
+
+tasks:
+  # --- single lookup -------------------------------------------------------------
+
+  - id: metformin_rxcui
+    category: single_lookup
+    difficulty: easy
+    prompt: What is the RxNorm RxCUI for metformin?
+    sources: [rxnorm]
+    scoring: {type: contains_all}
+    reference: |
+      r = await request("rxnorm", "/rxcui.json", {"name": "metformin"})
+      r["data"]["idGroup"]["rxnormId"]
+
+  - id: semaglutide_atc_class
+    category: single_lookup
+    difficulty: easy
+    prompt: Which ATC drug class does semaglutide belong to? Give the ATC class code.
+    sources: [rxnorm]
+    scoring: {type: contains_all}
+    reference: |
+      r = await request("rxnorm", "/rxclass/class/byDrugName.json",
+                        {"drugName": "semaglutide", "relaSource": "ATC"})
+      sorted({d["rxclassMinConceptItem"]["classId"] for d in r["data"]["rxclassDrugInfoList"]["rxclassDrugInfo"]})
+
+  - id: warfarin_boxed_warning
+    category: single_lookup
+    difficulty: easy
+    prompt: >-
+      Does the FDA drug label for warfarin carry a boxed warning, and what risk does
+      it warn about? Answer in a few words.
+    sources: [openfda]
+    scoring: {type: contains_all}
+    reference: |
+      r = await request("openfda", "/drug/label.json",
+                        {"search": '_exists_:boxed_warning AND openfda.generic_name:"warfarin"', "limit": 1})
+      text = " ".join(r["data"]["results"][0]["boxed_warning"]).lower()
+      ["bleeding"] if "bleeding" in text else []
+
+  - id: trial_status_and_sponsor
+    category: single_lookup
+    difficulty: easy
+    prompt: >-
+      What is the overall status of clinical trial NCT03548935, and who is its lead
+      sponsor?
+    sources: [clinicaltrials]
+    scoring: {type: contains_all}
+    reference: |
+      r = await request("clinicaltrials", "/studies/NCT03548935",
+                        {"fields": "OverallStatus|LeadSponsorName"})
+      p = r["data"]["protocolSection"]
+      [p["statusModule"]["overallStatus"], p["sponsorCollaboratorsModule"]["leadSponsor"]["name"]]
+
+  - id: label_versions_count
+    category: single_lookup
+    difficulty: medium
+    prompt: >-
+      How many published versions does the DailyMed label with setid
+      bfd6ec0f-8264-4877-aa6d-f347f53bc426 have?
+    sources: [dailymed]
+    scoring: {type: number}
+    reference: |
+      r = await request("dailymed", "/spls/bfd6ec0f-8264-4877-aa6d-f347f53bc426/history.json")
+      len(r["data"]["data"]["history"])
+
+  # --- chained -------------------------------------------------------------------
+
+  - id: metformin_top_reactions
+    category: chained
+    difficulty: medium
+    prompt: >-
+      What are the 5 most frequently reported adverse reactions for metformin in
+      FAERS, most frequent first?
+    sources: [openfda]
+    scoring: {type: ordered}
+    reference: |
+      r = await request("openfda", "/drug/event.json", {
+          "search": 'patient.drug.openfda.generic_name:"metformin"',
+          "count": "patient.reaction.reactionmeddrapt.exact", "limit": 5})
+      [t["term"] for t in r["data"]["results"]]
+
+  - id: glp1_class_members
+    category: chained
+    difficulty: medium
+    prompt: >-
+      Which drugs are in the same ATC drug class as semaglutide? List them all.
+    sources: [rxnorm]
+    scoring: {type: contains_all}
+    reference: |
+      c = await request("rxnorm", "/rxclass/class/byDrugName.json",
+                        {"drugName": "semaglutide", "relaSource": "ATC"})
+      class_id = c["data"]["rxclassDrugInfoList"]["rxclassDrugInfo"][0]["rxclassMinConceptItem"]["classId"]
+      m = await request("rxnorm", "/rxclass/classMembers.json", {"classId": class_id, "relaSource": "ATC"})
+      sorted({d["minConcept"]["name"] for d in m["data"]["drugMemberGroup"]["drugMember"]})
+
+  - id: sitagliptin_brand_names
+    category: chained
+    difficulty: medium
+    prompt: What brand names does RxNorm list for products containing sitagliptin?
+    sources: [rxnorm]
+    scoring: {type: contains_all}
+    reference: |
+      ids = await request("rxnorm", "/rxcui.json", {"name": "sitagliptin"})
+      rxcui = ids["data"]["idGroup"]["rxnormId"][0]
+      rel = await request("rxnorm", f"/rxcui/{rxcui}/related.json", {"tty": "BN"})
+      names = []
+      for group in rel["data"]["relatedGroup"]["conceptGroup"]:
+          for c in group.get("conceptProperties", []):
+              names.append(c["name"])
+      sorted(set(names))
+
+  - id: semaglutide_pancreatitis_papers
+    category: chained
+    difficulty: easy
+    prompt: How many PubMed articles match the search "semaglutide AND pancreatitis"?
+    sources: [pubmed]
+    scoring: {type: number}
+    reference: |
+      r = await request("pubmed", "/esearch.fcgi", {"term": "semaglutide AND pancreatitis", "retmax": 0})
+      int(r["data"]["esearchresult"]["count"])
+
+  - id: trial_sponsor_drug_label
+    category: chained
+    difficulty: hard
+    prompt: >-
+      Clinical trial NCT03548935 tests which intervention? Find that drug's FDA label
+      and say whether it has a boxed warning.
+    sources: [clinicaltrials, openfda]
+    scoring: {type: boolean}
+    reference: |
+      t = await request("clinicaltrials", "/studies/NCT03548935", {"fields": "InterventionName"})
+      names = [i["name"] for i in t["data"]["protocolSection"]["armsInterventionsModule"]["interventions"]]
+      drug = "semaglutide" if any("semaglutide" in n.lower() for n in names) else names[0].lower()
+      r = await request("openfda", "/drug/label.json",
+                        {"search": f'_exists_:boxed_warning AND openfda.generic_name:"{drug}"', "limit": 1})
+      r["status"] == 200 and len(r["data"].get("results", [])) > 0
+
+  - id: metformin_label_count
+    category: chained
+    difficulty: medium
+    prompt: >-
+      How many drug labels (SPLs) does DailyMed list when searching for metformin by
+      drug name?
+    sources: [dailymed]
+    scoring: {type: number}
+    reference: |
+      r = await request("dailymed", "/spls.json", {"drug_name": "metformin", "pagesize": 1})
+      r["data"]["metadata"]["total_elements"]
+
+  # --- fan-out -------------------------------------------------------------------
+
+  - id: statins_serious_reports
+    category: fan_out
+    difficulty: medium
+    prompt: >-
+      Rank atorvastatin, simvastatin and rosuvastatin by their number of serious FAERS
+      reports, most first.
+    sources: [openfda]
+    scoring: {type: ordered}
+    reference: |
+      import asyncio
+      drugs = ["atorvastatin", "simvastatin", "rosuvastatin"]
+      rs = await asyncio.gather(*[request("openfda", "/drug/event.json", {
+          "search": f'patient.drug.openfda.generic_name:"{d}" AND serious:1', "limit": 1}) for d in drugs])
+      totals = {d: r["data"]["meta"]["results"]["total"] for d, r in zip(drugs, rs)}
+      sorted(drugs, key=lambda d: -totals[d])
+
+  - id: glp1_paper_ranking
+    category: fan_out
+    difficulty: hard
+    prompt: >-
+      Rank the drugs in semaglutide's ATC class by their number of PubMed articles,
+      most first.
+    sources: [rxnorm, pubmed]
+    scoring: {type: ordered}
+    reference: |
+      import asyncio
+      m = await request("rxnorm", "/rxclass/classMembers.json", {"classId": "A10BJ", "relaSource": "ATC"})
+      drugs = sorted({d["minConcept"]["name"] for d in m["data"]["drugMemberGroup"]["drugMember"]})
+      rs = await asyncio.gather(*[request("pubmed", "/esearch.fcgi", {"term": d, "retmax": 0}) for d in drugs])
+      counts = {d: int(r["data"]["esearchresult"]["count"]) for d, r in zip(drugs, rs)}
+      sorted(drugs, key=lambda d: -counts[d])
+
+  - id: semaglutide_phase3_sponsors
+    category: fan_out
+    difficulty: hard
+    prompt: >-
+      Among Phase 3 clinical trials of semaglutide, which 3 lead sponsors appear most
+      often, most first?
+    sources: [clinicaltrials]
+    scoring: {type: ordered}
+    reference: |
+      from collections import Counter
+      r = await request("clinicaltrials", "/studies", {
+          "query.intr": "semaglutide", "filter.advanced": "AREA[Phase]PHASE3",
+          "fields": "LeadSponsorName", "pageSize": 1000})
+      names = [s["protocolSection"]["sponsorCollaboratorsModule"]["leadSponsor"]["name"] for s in r["data"]["studies"]]
+      [n for n, _ in Counter(names).most_common(3)]
+
+  - id: class1_recall_firms_2025
+    category: fan_out
+    difficulty: medium
+    prompt: >-
+      Which 3 firms had the most Class I drug recalls with a report date in 2025, most
+      first?
+    sources: [openfda]
+    scoring: {type: ordered}
+    reference: |
+      r = await request("openfda", "/drug/enforcement.json", {
+          "search": 'classification:"Class I" AND report_date:[20250101 TO 20251231]',
+          "count": "recalling_firm.exact", "limit": 3})
+      [t["term"] for t in r["data"]["results"]]
+
+  - id: glitazone_boxed_warnings
+    category: fan_out
+    difficulty: medium
+    prompt: >-
+      Of pioglitazone, rosiglitazone and metformin, which have a boxed warning on at
+      least one FDA label?
+    sources: [openfda]
+    scoring: {type: contains_all}
+    reference: |
+      import asyncio
+      drugs = ["pioglitazone", "rosiglitazone", "metformin"]
+      rs = await asyncio.gather(*[request("openfda", "/drug/label.json", {
+          "search": f'_exists_:boxed_warning AND openfda.generic_name:"{d}"', "limit": 1}) for d in drugs])
+      [d for d, r in zip(drugs, rs) if r["status"] == 200]
+
+  # --- aggregation ---------------------------------------------------------------
+
+  - id: shortage_categories
+    category: aggregation
+    difficulty: medium
+    prompt: >-
+      Which 3 therapeutic categories have the most current drug shortages listed by
+      FDA, most first?
+    sources: [openfda]
+    scoring: {type: ordered}
+    reference: |
+      r = await request("openfda", "/drug/shortages.json",
+                        {"search": 'status:"Current"', "count": "therapeutic_category", "limit": 3})
+      [t["term"] for t in r["data"]["results"]]
+
+  - id: metformin_reports_2023
+    category: aggregation
+    difficulty: medium
+    prompt: How many FAERS reports for metformin were received during 2023?
+    sources: [openfda]
+    scoring: {type: number}
+    reference: |
+      r = await request("openfda", "/drug/event.json", {
+          "search": 'patient.drug.openfda.generic_name:"metformin" AND receivedate:[20230101 TO 20231231]',
+          "limit": 1})
+      r["data"]["meta"]["results"]["total"]
+
+  - id: metformin_dosage_forms
+    category: aggregation
+    difficulty: easy
+    prompt: >-
+      What are the 3 most common dosage forms among metformin products in the NDC
+      directory, most common first?
+    sources: [openfda]
+    scoring: {type: ordered}
+    reference: |
+      r = await request("openfda", "/drug/ndc.json",
+                        {"search": 'generic_name:"metformin"', "count": "dosage_form.exact", "limit": 3})
+      [t["term"] for t in r["data"]["results"]]
+
+  - id: warfarin_death_share
+    category: aggregation
+    difficulty: hard
+    prompt: >-
+      What percentage of FAERS reports for warfarin record that the patient died?
+      Round to one decimal place.
+    sources: [openfda]
+    scoring: {type: number, tolerance: 0.1}
+    reference: |
+      import asyncio
+      base = 'patient.drug.openfda.generic_name:"warfarin"'
+      every, deaths = await asyncio.gather(
+          request("openfda", "/drug/event.json", {"search": base, "limit": 1}),
+          request("openfda", "/drug/event.json", {"search": base + " AND seriousnessdeath:1", "limit": 1}))
+      round(100 * deaths["data"]["meta"]["results"]["total"] / every["data"]["meta"]["results"]["total"], 1)
+
+  - id: semaglutide_papers_recent
+    category: aggregation
+    difficulty: medium
+    prompt: How many PubMed articles about semaglutide were published in 2024 or 2025?
+    sources: [pubmed]
+    scoring: {type: number}
+    reference: |
+      r = await request("pubmed", "/esearch.fcgi", {
+          "term": "semaglutide", "mindate": "2024", "maxdate": "2025", "datetype": "pdat", "retmax": 0})
+      int(r["data"]["esearchresult"]["count"])
+
+  # --- discovery-heavy -----------------------------------------------------------
+
+  - id: misspelled_ozempic_rxcui
+    category: discovery
+    difficulty: medium
+    prompt: >-
+      A user typed "ozempik". What drug did they probably mean, and what is its
+      RxNorm RxCUI?
+    sources: [rxnorm]
+    scoring: {type: contains_all}
+    reference: |
+      r = await request("rxnorm", "/approximateTerm.json", {"term": "ozempik", "maxEntries": 3})
+      named = [c for c in r["data"]["approximateGroup"]["candidate"] if c.get("name")]
+      [named[0]["rxcui"]]
+
+  - id: amoxicillin_shortage
+    category: discovery
+    difficulty: medium
+    prompt: >-
+      Does FDA currently list a shortage for any amoxicillin product? Answer yes or
+      no.
+    sources: [openfda]
+    scoring: {type: boolean}
+    reference: |
+      r = await request("openfda", "/drug/shortages.json",
+                        {"search": 'generic_name:"amoxicillin" AND status:"Current"', "limit": 1})
+      r["status"] == 200
+
+  - id: trial_phase_values
+    category: discovery
+    difficulty: medium
+    prompt: >-
+      What values does ClinicalTrials.gov use for a study's phase? List them all.
+    sources: [clinicaltrials]
+    scoring: {type: contains_all}
+    reference: |
+      r = await request("clinicaltrials", "/studies/enums")
+      phase = [e for e in r["data"] if e["type"] == "Phase"][0]
+      [v["value"] for v in phase["values"]]
+
+  - id: recruiting_obesity_trials
+    category: discovery
+    difficulty: hard
+    prompt: >-
+      How many interventional clinical trials for obesity are currently recruiting on
+      ClinicalTrials.gov?
+    sources: [clinicaltrials]
+    scoring: {type: number}
+    reference: |
+      r = await request("clinicaltrials", "/studies", {
+          "query.cond": "obesity", "filter.overallStatus": "RECRUITING",
+          "filter.advanced": "AREA[StudyType]INTERVENTIONAL", "countTotal": True, "pageSize": 1})
+      r["data"]["totalCount"]
