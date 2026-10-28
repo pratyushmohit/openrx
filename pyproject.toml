@@ -27,10 +27,12 @@ dev = [
 ]
 evals = [
     "matplotlib>=3.11.2",
-    "pandas>=3.1.0",
-    "pyarrow>=26.0.0",
     "tiktoken>=0.14.0",
 ]
+
+[tool.uv]
+# `uv sync` installs the eval tools too: `openrx eval report` draws charts.
+default-groups = ["dev", "evals"]
 
 [project.scripts]
 # `openrx` command -> the Typer app in src/openrx/cli.py

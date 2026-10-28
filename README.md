@@ -348,10 +348,10 @@ Hand-built LangGraph graph → MCP via a small fastmcp-client adapter (D-016) �
 - LLM-as-judge: only for free-text quality and grounding of prose, with a fixed rubric and a fixed judge model. Report judge agreement on a hand-labelled sample of ≥ 20 answers.
 
 ### 12.3 Protocol
-Replay mode, temperature 0, k = 3 runs per task, two local models (small vs medium). Report every §6 metric overall and by category. Latency percentiles are computed over all runs.
+Replay mode (`replay_or_record`, so data the agent asks for beyond the references is recorded once and replayed after), temperature 0, k = 3 runs per task, two local models (small vs medium; one, qwen3.5, so far). Report every §6 metric overall and by category. Latency percentiles are computed over all runs.
 
 ### 12.4 Outputs
-`results/runs/*.parquet` (raw spans), `results/summary.md` (tables), `results/charts/` (success by category, tokens by category, latency percentiles, data reduction ratio, footprint vs per-endpoint baseline).
+`results/runs/*.jsonl` (one line per trial: answer, score, totals and every model and tool event), `results/summary.md` (every §6 metric next to its target, overall and by category), `results/metrics.json` (the same numbers as data), `results/failures.md` (every failed trial and why) and `results/pass_by_category.png`. The footprint comparison is `openrx eval footprint` (static).
 
 ## 13. CLI
 

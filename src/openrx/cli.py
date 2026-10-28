@@ -351,3 +351,43 @@ def eval_run(
     if recorded:  # data the agent fetched that no reference needed: keep it for replays
         export_fixtures(s3, FIXTURE_BUCKET)
     typer.echo(f"{passed}/{total} trials passed; {recorded} new fixture(s); saved {path}")
+
+
+@eval_app.command("report")
+def eval_report(
+    runs: Annotated[
+        Path | None, typer.Option(help="A runs file (default: the latest in results/runs/).")
+    ] = None,
+) -> None:
+    """Compute the README §6 metrics from a run; write results/summary.md and a chart."""
+    import json
+
+    from openrx.evals.metrics import all_metrics
+    from openrx.evals.report import RESULTS_DIR, chart_pass_by_category, failures, render_summary
+    from openrx.evals.run import RUNS_DIR, read_runs
+
+    if runs is None:
+        found = sorted(RUNS_DIR.glob("*.jsonl"))
+        if not found:
+            typer.echo("no runs yet: run `make eval-run` first", err=True)
+            raise typer.Exit(code=1)
+        runs = found[-1]
+    records = read_runs(runs)
+    metrics = all_metrics(records)
+    k = max(r["attempt"] for r in records)
+    source = (
+        runs.relative_to(RESULTS_DIR.parent).as_posix()
+        if runs.is_relative_to(RESULTS_DIR.parent)
+        else runs.name
+    )
+
+    summary = render_summary(metrics, source, k)
+    (RESULTS_DIR / "summary.md").write_text(summary, encoding="utf-8", newline="\n")
+    (RESULTS_DIR / "failures.md").write_text(
+        "# Failed trials\n\n" + failures(records) + "\n", encoding="utf-8", newline="\n"
+    )
+    (RESULTS_DIR / "metrics.json").write_text(
+        json.dumps(metrics, indent=2) + "\n", encoding="utf-8", newline="\n"
+    )
+    chart_pass_by_category(metrics, RESULTS_DIR / "pass_by_category.png")
+    typer.echo(summary)
