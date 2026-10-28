@@ -46,10 +46,10 @@ resource "aws_iam_role_policy" "bridge" {
         Resource = "${aws_s3_bucket.fixtures.arn}/fixtures/*"
       },
       {
-        Sid      = "Logs"
+        Sid      = "OwnLogs"
         Effect   = "Allow"
         Action   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
-        Resource = "*"
+        Resource = "arn:aws:logs:*:*:log-group:/aws/lambda/openrx-bridge*"
       },
     ]
   })

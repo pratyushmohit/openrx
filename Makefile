@@ -75,6 +75,7 @@ build: ## Build a Lambda zip: make build LAMBDA=<name> (from lambdas/<name>/)
 # Terraform needs the zips to exist (it hashes them), so build before applying.
 deploy: ## Build the Lambda zips and apply Terraform to Floci
 	$(MAKE) build LAMBDA=bridge
+	$(MAKE) build LAMBDA=search_runner
 	$(TF) apply -auto-approve
 
 tf-init: ## Download the Terraform providers

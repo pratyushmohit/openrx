@@ -17,3 +17,8 @@ output "fixtures_bucket" {
   description = "S3 bucket holding replay fixtures."
   value       = aws_s3_bucket.fixtures.bucket
 }
+
+output "search_runner_function_name" {
+  description = "Name of the search-runner Lambda."
+  value       = aws_lambda_function.search_runner.function_name
+}

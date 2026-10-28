@@ -26,7 +26,7 @@ flowchart LR
 
   subgraph floci["Floci 2.3.0 · local AWS · 127.0.0.1:4566 · IAM enforced"]
     subgraph sandbox["Model code runs here"]
-      search["search-runner<br/>Monty + catalog_*()<br/>no AWS permissions<br/><i>M3</i>"]
+      search["search-runner<br/>Monty + catalog_*()<br/>no AWS permissions"]
       execute["execute-runner<br/>Monty + catalog_*() + request()<br/>IAM: invoke bridge only<br/><i>M3</i>"]
     end
     subgraph creds["Credentials live here"]
@@ -49,8 +49,8 @@ flowchart LR
 
   classDef built stroke:#333,stroke-width:1.5px
   classDef planned stroke:#333,stroke-width:1.5px,stroke-dasharray:5 4
-  class secrets,bedrock,ollama,apis,bridge built
-  class client,server,search,execute planned
+  class secrets,bedrock,ollama,apis,bridge,search built
+  class client,server,execute planned
   style sandbox fill:#fbf1e1,stroke:#a8640a,color:#111
   style creds fill:#fbe9eb,stroke:#ad2a3c,color:#111
   style floci fill:#eef1f6,stroke:#586170,color:#111
@@ -146,6 +146,7 @@ enforcement on.
 | Catalog sources: openFDA, PubMed, RxNorm, DailyMed, ClinicalTrials.gov (23 endpoints) | M1 | Built |
 | `catalog_*()` functions | M1 | Built |
 | Bridge (validation, keys, limits, record/replay, Lambda) | M2 | Built |
-| search-runner, execute-runner | M3 | Planned |
+| search-runner | M3 | Built |
+| execute-runner | M3 | Planned |
 | MCP server, LangGraph agent | M4 | Planned |
 | Eval harness and report | M5 | Planned |

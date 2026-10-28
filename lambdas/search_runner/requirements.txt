@@ -1,0 +1,6 @@
+# Libraries the search-runner needs at runtime, pinned to the versions in uv.lock
+# (tests/test_packaging.py checks this). The openrx package itself is added by
+# scripts/build_lambda.sh without its other dependencies.
+pydantic-monty==1.4.0
+pydantic==2.14.1
+pyyaml==6.0.3
