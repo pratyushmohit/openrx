@@ -93,6 +93,14 @@ class KeyStore:
         lookup = self._cache[name]
         if lookup.key is None and not source.auth.optional:
             raise KeyUnavailable("missing_api_key", f"{source.id} needs an API key: {lookup.note}")
+        if lookup.key is None:
+            # The model reads this note. Say plainly that nothing is wrong: in the evals
+            # a bare "secret ... has no value set" made the model give up on the source.
+            return KeyLookup(
+                None,
+                f"no API key for {source.id} ({lookup.note}); the key is optional, so "
+                "requests work without it, at a lower rate limit",
+            )
         return lookup
 
     def _read(self, name: str) -> KeyLookup:

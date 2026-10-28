@@ -62,7 +62,7 @@ def test_bridge_role_can_read_its_secrets_under_iam_enforcement(lam):
     )
 
     assert answer["ok"]
-    assert "secret 'openrx/ncbi_api_key' has no value set" in answer["notes"]
+    assert any("secret 'openrx/ncbi_api_key' has no value set" in n for n in answer["notes"])
 
 
 def test_fixed_path_is_routed_to_its_own_endpoint(lam):

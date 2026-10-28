@@ -90,7 +90,8 @@ def test_secret_without_a_value_means_no_key(answer):
     lookup = KeyStore(FakeSecrets(answer), ARNS).key_for(OPENFDA)
 
     assert lookup.key is None
-    assert lookup.note == "secret 'openrx/openfda_api_key' has no value set"
+    assert "secret 'openrx/openfda_api_key' has no value set" in (lookup.note or "")
+    assert "optional, so requests work without it" in (lookup.note or "")
 
 
 def test_missing_arn_means_no_key():
@@ -106,7 +107,9 @@ def test_access_denied_is_reported_but_does_not_fail_an_optional_key():
     lookup = KeyStore(FakeSecrets(client_error("AccessDeniedException")), ARNS).key_for(OPENFDA)
 
     assert lookup.key is None
-    assert lookup.note == "could not read secret 'openrx/openfda_api_key': AccessDeniedException"
+    assert "could not read secret 'openrx/openfda_api_key': AccessDeniedException" in (
+        lookup.note or ""
+    )
 
 
 # --- required keys ----------------------------------------------------------------
