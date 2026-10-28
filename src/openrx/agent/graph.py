@@ -84,7 +84,8 @@ def build_agent(
                 output = json.dumps({"error": {"type": "UnknownTool", "message": call["name"]}})
             else:
                 output = str(await tool.ainvoke(call["args"]))
-            events.append(_tool_event(call["name"], output, (clock() - started) * 1000))
+            ms = (clock() - started) * 1000
+            events.append(_tool_event(call["name"], call["args"], output, ms))
             messages.append(ToolMessage(content=output, tool_call_id=call["id"], name=call["name"]))
         return {"messages": messages, "events": events}
 
@@ -145,7 +146,7 @@ def message_text(message: AnyMessage) -> str:
     ).strip()
 
 
-def _tool_event(name: str, output: str, ms: float) -> dict[str, Any]:
+def _tool_event(name: str, args: Any, output: str, ms: float) -> dict[str, Any]:
     try:
         result = json.loads(output)
     except ValueError:
@@ -160,4 +161,7 @@ def _tool_event(name: str, output: str, ms: float) -> dict[str, Any]:
         "request_calls": result.get("request_calls", 0) if isinstance(result, dict) else 0,
         "bytes_fetched": result.get("bytes_fetched", 0) if isinstance(result, dict) else 0,
         "bytes_returned": result.get("bytes_returned", 0) if isinstance(result, dict) else 0,
+        # Kept for the evals: grounding checks and error classes (README §6).
+        "args": args,
+        "output": output,
     }

@@ -287,3 +287,67 @@ def eval_record() -> None:
         raise typer.Exit(code=1)
     save_expected(expected)
     typer.echo(f"saved {len(expected)} expected answer(s) to evals/expected.json")
+
+
+@eval_app.command("run")
+def eval_run(
+    k: Annotated[int, typer.Option("-k", min=1, help="Attempts per task (pass^k).")] = 3,
+    tasks: Annotated[str, typer.Option(help="Comma-separated task ids (default: all).")] = "",
+    model: Annotated[str, typer.Option(help="Bedrock model id (OPENRX_MODEL_ID).")] = "",
+) -> None:
+    """Run the agent on the task suite k times and save every trial (README §12.2)."""
+    import asyncio
+    import os
+
+    from openrx.agent.model import DEFAULT_MODEL_ID
+    from openrx.agent.run import ask_question
+    from openrx.evals.deployed import FIXTURE_BUCKET, lambda_client, s3_client, set_bridge_mode
+    from openrx.evals.expected import load_expected
+    from openrx.evals.fixtures import export_fixtures, list_keys
+    from openrx.evals.run import RUNS_DIR, append_line, run_id, run_trial, trials
+    from openrx.evals.tasks import load_tasks
+
+    env = dict(os.environ)
+    if model:
+        env["OPENRX_MODEL_ID"] = model
+    model_id = env.get("OPENRX_MODEL_ID", DEFAULT_MODEL_ID)
+    suite = load_tasks()
+    if tasks:
+        wanted = {t.strip() for t in tasks.split(",") if t.strip()}
+        unknown = wanted - {t.id for t in suite}
+        if unknown:
+            typer.echo(f"unknown task(s): {', '.join(sorted(unknown))}", err=True)
+            raise typer.Exit(code=2)
+        suite = [t for t in suite if t.id in wanted]
+    expected = load_expected()
+    path = RUNS_DIR / f"{run_id(model_id)}.jsonl"
+    s3, lam = s3_client(), lambda_client()
+
+    async def ask(prompt: str):  # noqa: ANN202 - AgentResult, imported lazily
+        return await ask_question(prompt, env)
+
+    async def run_all() -> tuple[int, int, int]:
+        passed = recorded = 0
+        plan = trials(suite, k)
+        for n, trial in enumerate(plan, 1):
+            record = await run_trial(
+                trial, expected[trial.task.id], ask, model_id, lambda: list_keys(s3, FIXTURE_BUCKET)
+            )
+            append_line(path, record)
+            passed += record["passed"]
+            recorded += len(record["new_fixtures"])
+            mark = "pass" if record["passed"] else ("CRASH" if record["crash"] else "fail")
+            typer.echo(
+                f"[{n}/{len(plan)}] {mark:<5} {trial.task.id} #{trial.attempt} "
+                f"({record['totals']['seconds']}s) {record.get('detail') or ''}".rstrip()
+            )
+        return passed, len(plan), recorded
+
+    set_bridge_mode(lam, "replay_or_record")
+    try:
+        passed, total, recorded = asyncio.run(run_all())
+    finally:
+        set_bridge_mode(lam, "live")
+    if recorded:  # data the agent fetched that no reference needed: keep it for replays
+        export_fixtures(s3, FIXTURE_BUCKET)
+    typer.echo(f"{passed}/{total} trials passed; {recorded} new fixture(s); saved {path}")

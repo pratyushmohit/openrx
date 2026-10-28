@@ -125,6 +125,7 @@ def test_events_record_each_llm_and_tool_call():
     assert (llm["input_tokens"], llm["output_tokens"], llm["tool_calls"]) == (100, 20, 1)
     assert tool["tool"] == "execute" and tool["ok"] is True
     assert (tool["request_calls"], tool["bytes_fetched"], tool["bytes_returned"]) == (2, 5000, 10)
+    assert tool["args"] == {"code": "x"} and '"request_calls": 2' in tool["output"]
 
 
 def test_tool_errors_are_recorded_and_passed_to_the_model():

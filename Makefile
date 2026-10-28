@@ -20,7 +20,7 @@ export AWS_ENDPOINT_URL ?= http://127.0.0.1:4566
 
 TF := terraform -chdir=infra/envs/floci
 
-.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge bench-runners bench-mcp deploy serve eval-record fixtures-export fixtures-import up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
+.PHONY: help check lint lint-catalog typecheck test test-integration bench-bridge bench-runners bench-mcp deploy serve eval-record eval-run eval-report fixtures-export fixtures-import up up-ui down logs ps build tf-init tf-plan tf-apply tf-destroy
 
 help: ## List available commands
 	@grep -E "^[a-z-]+:.*## " $(MAKEFILE_LIST) | awk -F ":.*## " "{printf \"  %-15s %s\n\", \$$1, \$$2}"
@@ -80,6 +80,13 @@ build: ## Build a Lambda zip: make build LAMBDA=<name> (from lambdas/<name>/)
 
 eval-record: ## Record the data every eval task needs, then export it to evals/fixtures/
 	uv run openrx eval record
+
+K ?= 3
+eval-run: ## Run the agent on every task K times (default 3), saving results/runs/*.jsonl
+	uv run openrx eval run -k $(K)
+
+eval-report: ## Summarise the latest run into results/summary.md and charts
+	uv run openrx eval report
 
 fixtures-export: ## Copy recorded fixtures from Floci's S3 into evals/fixtures/
 	uv run openrx eval fixtures export
