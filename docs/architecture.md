@@ -147,7 +147,8 @@ enforcement on.
 | Bridge (validation, keys, limits, record/replay, Lambda) | M2 | Built |
 | search-runner | M3 | Built |
 | execute-runner | M3 | Built |
-| Sandbox-escape suite (NFR-2) and end-to-end secret-exposure check (§6.5) | M3 | **Open: deferred** |
+| Sandbox-escape suite (NFR-2) and end-to-end secret-exposure check (§6.5) | M3 | **Not in v1** (D-017) |
 | MCP server (`openrx serve`, two tools, descriptions, 714-token footprint) | M4 | Built |
 | LangGraph agent, `openrx ask` | M4 | Built |
-| Eval harness and report | M5 | Planned |
+| Eval harness and report (`openrx eval record/run/report`, 25 tasks) | M5 | Built |
+| CI (`make check` on GitHub Actions) | M5 | Built |

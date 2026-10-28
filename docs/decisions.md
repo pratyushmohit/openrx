@@ -444,3 +444,26 @@ the modern-protocol server and its tests (M4 piece 1) for a dependency we need l
 
 **Cost:** one more small module to maintain; revisit when langchain-mcp-adapters supports
 the 2.x SDK.
+
+---
+
+## D-017: Ship v1 without the deferred items
+
+**Date:** 2026-10-28 · **Status:** Accepted
+
+**Context:** Several items were deferred while building M3–M5: the sandbox-escape suite
+(NFR-2) and the end-to-end secret-exposure check (§6.5), the three prompt-injection
+tasks, the LLM judge for prose answers, a second model and LLM tuning, and the
+third-party client demo (FR-17, CUJ-3).
+
+**Decision:** They are out of scope for v1. v1 is M0–M5 as built and measured; these
+items are listed as known gaps, not pending work.
+
+**Why:** The owner's call: the core claim (two tools, a code sandbox, a small context
+footprint, measured quality) is built and evaluated without them.
+
+**Cost:** v1 does not meet the README's launch rule that every P0 requirement is
+verified: NFR-2's escape suite and the secret-exposure check are P0 and untested end to
+end. What does exist: Monty's own isolation (no filesystem, network or imports), the
+resource-abuse and request-abuse tests, and fixtures checked to hold no keys. Anyone
+running OpenRx with real API keys or untrusted users should build the escape suite first.

@@ -71,7 +71,7 @@ Priorities: **P0** = must have for v1 (no launch without it), **P1** = should ha
 | FR-14 | P1 | Pre-execution type check with Monty's bundled `ty` against generated stubs; type errors returned without running. Toggleable. |
 | FR-15 | P1 | Per-source rate limiting and a per-execution `request()` budget (default 50 calls). |
 | FR-16 | P1 | `openrx catalog lint` validates catalog files. `openrx catalog import-openapi` converts OpenAPI specs. |
-| FR-17 | P1 | Works from at least one third-party MCP client (e.g. Claude Desktop), documented in the README. **Deferred** (M4 kept simple); `openrx serve` is a standard stdio MCP server, tested over stdio. |
+| FR-17 | P1 | Works from at least one third-party MCP client (e.g. Claude Desktop), documented in the README. **Not in v1** (D-017); `openrx serve` is a standard stdio MCP server, tested over stdio. |
 | FR-18 | P2 | Streamable HTTP transport, deployed on Floci (API Gateway + Lambda). |
 | FR-19 | P2 | Alternative sandbox backends behind the same runner interface (Docker `--network none`, Daytona/E2B) with a comparison. |
 | FR-20 | P2 | Direct tool-calling baseline agent for an A/B comparison. |
@@ -397,12 +397,12 @@ A milestone is done only when its exit criteria pass.
 | M0 | Spike | Floci + hello-world Lambda via Terraform; Lambda→Lambda invoke; Secrets Manager read; IAM/network enforcement check; `pydantic-monty` in the Lambda image; external functions + resource limits; Monty's supported Python features and stdlib; `ty` with custom stubs; Ollama model tool calling + Monty-compatible code on 3–5 sample tasks; baseline latency of sandbox overhead | `docs/m0-findings.md` written; provisional SLOs in §6.4 confirmed or revised in `docs/slos.md`; plan adjusted; risks in §11 updated |
 | M1 | Catalog | Schema, loader, catalog functions, lint, OpenAPI converter; all five sources | `catalog lint` passes; unit tests ≥ 80% coverage; every endpoint has an example response |
 | M2 | Bridge | Validation, allowlist, rate limits, budget, secrets, record/replay (fixtures in S3); local first, then Lambda | Request-abuse evals 100%; record/replay round-trips on sample requests; bridge overhead SLO met |
-| M3 | Runners | Shared Monty runner; search/execute Lambdas; Terraform for all Lambdas, IAM, secrets | Escape, resource-abuse, and secret-exposure suites 100%; sandbox overhead SLO met; `make deploy` from clean works. **Status:** done except the sandbox-escape suite and the end-to-end secret-exposure check, deferred (see `docs/architecture.md`) |
-| M4 | MCP server + agent | Two tools, descriptions, `instructions`, LangGraph agent, `openrx ask` | NFR-1 footprint test passes; CUJ-1 demoed with `openrx ask` (CUJ-3 with a third-party client deferred); search/execute latency SLOs met. **Status:** done (footprint 714 tokens; CUJ-1 answered with `openrx ask`; search/execute SLOs met) |
+| M3 | Runners | Shared Monty runner; search/execute Lambdas; Terraform for all Lambdas, IAM, secrets | Escape, resource-abuse, and secret-exposure suites 100%; sandbox overhead SLO met; `make deploy` from clean works. **Status:** done except the sandbox-escape suite and the end-to-end secret-exposure check, not in v1 (D-017) |
+| M4 | MCP server + agent | Two tools, descriptions, `instructions`, LangGraph agent, `openrx ask` | NFR-1 footprint test passes; CUJ-1 demoed with `openrx ask` (CUJ-3 with a third-party client not in v1, D-017); search/execute latency SLOs met. **Status:** done (footprint 714 tokens; CUJ-1 answered with `openrx ask`; search/execute SLOs met) |
 | M5 | Evals + launch | Task suite, reference solutions, fixtures for the task suite, scorer, runner, footprint analysis, report, README | Fixtures recorded for every task; all P0 requirements done; all §6 metrics reported; P0 targets met or documented with reasons; README results published |
 | M6 | Stretch (P2) | FR-18 to FR-21 | Per item |
 
-**Launch (v1) =** M0–M5 exit criteria met, and every P0 requirement in §5 is verified by a test or an eval.
+**Launch (v1) =** M0–M5 exit criteria met, and every P0 requirement in §5 is verified by a test or an eval. v1 ships with the known gaps in D-017 (notably the NFR-2 escape suite).
 
 ## 16. Open questions
 
@@ -410,8 +410,8 @@ A milestone is done only when its exit criteria pass.
 2. ~~Missing Python features (e.g. `json`, `datetime`): add helper external functions, or tell the model to avoid them?~~ Decided: document the gaps, no helpers (D-015, `docs/python-subset.md`).
 3. ~~How fixtures reach the bridge Lambda in replay mode (package, S3 on Floci, or mount).~~ Decided: S3 on Floci (D-013).
 4. Whether the MCP server invokes runners via boto3 directly (proposed) or via API Gateway.
-5. Which two Ollama models fit the reference machine. (Deferred to the end; qwen3.5 runs fully on the GPU, E1.)
-6. Judge model for LLM-as-judge scoring, and how to keep it fixed across runs.
+5. Which two Ollama models fit the reference machine. (Not in v1, D-017: evaluated with qwen3.5 only.)
+6. Judge model for LLM-as-judge scoring, and how to keep it fixed across runs. (Not in v1, D-017: scoring is deterministic.)
 
 ## 17. Glossary
 
