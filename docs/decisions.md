@@ -284,3 +284,6 @@ saved spec the output is reproducible, an upstream change shows up as a reviewab
 of the saved spec, and the sync test catches both hand edits and forgotten regeneration.
 
 **Cost:** three files for one source, and an 81 KB spec copy in the repo (and package).
+
+*Update 2026-10-28:* the input folder was renamed from `openapi/` to `openapi_specs/`, so
+it no longer shares a name with the `openapi.py` module next to it.

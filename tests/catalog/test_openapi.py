@@ -135,7 +135,7 @@ def test_render_adds_header_and_writes_multiline_text_as_blocks():
 
 
 def make_root(tmp_path, overlay_data=OVERLAY):
-    (tmp_path / "openapi").mkdir()
+    (tmp_path / "openapi_specs").mkdir()
     (tmp_path / "sources").mkdir()
     overlay_path(tmp_path, "trials").write_text(yaml.safe_dump(overlay_data), encoding="utf-8")
     spec_path(tmp_path, "trials").write_text(yaml.safe_dump(SPEC), encoding="utf-8")

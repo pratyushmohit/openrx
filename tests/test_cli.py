@@ -117,15 +117,19 @@ def test_capture_examples_reports_a_broken_source_file(tmp_path):
 
 
 def write_openapi_inputs(root):
-    (root / "openapi").mkdir()
+    (root / "openapi_specs").mkdir()
     (root / "sources").mkdir(exist_ok=True)
-    (root / "openapi" / "trials.yaml").write_text(yaml.safe_dump(OPENAPI_OVERLAY), encoding="utf-8")
+    (root / "openapi_specs" / "trials.yaml").write_text(
+        yaml.safe_dump(OPENAPI_OVERLAY), encoding="utf-8"
+    )
     return OPENAPI_SPEC
 
 
 def test_import_openapi_generates_from_the_saved_spec(tmp_path):
     spec = write_openapi_inputs(tmp_path)
-    (tmp_path / "openapi" / "trials.spec.yaml").write_text(yaml.safe_dump(spec), encoding="utf-8")
+    (tmp_path / "openapi_specs" / "trials.spec.yaml").write_text(
+        yaml.safe_dump(spec), encoding="utf-8"
+    )
 
     result = runner.invoke(app, ["catalog", "import-openapi", "trials", "--dir", str(tmp_path)])
 
@@ -143,7 +147,7 @@ def test_import_openapi_fetch_saves_the_spec_with_lf_endings(tmp_path, monkeypat
     result = runner.invoke(app, args)
 
     assert result.exit_code == 0, result.output
-    assert b"\r\n" not in (tmp_path / "openapi" / "trials.spec.yaml").read_bytes()
+    assert b"\r\n" not in (tmp_path / "openapi_specs" / "trials.spec.yaml").read_bytes()
 
 
 def test_import_openapi_fetch_failure(tmp_path, monkeypatch):

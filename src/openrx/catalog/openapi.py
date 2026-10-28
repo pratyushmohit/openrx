@@ -2,9 +2,9 @@
 
 Hand-written and generated content stay in separate files (as in D-009):
 
-    openapi/<source>.yaml        hand-written: which operations, plus guide and notes
-    openapi/<source>.spec.yaml   a saved copy of the upstream spec (refresh: --fetch)
-    sources/<source>.yaml        generated from the two above; never edited by hand
+    openapi_specs/<source>.yaml        hand-written: which operations, plus guide and notes
+    openapi_specs/<source>.spec.yaml   a saved copy of the upstream spec (refresh: --fetch)
+    sources/<source>.yaml              generated from the two above; never edited by hand
 
 Generating from a saved spec makes the output reproducible, so a test can regenerate it
 and fail if the committed file was edited or not regenerated.
@@ -21,7 +21,7 @@ from openrx.catalog.loader import read_yaml
 from openrx.catalog.schema import FixedParams, Source
 
 GENERATED_HEADER = """\
-# GENERATED FILE: do not edit. Change openapi/{id}.yaml instead, then run
+# GENERATED FILE: do not edit. Change openapi_specs/{id}.yaml instead, then run
 #   openrx catalog import-openapi {id}
 # Generated from the {name} OpenAPI spec, version {version}.
 """
@@ -57,12 +57,12 @@ class OpenAPIImportError(Exception):
 
 def overlay_path(root: Path, source_id: str) -> Path:
     """The hand-written overlay for a generated source."""
-    return root / "openapi" / f"{source_id}.yaml"
+    return root / "openapi_specs" / f"{source_id}.yaml"
 
 
 def spec_path(root: Path, source_id: str) -> Path:
     """The saved copy of the upstream spec."""
-    return root / "openapi" / f"{source_id}.spec.yaml"
+    return root / "openapi_specs" / f"{source_id}.spec.yaml"
 
 
 def generated_text(root: Path, source_id: str) -> str:

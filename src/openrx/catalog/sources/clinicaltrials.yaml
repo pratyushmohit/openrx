@@ -1,4 +1,4 @@
-# GENERATED FILE: do not edit. Change openapi/clinicaltrials.yaml instead, then run
+# GENERATED FILE: do not edit. Change openapi_specs/clinicaltrials.yaml instead, then run
 #   openrx catalog import-openapi clinicaltrials
 # Generated from the ClinicalTrials.gov OpenAPI spec, version 2.0.5.
 
