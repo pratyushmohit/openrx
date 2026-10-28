@@ -144,7 +144,7 @@ enforcement on.
 | Catalog schema | M1 | Built |
 | Catalog loader, lint, example capture | M1 | Built |
 | Catalog sources: openFDA, PubMed, RxNorm, DailyMed, ClinicalTrials.gov (23 endpoints) | M1 | Built |
-| `catalog_*()` functions | M1 | Planned |
+| `catalog_*()` functions | M1 | Built |
 | Bridge | M2 | Planned |
 | search-runner, execute-runner | M3 | Planned |
 | MCP server, LangGraph agent | M4 | Planned |

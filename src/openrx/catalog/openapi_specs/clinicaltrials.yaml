@@ -46,8 +46,9 @@ operations:
   - operation: listStudies
     id: search_studies
     description: >-
-      Search clinical studies by condition, intervention, sponsor, status, phase
-      and other fields; returns matching studies page by page.
+      Search clinical trials (studies) by condition, drug or other intervention,
+      sponsor, status, phase and other fields; returns matching trials page by
+      page.
     fixed_params: {format: json}
     # postFilter.* repeat filter.*; geoDecay and markupFormat aren't needed.
     exclude_params:
@@ -72,9 +73,9 @@ operations:
   - operation: fetchStudy
     id: study
     description: >-
-      One study in full by NCT id: identification, status, sponsor, design and
+      One clinical trial (study) in full by NCT id: status, sponsor, design and
       phase, arms and interventions, outcomes, eligibility, locations, and
-      results when posted.
+      posted results including adverse events.
     fixed_params: {format: json}
     exclude_params: [markupFormat]
     example_params:

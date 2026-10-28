@@ -36,8 +36,8 @@ guide: |
 endpoints:
 - id: search_studies
   path: /studies
-  description: Search clinical studies by condition, intervention, sponsor, status, phase
-    and other fields; returns matching studies page by page.
+  description: Search clinical trials (studies) by condition, drug or other intervention,
+    sponsor, status, phase and other fields; returns matching trials page by page.
   fixed_params:
     format: json
   params:
@@ -147,8 +147,9 @@ endpoints:
     is present when there are more pages.
 - id: study
   path: /studies/{nctId}
-  description: 'One study in full by NCT id: identification, status, sponsor, design and phase,
-    arms and interventions, outcomes, eligibility, locations, and results when posted.'
+  description: 'One clinical trial (study) in full by NCT id: status, sponsor, design and
+    phase, arms and interventions, outcomes, eligibility, locations, and posted results including
+    adverse events.'
   fixed_params:
     format: json
   params:
