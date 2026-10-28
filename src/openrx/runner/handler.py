@@ -10,12 +10,14 @@ so the MCP server always has something to show the model.
 """
 
 import json
+import os
 from collections.abc import Callable, Mapping
 from dataclasses import replace
-from typing import Any, Protocol
+from typing import Any, Protocol, cast
 
 from openrx.catalog.functions import catalog_functions
 from openrx.catalog.loader import load_catalog
+from openrx.runner.requests import LambdaBridge, LambdaClient, RequestFunction
 from openrx.runner.results import ToolResult
 from openrx.runner.sandbox import Limits
 from openrx.runner.stubs import Runner as RunnerKind
@@ -47,13 +49,18 @@ class Runner:
         functions: Mapping[str, Callable[..., Any]],
         limits: Limits | None = None,
         log: Callable[[str], None] = print,
+        request_factory: Callable[[], RequestFunction] | None = None,
     ) -> None:
-        """Wire a runner of `kind` to its host and functions."""
+        """Wire a runner of `kind` to its host and functions.
+
+        `request_factory` gives each run its own request() (execute-runner only).
+        """
         self.kind: RunnerKind = kind
         self._host = host
         self._functions = dict(functions)
         self._limits = limits or Limits()
         self._log = log
+        self._request_factory = request_factory
 
     def handle(self, event: Any) -> dict[str, Any]:
         """Run the event's code and return the ToolResult as a dict."""
@@ -62,7 +69,15 @@ class Runner:
         except ValueError as e:
             result = ToolResult(error={"type": "BadRequest", "message": str(e)})
         else:
-            result = self._host.run(code, self._functions, type_check=type_check, limits=limits)
+            functions = dict(self._functions)
+            request = self._request_factory() if self._request_factory else None
+            if request is not None:
+                functions["request"] = request
+            result = self._host.run(code, functions, type_check=type_check, limits=limits)
+            if request is not None:
+                result.request_calls = request.calls
+                result.bytes_fetched = request.bytes_fetched
+                result.notes.extend(n for n in request.notes if n not in result.notes)
         self._log(
             json.dumps(
                 {
@@ -70,6 +85,8 @@ class Runner:
                     "ok": result.error is None,
                     "error_type": (result.error or {}).get("type"),
                     "duration_ms": result.duration_ms,
+                    "request_calls": result.request_calls,
+                    "bytes_fetched": result.bytes_fetched,
                     "bytes_returned": result.bytes_returned,
                     "truncated": result.truncated,
                 }
@@ -113,3 +130,34 @@ def search_handler(event: Any, context: Any) -> dict[str, Any]:
     if _search is None:
         _search = search_runner()
     return _search.handle(event)
+
+
+_execute: Runner | None = None
+
+
+def execute_runner(env: Mapping[str, str] = os.environ) -> Runner:
+    """The execute-runner: catalog_* functions plus request() through the bridge."""
+    import boto3  # in the Lambda runtime; on Floci it uses the injected AWS_ENDPOINT_URL
+    from botocore.config import Config
+
+    from openrx.runner.sandbox import SandboxHost  # starts Monty; Lambda only (D-005)
+
+    # Retries for a busy bridge are handled (and tested) in LambdaBridge, so boto3's
+    # own are off; the read timeout outlasts the bridge's 90 s.
+    config = Config(retries={"max_attempts": 1, "mode": "standard"}, read_timeout=100)
+    client = cast(LambdaClient, boto3.client("lambda", config=config))
+    bridge = LambdaBridge(client, env.get("OPENRX_BRIDGE_FUNCTION", "openrx-bridge"))
+    return Runner(
+        "execute",
+        SandboxHost("execute"),
+        catalog_functions(load_catalog()),
+        request_factory=lambda: RequestFunction(bridge),
+    )
+
+
+def execute_handler(event: Any, context: Any) -> dict[str, Any]:
+    """Lambda entry point for the execute-runner. Built once per container."""
+    global _execute
+    if _execute is None:
+        _execute = execute_runner()
+    return _execute.handle(event)

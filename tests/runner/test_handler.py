@@ -101,6 +101,8 @@ def test_one_json_log_line_per_run():
         "ok": False,
         "error_type": "ZeroDivisionError",
         "duration_ms": 0.0,
+        "request_calls": 0,
+        "bytes_fetched": 0,
         "bytes_returned": 0,
         "truncated": False,
     }
@@ -119,5 +121,45 @@ def test_search_handler_builds_its_runner_once(monkeypatch):
 
     handler_module.search_handler({"code": "1"}, None)
     handler_module.search_handler({"code": "2"}, None)
+
+    assert len(built) == 1
+
+
+def test_execute_runner_gives_each_run_its_own_request_and_reports_its_counts():
+    class FakeRequest:
+        def __init__(self):
+            self.calls, self.bytes_fetched, self.notes = 3, 120, ["note a"]
+
+    made = []
+
+    def factory():
+        made.append(FakeRequest())
+        return made[-1]
+
+    host = FakeHost(ToolResult(result="ok", notes=["note a", "other"]))
+    runner = Runner("execute", host, {}, log=lambda _: None, request_factory=factory)
+
+    first = runner.handle({"code": "x"})
+    runner.handle({"code": "y"})
+
+    assert len(made) == 2  # a fresh request() per run
+    assert host.calls[0]["functions"]["request"] is made[0]
+    assert (first["request_calls"], first["bytes_fetched"]) == (3, 120)
+    assert first["notes"] == ["note a", "other"]  # no duplicate
+
+
+def test_execute_handler_builds_its_runner_once(monkeypatch):
+    built = []
+
+    def fake_runner():
+        runner, _, _ = make_runner()
+        built.append(runner)
+        return runner
+
+    monkeypatch.setattr(handler_module, "_execute", None)
+    monkeypatch.setattr(handler_module, "execute_runner", fake_runner)
+
+    handler_module.execute_handler({"code": "1"}, None)
+    handler_module.execute_handler({"code": "2"}, None)
 
     assert len(built) == 1

@@ -57,7 +57,10 @@ class Response(TypedDict):
 async def request(
     source: str, path: str, params: dict[str, str | int | float | bool] | None = None
 ) -> Response:
-    """Call a catalogued endpoint through the bridge. Raises if the call is rejected."""
+    """Call a catalogued endpoint through the bridge.
+
+    Raises RuntimeError("<code>: <message>") if the call is rejected.
+    """
     ...
 '''
 

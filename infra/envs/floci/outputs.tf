@@ -22,3 +22,8 @@ output "search_runner_function_name" {
   description = "Name of the search-runner Lambda."
   value       = aws_lambda_function.search_runner.function_name
 }
+
+output "execute_runner_function_name" {
+  description = "Name of the execute-runner Lambda."
+  value       = aws_lambda_function.execute_runner.function_name
+}
