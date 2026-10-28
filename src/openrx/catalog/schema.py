@@ -194,6 +194,7 @@ def expand_placeholders(params: FixedParams, env: dict[str, str]) -> tuple[Fixed
 
     Returns the parameters that could be filled and the names of missing variables;
     a parameter whose variable is missing is left out rather than sent half-filled.
+    A variable set to "" counts as missing: Terraform passes unset settings as "".
     """
     filled: FixedParams = {}
     missing: list[str] = []
@@ -201,7 +202,7 @@ def expand_placeholders(params: FixedParams, env: dict[str, str]) -> tuple[Fixed
         if not isinstance(value, str):
             filled[name] = value
             continue
-        absent = [v for v in ENV_PLACEHOLDER.findall(value) if v not in env]
+        absent = [v for v in ENV_PLACEHOLDER.findall(value) if not env.get(v)]
         if absent:
             missing.extend(absent)
             continue

@@ -89,7 +89,10 @@ def _check_path_shape(path: Any) -> None:
 
 
 def _match_endpoint(source: Source, path: str) -> tuple[Endpoint, dict[str, str]]:
-    for endpoint in source.endpoints:
+    # Fixed paths beat templates, and fewer placeholders beat more, as in web routing:
+    # "/studies/enums" is the enums endpoint, not "/studies/{nctId}" with nctId=enums.
+    by_specificity = sorted(source.endpoints, key=lambda e: e.path.count("{"))
+    for endpoint in by_specificity:
         match = _template_regex(endpoint.path).fullmatch(path)
         if match:
             return endpoint, match.groupdict()

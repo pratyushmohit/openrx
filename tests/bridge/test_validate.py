@@ -244,3 +244,26 @@ def test_number_params_accept_ints_floats_and_their_text(value, expected):
 def test_number_params_reject_other_values(value):
     with pytest.raises(RequestRejected, match="must be a number"):
         validate_request(number_catalog(), "geo", "/near", {"radius": value})
+
+
+@pytest.mark.parametrize(
+    ("path", "endpoint"),
+    [
+        ("/studies/enums", "enums"),  # a fixed path beats the template below
+        ("/studies/NCT03548935", "study"),  # /studies/{nctId}
+        ("/studies", "search_studies"),
+    ],
+)
+def test_fixed_paths_win_over_templates(path, endpoint):
+    # Regression: "/studies/enums" used to match /studies/{nctId} (nctId="enums"),
+    # so the study endpoint's fixed format=json was sent and the API refused it.
+    assert validate_request(CATALOG, "clinicaltrials", path).endpoint.id == endpoint
+
+
+def test_no_fixed_path_is_shadowed_by_a_template_in_the_shipped_catalog():
+    for source in CATALOG:
+        for endpoint in source.endpoints:
+            if "{" not in endpoint.path:
+                params = dict(endpoint.example_params)  # supplies required params
+                matched = validate_request(CATALOG, source.id, endpoint.path, params).endpoint
+                assert matched is endpoint, f"{source.id} {endpoint.path} -> {matched.id}"

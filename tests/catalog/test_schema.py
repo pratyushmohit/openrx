@@ -266,3 +266,10 @@ def test_expand_placeholders_fills_known_and_drops_unknown():
 
     assert filled == {"tool": "openrx", "email": "me@example.org", "n": 3}
     assert missing == ["B"]
+
+
+def test_empty_placeholder_value_counts_as_missing():
+    # Terraform passes an unset setting as "", which must not send email= to NCBI.
+    filled, missing = expand_placeholders({"email": "${EMAIL}"}, {"EMAIL": ""})
+
+    assert filled == {} and missing == ["EMAIL"]
