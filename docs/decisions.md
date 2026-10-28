@@ -379,3 +379,31 @@ invocation would leave the pool on a closed loop), and the pool has to be create
 inside that running loop. With a single bridge container (D-012), parallel requests
 still queue at the bridge; the gain is natural code and overlapping waits, not more
 upstream throughput.
+
+---
+
+## D-015: Document Monty's Python gaps; no helper functions
+
+**Date:** 2026-10-28 · **Status:** Accepted (README open question 2)
+
+**Context:** M3 ran 66 snippets of everyday Python through the deployed runner. 51
+work; 15 don't: class inheritance (and so `super()` and `enum`), `@property`,
+generators, and the modules `statistics`, `operator`, `heapq`, `OrderedDict`, `io` /
+`csv`, `string`, `textwrap`, `fractions`, `urllib.parse`. `json`, `datetime` and `re`,
+the ones data work leans on most, all work.
+
+**Options:**
+1. Add helper external functions for the gaps (e.g. `mean`, `median`).
+2. Document the gaps, with the plain-Python alternative for each.
+
+**Decision:** Option 2. `docs/python-subset.md` lists what works and what to write
+instead; the tool descriptions (M4) carry a short "not available" line.
+
+**Why:** every gap has a one-line alternative a model can write (`sum(xs) / len(xs)`,
+a lambda instead of `itemgetter`, `sorted(...)[:n]` instead of `heapq`). Helper
+functions would grow the tool definitions, which README goal G2 keeps small, and add
+API surface to maintain. Revisit if evals show models repeatedly tripping on one gap.
+
+**How it stays true:** `tests/python_features.py` records both lists, and the
+integration test fails in either direction, so a Monty upgrade that adds or drops a
+feature shows up and this page gets updated.

@@ -406,7 +406,7 @@ A milestone is done only when its exit criteria pass.
 ## 16. Open questions
 
 1. Async external functions vs a start/resume loop for `request()` dispatch (moved to M3: both exist in Monty 1.4, decide while building the runner).
-2. Missing Python features (e.g. `json`, `datetime`): add helper external functions, or tell the model to avoid them? (Moved to M3.)
+2. ~~Missing Python features (e.g. `json`, `datetime`): add helper external functions, or tell the model to avoid them?~~ Decided: document the gaps, no helpers (D-015, `docs/python-subset.md`).
 3. ~~How fixtures reach the bridge Lambda in replay mode (package, S3 on Floci, or mount).~~ Decided: S3 on Floci (D-013).
 4. Whether the MCP server invokes runners via boto3 directly (proposed) or via API Gateway.
 5. Which two Ollama models fit the reference machine. (Deferred to the end; qwen3.5 runs fully on the GPU, E1.)
