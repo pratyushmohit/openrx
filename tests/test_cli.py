@@ -9,7 +9,9 @@ from typer.testing import CliRunner
 from openrx import __version__, cli
 from openrx.cli import app
 
-runner = CliRunner()
+# Plain text whatever the environment: on GitHub Actions Rich colours the help, and the
+# escape codes split words like "--version" that the tests look for.
+runner = CliRunner(env={"NO_COLOR": "1", "TERM": "dumb", "GITHUB_ACTIONS": "", "FORCE_COLOR": ""})
 
 
 def test_version_flag_prints_package_version():
