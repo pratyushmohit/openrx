@@ -395,10 +395,10 @@ A milestone is done only when its exit criteria pass.
 |---|---|---|---|
 | M0 | Spike | Floci + hello-world Lambda via Terraform; Lambda→Lambda invoke; Secrets Manager read; IAM/network enforcement check; `pydantic-monty` in the Lambda image; external functions + resource limits; Monty's supported Python features and stdlib; `ty` with custom stubs; Ollama model tool calling + Monty-compatible code on 3–5 sample tasks; baseline latency of sandbox overhead | `docs/m0-findings.md` written; provisional SLOs in §6.4 confirmed or revised in `docs/slos.md`; plan adjusted; risks in §11 updated |
 | M1 | Catalog | Schema, loader, catalog functions, lint, OpenAPI converter; all five sources | `catalog lint` passes; unit tests ≥ 80% coverage; every endpoint has an example response |
-| M2 | Bridge | Validation, allowlist, rate limits, budget, secrets, record/replay; local first, then Lambda | Request-abuse evals 100%; fixtures recorded for the task suite; bridge overhead SLO met |
+| M2 | Bridge | Validation, allowlist, rate limits, budget, secrets, record/replay (fixtures in S3); local first, then Lambda | Request-abuse evals 100%; record/replay round-trips on sample requests; bridge overhead SLO met |
 | M3 | Runners | Shared Monty runner; search/execute Lambdas; Terraform for all Lambdas, IAM, secrets | Escape, resource-abuse, and secret-exposure suites 100%; sandbox overhead SLO met; `make deploy` from clean works |
 | M4 | MCP server + agent | Two tools, descriptions, `instructions`, LangGraph agent, `openrx ask` | NFR-1 footprint test passes; CUJ-1 and CUJ-3 demoed (incl. one third-party MCP client); search/execute latency SLOs met |
-| M5 | Evals + launch | Task suite, reference solutions, scorer, runner, footprint analysis, report, README | All P0 requirements done; all §6 metrics reported; P0 targets met or documented with reasons; README results published |
+| M5 | Evals + launch | Task suite, reference solutions, fixtures for the task suite, scorer, runner, footprint analysis, report, README | Fixtures recorded for every task; all P0 requirements done; all §6 metrics reported; P0 targets met or documented with reasons; README results published |
 | M6 | Stretch (P2) | FR-18 to FR-21 | Per item |
 
 **Launch (v1) =** M0–M5 exit criteria met, and every P0 requirement in §5 is verified by a test or an eval.
@@ -407,7 +407,7 @@ A milestone is done only when its exit criteria pass.
 
 1. Async external functions vs a start/resume loop for `request()` dispatch (moved to M3: both exist in Monty 1.4, decide while building the runner).
 2. Missing Python features (e.g. `json`, `datetime`): add helper external functions, or tell the model to avoid them? (Moved to M3.)
-3. How fixtures reach the bridge Lambda in replay mode (package, S3 on Floci, or mount).
+3. ~~How fixtures reach the bridge Lambda in replay mode (package, S3 on Floci, or mount).~~ Decided: S3 on Floci (D-013).
 4. Whether the MCP server invokes runners via boto3 directly (proposed) or via API Gateway.
 5. Which two Ollama models fit the reference machine. (Deferred to the end; qwen3.5 runs fully on the GPU, E1.)
 6. Judge model for LLM-as-judge scoring, and how to keep it fixed across runs.

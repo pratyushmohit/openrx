@@ -287,3 +287,58 @@ of the saved spec, and the sync test catches both hand edits and forgotten regen
 
 *Update 2026-10-28:* the input folder was renamed from `openapi/` to `openapi_specs/`, so
 it no longer shares a name with the `openapi.py` module next to it.
+
+---
+
+## D-012: Call budget in Monty; rate limits with a single bridge container
+
+**Date:** 2026-10-28 · **Status:** Accepted
+
+**Context:** Each `execute` call may make at most 50 `request()` calls (FR-15), and each
+source has an upstream rate limit. Counters kept in memory only work if every request for
+an execution, or for a source, reaches the same process.
+
+**Options:**
+1. Shared counters in DynamoDB, used by every bridge container.
+2. Budget enforced in the runner by Monty; bridge limited to one container
+   (reserved concurrency 1), so in-memory counters in the bridge see every request.
+
+**Decision:** Option 2. Monty's `max_suspensions` limit stops the sandbox after 50
+external calls; the bridge also counts per `execution_id` as a backup. The bridge Lambda
+runs with reserved concurrency 1 and keeps a token bucket per source in memory.
+
+**Why:** Monty's limit is enforced inside the sandbox and can't be talked around by
+model code, so it is the right primary control. A single bridge container makes the
+in-memory rate limiter exact without another service. At this project's scale (one
+agent, a few calls per second) one container is enough.
+
+**Cost:** the bridge handles one request at a time, so parallel `request()` calls queue
+there. If Floci does not enforce reserved concurrency, the limiter is only per container
+locally; this is checked in M2, not assumed. Revisit with DynamoDB if throughput matters.
+
+---
+
+## D-013: Replay fixtures live in S3
+
+**Date:** 2026-10-28 · **Status:** Accepted
+
+**Context:** For reproducible evals (NFR-5) the bridge records complete upstream
+responses and plays them back (FR-11). README open question 3: where do they live?
+
+**Options:**
+1. Packaged into the bridge's zip.
+2. A bucket in S3 (on Floci locally), readable and writable only by the bridge role.
+
+**Decision:** Option 2. Fixtures are stored as
+`fixtures/<source>/<fingerprint>.json`, where the fingerprint is a hash of source, path
+and sorted parameters, never the API key or placeholder values. In replay mode a missing
+fixture is an error, never a silent live call.
+
+**Why:** Lambda can only write to a temporary `/tmp`, so recording from inside the
+bridge needs somewhere lasting; S3 is the standard answer and works the same on real AWS.
+Fixtures grow with the task suite, which would keep growing the zip under option 1, and
+recording would need a separate local path.
+
+**Cost:** one more AWS service in Terraform and on the bridge's IAM role. `make up` starts
+Floci clean (D-003), so recorded fixtures must be exported to and re-imported from the
+repo (a `make` target, M5) to survive restarts.
