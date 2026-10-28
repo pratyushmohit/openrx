@@ -31,6 +31,8 @@ app = typer.Typer(
 )
 catalog_app = typer.Typer(help="Inspect and check the API catalog.", no_args_is_help=True)
 app.add_typer(catalog_app, name="catalog")
+eval_app = typer.Typer(help="Measure OpenRx (README §6, §12).", no_args_is_help=True)
+app.add_typer(eval_app, name="eval")
 
 CatalogDir = Annotated[
     Path, typer.Option("--dir", help="Catalog folder containing sources/ and examples/.")
@@ -153,3 +155,32 @@ def serve() -> None:
     from openrx.mcp_server.server import server_from_environment
 
     server_from_environment().run()
+
+
+@eval_app.command("footprint")
+def eval_footprint() -> None:
+    """Tokens the tool definitions cost the model, vs one tool per endpoint (NFR-1)."""
+    from openrx.mcp_server.footprint import (
+        ENCODING,
+        TOKEN_BUDGET,
+        per_endpoint_footprint,
+        server_footprint,
+    )
+    from openrx.mcp_server.server import build_server
+
+    class _NoRunners:  # listing tools never runs code
+        def run(self, tool: str, code: str) -> dict[str, object]:
+            raise AssertionError("not called")
+
+    ours = server_footprint(build_server(_NoRunners()))  # type: ignore[arg-type]
+    theirs = per_endpoint_footprint(load_catalog())
+    verdict = "within" if ours.total <= TOKEN_BUDGET else "OVER"
+    typer.echo(f"tokens ({ENCODING})")
+    typer.echo(
+        f"  OpenRx        {ours.tool_count:3} tools  {ours.tools:6,} + {ours.instructions} "
+        f"instructions = {ours.total:,}  ({verdict} the {TOKEN_BUDGET:,} budget)"
+    )
+    typer.echo(f"  per endpoint  {theirs.tool_count:3} tools  {theirs.total:6,}")
+    typer.echo(f"  ratio         {theirs.total / ours.total:.1f}x")
+    if ours.total > TOKEN_BUDGET:
+        raise typer.Exit(code=1)

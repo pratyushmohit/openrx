@@ -74,18 +74,19 @@ def build_server(runners: Runners) -> FastMCP:
     mcp = FastMCP(name=SERVER_NAME, instructions=INSTRUCTIONS)
 
     # Both tools are read-only: OpenRx only ever sends GET requests (catalog schema).
+    # The title goes on the tool only (not also in annotations), so it is sent once.
     @mcp.tool(
+        title="Search the OpenRx API catalog",
         description=SEARCH_DESCRIPTION,
-        annotations=ToolAnnotations(title="Search the OpenRx API catalog", read_only_hint=True),
+        annotations=ToolAnnotations(read_only_hint=True),
     )
     def search(code: str) -> dict[str, Any]:
         return runners.run("search", code)
 
     @mcp.tool(
+        title="Run code against FDA/NIH drug APIs",
         description=EXECUTE_DESCRIPTION,
-        annotations=ToolAnnotations(
-            title="Run code against FDA/NIH drug APIs", read_only_hint=True, open_world_hint=True
-        ),
+        annotations=ToolAnnotations(read_only_hint=True, open_world_hint=True),
     )
     def execute(code: str) -> dict[str, Any]:
         return runners.run("execute", code)

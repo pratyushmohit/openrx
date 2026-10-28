@@ -30,6 +30,25 @@ which adds ~43 ms per request; E4).
 | `execute` call end to end, warm, ≤ 5 requests | Runner part, 5 gathered requests in replay: **46.6 / 48.9 / 50.2 ms** (M3, n=100) | ≤ 1 s | ≤ 2.5 s | ≤ 5 s | Runner part well within; provisional until M4 adds the MCP server |
 | Full task end to end with the local model | not measured | report | ≤ 90 s | report | Provisional; LLM speed is deferred to the end of the project |
 
+## Tool footprint (README NFR-1, §6.2)
+
+`openrx eval footprint` counts what the server actually sends to the model (its
+`list_tools` output plus `instructions`) with tiktoken's `o200k_base` encoding; a unit
+test fails if it goes over budget. The local model's own tokenizer counts somewhat
+differently.
+
+| | Tools | Tokens |
+|---|---|---|
+| OpenRx (M4) | 2 | **714** (611 tool definitions + 103 instructions); budget 1,500 ✅ |
+| One tool per endpoint, same catalog | 23 | 4,549 |
+| Ratio | | **6.4×** |
+
+The README expected at least 10×; at today's 23 endpoints it is 6.4×, against a
+deliberately lean baseline (endpoint descriptions and parameters only, no query guides
+or examples). The ratio grows with the catalog: OpenRx's footprint does not change when
+endpoints are added (they live in the catalog), while the per-endpoint design costs
+about 198 tokens more for each one, passing 10× at roughly 36 endpoints.
+
 ## Reported, not targeted
 
 These are reported in the eval results but have no target, because they mostly measure

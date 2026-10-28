@@ -1444,6 +1444,7 @@ dev = [
     { name = "pytest-asyncio" },
     { name = "pytest-cov" },
     { name = "ruff" },
+    { name = "tiktoken" },
 ]
 evals = [
     { name = "matplotlib" },
@@ -1473,6 +1474,7 @@ dev = [
     { name = "pytest-asyncio", specifier = ">=1.4.1" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "ruff", specifier = ">=0.17.3" },
+    { name = "tiktoken", specifier = ">=0.14.0" },
 ]
 evals = [
     { name = "matplotlib", specifier = ">=3.11.2" },

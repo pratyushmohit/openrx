@@ -176,3 +176,11 @@ def test_import_openapi_unknown_source(tmp_path):
 
     assert result.exit_code == 1
     assert "no overlay" in result.output
+
+
+def test_eval_footprint_reports_tokens_and_the_ratio():
+    result = runner.invoke(app, ["eval", "footprint"])
+
+    assert result.exit_code == 0, result.output
+    assert "OpenRx" in result.output and "within the 1,500 budget" in result.output
+    assert "per endpoint" in result.output and "ratio" in result.output

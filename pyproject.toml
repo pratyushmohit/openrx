@@ -24,6 +24,7 @@ dev = [
     "pytest-asyncio>=1.4.1",
     "pytest-cov>=7.1.0",
     "ruff>=0.17.3",
+    "tiktoken>=0.14.0",
 ]
 evals = [
     "matplotlib>=3.11.2",
