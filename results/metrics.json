@@ -1,0 +1,179 @@
+{
+  "openrx-local": {
+    "overall": {
+      "quality": {
+        "tasks": 25,
+        "trials": 75,
+        "pass_at_1": 68.0,
+        "pass_all_k": 52.0,
+        "pass_rate": 70.7,
+        "partial_score": 0.727,
+        "grounding_rate": 89.5,
+        "hallucinated_endpoint_rate": 1.1,
+        "search_hit_rate": 85.3,
+        "first_try_code_success": 59.7,
+        "self_repair_rate": 80.7
+      },
+      "efficiency": {
+        "tokens_p50": 16642,
+        "tokens_p95": 141318,
+        "turns_p50": 6,
+        "turns_p95": 15,
+        "data_reduction": 101.8,
+        "requests_per_execute": 1.29
+      },
+      "reliability": {
+        "tool_calls": 456,
+        "infra_error_rate": 0.0,
+        "timeout_rate": 0.0,
+        "crashed_trials": 0,
+        "step_limit_trials": 8
+      },
+      "latency": {
+        "search_ms": {
+          "p50": 20.8,
+          "p95": 45.9,
+          "p99": 720.4
+        },
+        "execute_ms": {
+          "p50": 33.9,
+          "p95": 4000.9,
+          "p99": 10973.9
+        },
+        "task_s": {
+          "p50": 18.4,
+          "p95": 79.8,
+          "p99": 140.0
+        },
+        "model_s": {
+          "p50": 15.5,
+          "p95": 77.5,
+          "p99": 108.1
+        },
+        "tool_s": {
+          "p50": 0.3,
+          "p95": 18.4,
+          "p99": 41.6
+        }
+      }
+    },
+    "by_category": {
+      "aggregation": {
+        "quality": {
+          "tasks": 5,
+          "trials": 15,
+          "pass_at_1": 40.0,
+          "pass_all_k": 0.0,
+          "pass_rate": 20.0,
+          "partial_score": 0.244,
+          "grounding_rate": 77.4,
+          "hallucinated_endpoint_rate": 0.0,
+          "search_hit_rate": 86.7,
+          "first_try_code_success": 52.3,
+          "self_repair_rate": 73.8
+        },
+        "efficiency": {
+          "tokens_p50": 22233,
+          "tokens_p95": 141318,
+          "turns_p50": 8,
+          "turns_p95": 15,
+          "data_reduction": 383.6,
+          "requests_per_execute": 1.36
+        }
+      },
+      "chained": {
+        "quality": {
+          "tasks": 6,
+          "trials": 18,
+          "pass_at_1": 83.3,
+          "pass_all_k": 66.7,
+          "pass_rate": 88.9,
+          "partial_score": 0.889,
+          "grounding_rate": 100.0,
+          "hallucinated_endpoint_rate": 1.6,
+          "search_hit_rate": 100.0,
+          "first_try_code_success": 63.6,
+          "self_repair_rate": 100.0
+        },
+        "efficiency": {
+          "tokens_p50": 17948,
+          "tokens_p95": 245525,
+          "turns_p50": 5,
+          "turns_p95": 15,
+          "data_reduction": 5.1,
+          "requests_per_execute": 0.95
+        }
+      },
+      "discovery": {
+        "quality": {
+          "tasks": 4,
+          "trials": 12,
+          "pass_at_1": 75.0,
+          "pass_all_k": 50.0,
+          "pass_rate": 83.3,
+          "partial_score": 0.833,
+          "grounding_rate": 100.0,
+          "hallucinated_endpoint_rate": 0.0,
+          "search_hit_rate": 100.0,
+          "first_try_code_success": 80.0,
+          "self_repair_rate": 50.0
+        },
+        "efficiency": {
+          "tokens_p50": 8623,
+          "tokens_p95": 36686,
+          "turns_p50": 4,
+          "turns_p95": 6,
+          "data_reduction": 46.7,
+          "requests_per_execute": 1.1
+        }
+      },
+      "fan_out": {
+        "quality": {
+          "tasks": 5,
+          "trials": 15,
+          "pass_at_1": 60.0,
+          "pass_all_k": 60.0,
+          "pass_rate": 66.7,
+          "partial_score": 0.722,
+          "grounding_rate": 86.2,
+          "hallucinated_endpoint_rate": 1.4,
+          "search_hit_rate": 60.0,
+          "first_try_code_success": 59.3,
+          "self_repair_rate": 89.2
+        },
+        "efficiency": {
+          "tokens_p50": 50229,
+          "tokens_p95": 91719,
+          "turns_p50": 10,
+          "turns_p95": 15,
+          "data_reduction": 380.0,
+          "requests_per_execute": 1.62
+        }
+      },
+      "single_lookup": {
+        "quality": {
+          "tasks": 5,
+          "trials": 15,
+          "pass_at_1": 80.0,
+          "pass_all_k": 80.0,
+          "pass_rate": 93.3,
+          "partial_score": 0.933,
+          "grounding_rate": 100.0,
+          "hallucinated_endpoint_rate": 3.6,
+          "search_hit_rate": 80.0,
+          "first_try_code_success": 60.0,
+          "self_repair_rate": 50.0
+        },
+        "efficiency": {
+          "tokens_p50": 8854,
+          "tokens_p95": 25250,
+          "turns_p50": 5,
+          "turns_p95": 8,
+          "data_reduction": 5.4,
+          "requests_per_execute": 0.93
+        }
+      }
+    },
+    "new_fixtures": 138
+  }
+}

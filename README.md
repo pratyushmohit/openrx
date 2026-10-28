@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Author** | Pratyush Mohit |
-| **Status** | Draft v0.3 |
-| **Last updated** | 2026-10-27 |
+| **Status** | v1: M0–M5 done (known gaps in `docs/decisions.md` D-017) |
+| **Last updated** | 2026-10-28 |
 | **Repo** | `pratyushmohit/openrx` |
 | **Names** | Project/package/CLI/MCP server: `openrx`. MCP tools: `search`, `execute` (clients typically show them as `openrx__search`, `openrx__execute`). |
 
@@ -15,6 +15,50 @@
 ## 1. TL;DR
 
 OpenRx is an MCP server that gives any AI agent access to five free public FDA/NIH drug-data APIs through **two tools**. With `search`, the agent writes Python to explore an API catalog. With `execute`, it writes Python that calls the APIs, loops, joins, and filters. The code runs in **Pydantic Monty** (a deny-by-default Python interpreter in Rust) **inside AWS Lambda on Floci** (a local AWS emulator). API keys never enter the sandbox. Only the final result goes back to the model, so the tool footprint stays at about 1.5k tokens however many endpoints exist, and raw API data stays out of the model's context.
+
+## Results (v1)
+
+Measured on the reference machine with qwen3.5 on Ollama (GPU), temperature 0, replay
+mode, 25 tasks × 3 attempts = 75 trials. Full tables: [`results/summary.md`](results/summary.md);
+every failed trial and why: [`results/failures.md`](results/failures.md); raw trials:
+`results/runs/`. Rebuild with `make eval-run && make eval-report`.
+
+| Metric (README §6) | Result | Target | |
+|---|---|---|---|
+| Tool footprint (tools + instructions) | **714 tokens** | ≤ 1,500 | met |
+| Footprint vs one tool per endpoint | **6.4×** smaller | expect ≥ 10× | missed: grows with the catalog, ≥ 10× at ~36 endpoints (`docs/slos.md`) |
+| Task success, pass@1 | **68%** | ≥ 70% | missed by one task |
+| Consistency, pass^3 | **52%** | ≥ 55% | missed |
+| Pass rate, all trials | 70.7% (partial score 0.73) | report | |
+| Grounding (numbers in the answer found in tool output) | **89.5%** | ≥ 95% | missed |
+| Hallucinated-endpoint rate | **1.1%** | ≤ 5% | met |
+| Search hit rate (proxy) | **85.3%** | ≥ 80% | met |
+| Self-repair after a failed `execute` | **80.7%** | ≥ 60% | met |
+| First-try code success | 59.7% | report | |
+| Data reduction (bytes fetched ÷ bytes the model saw) | **102×** (383× on aggregation, 380× on fan-out) | ≫ 1 | met |
+| LLM turns per task, p50 / p95 | 6 / **15** | p95 ≤ 6 | missed |
+| Infra error rate (OpenRx's fault) | **0%** | < 1% | met |
+| `execute` timeouts | **0%** | < 3% | met |
+| Full task end to end, p50 / p95 | 18.4 s / **79.8 s** | p95 ≤ 90 s | met |
+| Sandbox overhead / bridge overhead, p50 | 7.3 ms / 1.3 ms | ≤ 100 ms / ≤ 30 ms | met |
+
+![Pass rate by category](results/pass_by_category.png)
+
+**Reading the results.** Everything OpenRx owns met its target: no infra errors, no
+timeouts, overheads far under budget, a 714-token footprint, and on average 102× less
+data in the model's context than the sandbox fetched. The misses are the model's: of
+22 failed trials, 8 ran out of steps (15 model calls) and 6 ended with no text answer,
+most on aggregation tasks where the model has to count with openFDA's `count=`
+parameter. The rest are wrong queries (e.g. 1,368,572 "metformin reports in 2023": the model
+used the label's field name and joined two clauses with a space, which openFDA reads
+as OR, so it counted every 2023 report). Tuning the prompt or trying a second model is the
+obvious next step and is not in v1 (D-017). The run also found three of OpenRx's own
+bugs, fixed: an openFDA limit the catalog got wrong, a key note that made the model give
+up, and two scorer mistakes.
+
+**Known gaps (D-017).** Not in v1: the sandbox-escape suite and an end-to-end
+secret-exposure check (NFR-2, P0), prompt-injection tasks, an LLM judge for prose
+answers, a second model, and a third-party MCP client demo.
 
 ## 2. Background and problem
 
@@ -399,7 +443,7 @@ A milestone is done only when its exit criteria pass.
 | M2 | Bridge | Validation, allowlist, rate limits, budget, secrets, record/replay (fixtures in S3); local first, then Lambda | Request-abuse evals 100%; record/replay round-trips on sample requests; bridge overhead SLO met |
 | M3 | Runners | Shared Monty runner; search/execute Lambdas; Terraform for all Lambdas, IAM, secrets | Escape, resource-abuse, and secret-exposure suites 100%; sandbox overhead SLO met; `make deploy` from clean works. **Status:** done except the sandbox-escape suite and the end-to-end secret-exposure check, not in v1 (D-017) |
 | M4 | MCP server + agent | Two tools, descriptions, `instructions`, LangGraph agent, `openrx ask` | NFR-1 footprint test passes; CUJ-1 demoed with `openrx ask` (CUJ-3 with a third-party client not in v1, D-017); search/execute latency SLOs met. **Status:** done (footprint 714 tokens; CUJ-1 answered with `openrx ask`; search/execute SLOs met) |
-| M5 | Evals + launch | Task suite, reference solutions, fixtures for the task suite, scorer, runner, footprint analysis, report, README | Fixtures recorded for every task; all P0 requirements done; all §6 metrics reported; P0 targets met or documented with reasons; README results published |
+| M5 | Evals + launch | Task suite, reference solutions, fixtures for the task suite, scorer, runner, footprint analysis, report, README | Fixtures recorded for every task; all P0 requirements done; all §6 metrics reported; P0 targets met or documented with reasons; README results published. **Status:** done (25 tasks, 75 trials; results above; P0 gaps documented in D-017) |
 | M6 | Stretch (P2) | FR-18 to FR-21 | Per item |
 
 **Launch (v1) =** M0–M5 exit criteria met, and every P0 requirement in §5 is verified by a test or an eval. v1 ships with the known gaps in D-017 (notably the NFR-2 escape suite).
