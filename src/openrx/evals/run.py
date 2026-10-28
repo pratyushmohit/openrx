@@ -149,3 +149,19 @@ def read_runs(path: Path) -> list[dict[str, Any]]:
     """Every trial in a runs file."""
     lines = path.read_text(encoding="utf-8").splitlines()
     return [json.loads(line) for line in lines if line.strip()]
+
+
+def rescore(record: dict[str, Any], task: Task) -> dict[str, Any]:
+    """The record scored again with the current scorer (answers don't change; scorers may).
+
+    Lets a scorer fix apply to saved runs without asking the model again.
+    """
+    if record["answer"] is None:
+        return record
+    score = score_answer(record["answer"], record["expected"], task.scoring)
+    return {
+        **record,
+        "passed": score.passed,
+        "score": round(score.score, 3),
+        "detail": score.detail,
+    }

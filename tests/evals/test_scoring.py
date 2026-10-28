@@ -124,6 +124,12 @@ def test_number_wrong_value_fails():
         ("No. The label has no boxed warning.", False, True),
         ("The label does not include a boxed warning.", False, True),
         ("Yes.", False, False),
+        (
+            "**Trial:** semaglutide. **Label:** Yes, it has a boxed warning; not for type 1.",
+            True,
+            True,
+        ),
+        ("No matches were found, so the label has no boxed warning.", False, True),
         ("I could not tell.", True, False),
     ],
 )

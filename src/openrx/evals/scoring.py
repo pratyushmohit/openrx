@@ -126,17 +126,20 @@ def _score_number(answer: str, expected: float, tolerance: float) -> Score:
     return Score(hit, 1.0 if hit else 0.0, "" if hit else f"expected {expected:g}")
 
 
+# An explicit "Yes"/"No" (as a word on its own, e.g. "**Yes**, it has ...") decides;
+# otherwise a negation anywhere means no, and an affirmation means yes.
+_VERDICT = re.compile(r"\b(yes|no)\b(?! (?:longer|matches|data|results?)\b)")
 _NO = re.compile(
-    r"\b(no|not|none|isn t|is not|does not|doesn t|there is no|there are no|without)\b"
+    r"\b(not|none|isn t|is not|does not|doesn t|there is no|there are no|without|no)\b"
 )
-_YES = re.compile(r"\b(yes|does|is listed|there is|there are|has|have|carries)\b")
+_YES = re.compile(r"\b(does|is listed|there is|there are|has|have|carries)\b")
 
 
 def _score_boolean(answer: str, expected: bool) -> Score:
     text = normalize(answer)
-    first = text.split()[0] if text else ""
-    if first in ("yes", "no"):
-        said: bool | None = first == "yes"
+    verdict = _VERDICT.search(text)
+    if verdict:
+        said: bool | None = verdict.group(1) == "yes"
     elif _NO.search(text):
         said = False
     elif _YES.search(text):

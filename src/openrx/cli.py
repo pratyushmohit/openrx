@@ -364,7 +364,8 @@ def eval_report(
 
     from openrx.evals.metrics import all_metrics
     from openrx.evals.report import RESULTS_DIR, chart_pass_by_category, failures, render_summary
-    from openrx.evals.run import RUNS_DIR, read_runs
+    from openrx.evals.run import RUNS_DIR, read_runs, rescore
+    from openrx.evals.tasks import load_tasks
 
     if runs is None:
         found = sorted(RUNS_DIR.glob("*.jsonl"))
@@ -372,7 +373,8 @@ def eval_report(
             typer.echo("no runs yet: run `make eval-run` first", err=True)
             raise typer.Exit(code=1)
         runs = found[-1]
-    records = read_runs(runs)
+    by_id = {t.id: t for t in load_tasks()}
+    records = [rescore(r, by_id[r["task"]]) if r["task"] in by_id else r for r in read_runs(runs)]
     metrics = all_metrics(records)
     k = max(r["attempt"] for r in records)
     source = (

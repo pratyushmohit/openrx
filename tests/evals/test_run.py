@@ -7,6 +7,7 @@ from openrx.evals.run import (
     append_line,
     error_codes,
     read_runs,
+    rescore,
     run_id,
     run_trial,
     trials,
@@ -120,3 +121,18 @@ def test_runs_file_round_trip(tmp_path):
     append_line(path, {"task": "b"})
 
     assert [r["task"] for r in read_runs(path)] == ["a", "b"]
+
+
+def test_rescore_uses_the_current_scorer():
+    record = run(Trial(TASK, 1), 26629, agent_returning("26,629 reports.", [LLM]))
+    stale = {**record, "passed": False, "score": 0.0, "detail": "old scorer"}
+
+    fresh = rescore(stale, TASK)
+
+    assert (fresh["passed"], fresh["score"], fresh["detail"]) == (True, 1.0, "")
+
+
+def test_rescore_leaves_crashed_trials_alone():
+    crashed = {"answer": None, "passed": False}
+
+    assert rescore(crashed, TASK) is crashed
