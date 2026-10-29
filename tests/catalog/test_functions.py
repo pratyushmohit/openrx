@@ -202,7 +202,7 @@ def test_find_respects_the_limit_and_is_deterministic():
     assert first == catalog_find(SHIPPED, "drug", limit=5)
 
 
-# A small search-quality eval on the real catalog (README §6.1, search hit rate):
+# A small search-quality eval on the real catalog (docs/design.md §6.1, search hit rate):
 # the right endpoint must be among the first results.
 SEARCHES = [
     ("adverse events", "openfda.drug_event", 1),

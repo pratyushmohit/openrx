@@ -56,7 +56,7 @@ def test_number_for_a_string_param_becomes_text():
     assert req.params == {"id": "38000000"}
 
 
-# --- source and path abuse (README §6.5 request abuse) ----------------------------
+# --- source and path abuse (docs/design.md §6.5 request abuse) ----------------------------
 
 
 def test_unknown_source_suggests_the_closest():

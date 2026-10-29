@@ -1,4 +1,4 @@
-"""README §6.5 request abuse: every attempt must be rejected by the deployed bridge
+"""docs/design.md §6.5 request abuse: every attempt must be rejected by the deployed bridge
 (M2 exit criterion: 100%). Needs `make up && make deploy`; `make test-integration`.
 
 The cases cover non-catalogued paths, absolute URLs, path traversal (plain and

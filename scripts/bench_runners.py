@@ -1,4 +1,4 @@
-"""Measure the deployed runners' overhead (docs/slos.md, README §6.4).
+"""Measure the deployed runners' overhead (docs/slos.md, docs/design.md §6.4).
 
 Run with `make bench-runners` (needs `make up && make deploy`). Reports p50/p95/p99 of:
 

@@ -31,7 +31,7 @@ app = typer.Typer(
 )
 catalog_app = typer.Typer(help="Inspect and check the API catalog.", no_args_is_help=True)
 app.add_typer(catalog_app, name="catalog")
-eval_app = typer.Typer(help="Measure OpenRx (README §6, §12).", no_args_is_help=True)
+eval_app = typer.Typer(help="Measure OpenRx (docs/design.md §6, §12).", no_args_is_help=True)
 app.add_typer(eval_app, name="eval")
 
 CatalogDir = Annotated[
@@ -298,7 +298,7 @@ def eval_run(
         Path | None, typer.Option(help="A runs file to continue: trials in it are skipped.")
     ] = None,
 ) -> None:
-    """Run the agent on the task suite k times and save every trial (README §12.2)."""
+    """Run the agent on the task suite k times and save every trial (docs/design.md §12.2)."""
     import asyncio
     import os
 
@@ -371,7 +371,7 @@ def eval_report(
         Path | None, typer.Option(help="A runs file (default: the latest in results/runs/).")
     ] = None,
 ) -> None:
-    """Compute the README §6 metrics from a run; write results/summary.md and a chart."""
+    """Compute the docs/design.md §6 metrics from a run; write results/summary.md and a chart."""
     import json
 
     from openrx.evals.metrics import all_metrics

@@ -1,11 +1,11 @@
-"""The read-only catalog functions that model-written code calls (README FR-2).
+"""The read-only catalog functions that model-written code calls (docs/design.md FR-2).
 
 These run as trusted code; the runner Lambdas expose them to Monty as external
 functions (M3). Everything they return is plain JSON-shaped data (dict, list, str,
 int, float, bool, None), because that is what can cross into the sandbox.
 
 Errors are ValueErrors whose message says what was wrong and lists the valid choices,
-so the model can fix its next call (README FR-9).
+so the model can fix its next call (docs/design.md FR-9).
 """
 
 import math
@@ -19,7 +19,7 @@ from openrx.catalog.schema import Endpoint, Source
 from openrx.catalog.trim import trim
 
 # Default size of the example in catalog_endpoint(): enough to show every field name,
-# small enough not to fill the model's context (README goal G2).
+# small enough not to fill the model's context (docs/design.md goal G2).
 SHORT_EXAMPLE_ITEMS = 1
 SHORT_EXAMPLE_STRING = 80
 SHORT_EXAMPLE_TEXT = 600

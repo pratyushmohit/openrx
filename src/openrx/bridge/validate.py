@@ -1,10 +1,10 @@
-"""Check a `request(source, path, params)` call against the catalog (README FR-6).
+"""Check a `request(source, path, params)` call against the catalog (docs/design.md FR-6).
 
 This is a security boundary: the arguments come from model-written code, so nothing is
 trusted. A request is accepted only if its source exists, its path matches one of that
 source's endpoint templates, and every parameter is declared, allowed and of the right
 type. Anything else is rejected with a code (for metrics) and a message the model can
-act on (README FR-9).
+act on (docs/design.md FR-9).
 """
 
 import difflib

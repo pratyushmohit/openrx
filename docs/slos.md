@@ -1,6 +1,6 @@
 # Latency SLOs
 
-Service level objectives for OpenRx latency (README §6.4), revised after M0 from the
+Service level objectives for OpenRx latency (docs/design.md §6.4), revised after M0 from the
 numbers measured in `docs/m0-findings.md`. An **SLI** is what we measure; an **SLO** is
 the target. Targets are percentiles over warm calls in replay mode on the reference
 machine unless stated otherwise.
@@ -12,7 +12,7 @@ which adds ~43 ms per request; E4).
 
 ## How targets were set
 
-1. **Measured:** keep the README target if the M0 baseline meets it with plenty of room.
+1. **Measured:** keep the design-doc target if the M0 baseline meets it with plenty of room.
    We don't tighten it just because the stand-ins were fast: the real components do more
    work (catalog validation, record/replay, result truncation, type checking).
 2. **Not yet measurable:** the target stays **provisional** and gets set from the first
@@ -30,7 +30,7 @@ which adds ~43 ms per request; E4).
 | `execute` call end to end, warm, 5 requests, replay | **47.8 / 52.6 / 55.0 ms** through the MCP server (M4, n=100); runner part 46.6 ms | ≤ 1 s | ≤ 2.5 s | ≤ 5 s | **Met** |
 | Full task end to end with the local model (qwen3.5 on Ollama) | **18.4 / 79.8 / 140 s** over the task suite (M5, 75 trials: 25 tasks × 3); model time 15.5 / 77.5 / 108.1 s, tool time 0.3 / 18.4 / 41.6 s | report | ≤ 90 s | report | **Met** at p95; the model is most of the time |
 
-## Tool footprint (README NFR-1, §6.2)
+## Tool footprint (docs/design.md NFR-1, §6.2)
 
 `openrx eval footprint` counts what the server actually sends to the model (its
 `list_tools` output plus `instructions`) with tiktoken's `o200k_base` encoding; a unit
@@ -43,7 +43,7 @@ differently.
 | One tool per endpoint, same catalog | 23 | 4,549 |
 | Ratio | | **6.4×** |
 
-The README expected at least 10×; at today's 23 endpoints it is 6.4×, against a
+The design doc expected at least 10×; at today's 23 endpoints it is 6.4×, against a
 deliberately lean baseline (endpoint descriptions and parameters only, no query guides
 or examples). The ratio grows with the catalog: OpenRx's footprint does not change when
 endpoints are added (they live in the catalog), while the per-endpoint design costs

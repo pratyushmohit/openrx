@@ -1,8 +1,8 @@
-"""Schema for catalog files (README §8.3).
+"""Schema for catalog files (docs/design.md §8.3).
 
 One YAML file per data source, validated against these models. The catalog is the
 single source of truth: the model reads it through the `catalog_*` functions, and the
-bridge checks every request against it (README FR-6). Some rules here are therefore
+bridge checks every request against it (docs/design.md FR-6). Some rules here are therefore
 security rules, not just tidiness: only GET, only https, and paths that can't be
 bent into another URL.
 """

@@ -1,8 +1,8 @@
-"""The README §6 metrics, computed from a runs file (results/runs/*.jsonl).
+"""The docs/design.md §6 metrics, computed from a runs file (results/runs/*.jsonl).
 
 Every number here comes from the trial records `openrx eval run` wrote, so a report can
 be rebuilt (or a new metric added) without running the agent again. Error causes are
-split as README §6.3 says: the model's fault (bad code, wrong endpoint) vs ours (Lambda
+split as docs/design.md §6.3 says: the model's fault (bad code, wrong endpoint) vs ours (Lambda
 or bridge failures), because only the infra error rate is an SLO OpenRx owns.
 """
 
@@ -13,7 +13,7 @@ from typing import Any
 
 from openrx.evals.run import HALLUCINATION_CODES
 
-# Failures that are OpenRx's fault, not the model code's (README §6.3).
+# Failures that are OpenRx's fault, not the model code's (docs/design.md §6.3).
 INFRA_ERROR_TYPES = frozenset({"RunnerUnavailable", "SandboxCrashed", "BadRequest"})
 INFRA_ERROR_CODES = frozenset(
     {
@@ -54,7 +54,7 @@ def is_infra_error(event: dict[str, Any], codes: Iterable[str]) -> bool:
 
 
 def quality(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """README §6.1 over a group of trials (one model, maybe one category)."""
+    """docs/design.md §6.1 over a group of trials (one model, maybe one category)."""
     by_task: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for r in records:
         by_task[r["task"]].append(r)
@@ -88,7 +88,7 @@ def quality(records: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def efficiency(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """README §6.2 per-task costs over a group of trials (answered trials only)."""
+    """docs/design.md §6.2 per-task costs over a group of trials (answered trials only)."""
     answered = [r for r in records if r["answer"] is not None]
     tokens = [r["totals"]["input_tokens"] + r["totals"]["output_tokens"] for r in answered]
     turns = [r["totals"]["llm_calls"] for r in answered]
@@ -108,7 +108,7 @@ def efficiency(records: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def reliability(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """README §6.3: infra errors (ours), timeouts, and crashed trials."""
+    """docs/design.md §6.3: infra errors (ours), timeouts, and crashed trials."""
     calls = [e for r in records for e in tool_events(r)]
     infra = 0
     for r in records:
@@ -126,7 +126,7 @@ def reliability(records: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def latency(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """README §6.4, as seen by the agent: tool calls (MCP in -> result out) and full tasks."""
+    """docs/design.md §6.4 as the agent sees it: tool calls (MCP in -> out) and full tasks."""
     answered = [r for r in records if r["answer"] is not None]
 
     def pcts(values: list[float]) -> dict[str, float | None]:
@@ -183,7 +183,7 @@ def _self_repair(records: list[dict[str, Any]]) -> tuple[int, int]:
 def _found_within_two_searches(record: dict[str, Any]) -> bool:
     """Whether the first successful execute came after at most two search calls.
 
-    A proxy for README §6.1's search hit rate: the scorer can't see which endpoint was
+    A proxy for docs/design.md §6.1's search hit rate: the scorer can't see which endpoint was
     "right", but a working call that used data means the agent found one.
     """
     searches = 0

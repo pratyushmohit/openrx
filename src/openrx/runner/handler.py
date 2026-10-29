@@ -118,7 +118,7 @@ _search: Runner | None = None
 
 
 def search_runner() -> Runner:
-    """The search-runner: catalog_* functions only, no request() (README FR-2)."""
+    """The search-runner: catalog_* functions only, no request() (docs/design.md FR-2)."""
     from openrx.runner.sandbox import SandboxHost  # starts Monty; Lambda only (D-005)
 
     return Runner("search", SandboxHost("search"), catalog_functions(load_catalog()))

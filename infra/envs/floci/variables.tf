@@ -7,7 +7,7 @@ variable "floci_endpoint" {
 }
 
 variable "fixture_mode" {
-  description = "Bridge fixture mode: live, record, replay or replay_or_record (README FR-11)."
+  description = "Bridge fixture mode: live, record, replay or replay_or_record (docs/design.md FR-11)."
   type        = string
   default     = "live"
 

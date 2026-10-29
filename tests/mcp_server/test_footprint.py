@@ -23,7 +23,7 @@ SERVER = build_server(NoRunners())
 
 
 def test_tool_definitions_and_instructions_fit_the_budget():
-    # README NFR-1: both tool definitions + instructions <= 1,500 tokens.
+    # docs/design.md NFR-1: both tool definitions + instructions <= 1,500 tokens.
     footprint = server_footprint(SERVER)
 
     assert footprint.tool_count == 2
@@ -54,7 +54,7 @@ def test_per_endpoint_baseline_has_one_tool_per_endpoint():
 
 
 def test_openrx_is_much_smaller_than_one_tool_per_endpoint():
-    # README §6.2 reports the ratio; it grows with the catalog, since OpenRx stays flat.
+    # docs/design.md §6.2 reports the ratio; it grows with the catalog, since OpenRx stays flat.
     ours, theirs = server_footprint(SERVER), per_endpoint_footprint(CATALOG)
 
     assert theirs.total > 5 * ours.total

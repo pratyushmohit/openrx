@@ -1,11 +1,11 @@
-"""The bridge Lambda: one request() call in, one structured answer out (README §8.6).
+"""The bridge Lambda: one request() call in, one structured answer out (docs/design.md §8.6).
 
 Each call goes through the same steps, in order:
 
     budget -> validate -> build (+ API key) -> rate limit -> live / record / replay
 
 Every failure comes back as {"ok": false, "error": {...}} with a code and an error
-class (README §10: model_code, limit, upstream, infra), never as a Lambda crash, so the
+class (docs/design.md §10: model_code, limit, upstream, infra), never as a Lambda crash, so the
 runner can hand it to the model to fix and retry (FR-9). One JSON log line is printed
 per call; it never contains the API key.
 
@@ -142,7 +142,7 @@ class Bridge:
         }
 
 
-# Error class per code, for the metrics in README §10.
+# Error class per code, for the metrics in docs/design.md §10.
 _ERROR_CLASS = {
     "budget_exceeded": "limit",
     "bad_execution_id": "infra",

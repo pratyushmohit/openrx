@@ -1,4 +1,4 @@
-"""Answer one question end to end: `openrx ask "<question>"` (README FR-12).
+"""Answer one question end to end: `openrx ask "<question>"` (docs/design.md FR-12).
 
 The agent talks to the OpenRx MCP server over fastmcp's in-memory transport: the full
 MCP protocol, in one process. (`openrx serve` over stdio is the same server; it is
@@ -28,7 +28,7 @@ async def ask_question(question: str, env: Mapping[str, str] = os.environ) -> Ag
 
 
 def summarise(result: AgentResult, seconds: float) -> dict[str, Any]:
-    """Totals over a run's events, for the CLI and the evals (README §6.2)."""
+    """Totals over a run's events, for the CLI and the evals (docs/design.md §6.2)."""
     llm = [e for e in result.events if e["kind"] == "llm"]
     tools = [e for e in result.events if e["kind"] == "tool"]
     fetched = sum(e["bytes_fetched"] for e in tools)
@@ -45,7 +45,7 @@ def summarise(result: AgentResult, seconds: float) -> dict[str, Any]:
         "request_calls": sum(e["request_calls"] for e in tools),
         "bytes_fetched": fetched,
         "bytes_returned": returned,
-        # README §6.2 data reduction: how much less the model saw than was fetched.
+        # docs/design.md §6.2 data reduction: how much less the model saw than was fetched.
         "data_reduction": round(fetched / returned, 1) if returned else None,
         "stopped_at_limit": result.stopped_at_limit,
     }

@@ -1,11 +1,11 @@
-"""The agent loop, built by hand with LangGraph (README §8.7, §9).
+"""The agent loop, built by hand with LangGraph (docs/design.md §8.7, §9).
 
     model ──tool calls──► tools ──► model ──no tool calls──► answer
       └── step limit reached (15 model calls) ──► stop with a note
 
 Hand-built rather than a prebuilt ReAct agent so every LLM call and tool call is a
 place to measure: each one adds an event (kind, latency, tokens or tool outcome) that
-the evals turn into README §6 metrics. All knowledge of the APIs comes from the tools;
+the evals turn into docs/design.md §6 metrics. All knowledge of the APIs comes from the tools;
 the system prompt only describes the way of working.
 """
 
@@ -161,7 +161,7 @@ def _tool_event(name: str, args: Any, output: str, ms: float) -> dict[str, Any]:
         "request_calls": result.get("request_calls", 0) if isinstance(result, dict) else 0,
         "bytes_fetched": result.get("bytes_fetched", 0) if isinstance(result, dict) else 0,
         "bytes_returned": result.get("bytes_returned", 0) if isinstance(result, dict) else 0,
-        # Kept for the evals: grounding checks and error classes (README §6).
+        # Kept for the evals: grounding checks and error classes (docs/design.md §6).
         "args": args,
         "output": output,
     }

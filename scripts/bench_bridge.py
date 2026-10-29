@@ -1,4 +1,4 @@
-"""Measure the deployed bridge's overhead (docs/slos.md, README §6.4).
+"""Measure the deployed bridge's overhead (docs/slos.md, docs/design.md §6.4).
 
 Run with `make bench-bridge` (needs `make up && make deploy`). It records one fixture,
 switches the bridge to replay mode so public API latency doesn't count, sends N warm

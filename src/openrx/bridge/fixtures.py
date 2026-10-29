@@ -1,4 +1,4 @@
-"""Record and replay upstream answers for reproducible evals (README FR-11, D-013).
+"""Record and replay upstream answers for reproducible evals (docs/design.md FR-11, D-013).
 
 Modes, set by OPENRX_FIXTURE_MODE:
 

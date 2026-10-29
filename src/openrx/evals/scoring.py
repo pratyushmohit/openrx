@@ -3,9 +3,9 @@
 Answers are free text, expected values come from the data, so matching is lenient in
 the ways a correct answer can differ: case, punctuation, British vs American spelling
 ("DIARRHOEA" vs "Diarrhea"), and company suffixes ("Novo Nordisk A/S" vs "Novo
-Nordisk"). Each check gives a pass/fail and a partial score in [0, 1] (README §6.1).
+Nordisk"). Each check gives a pass/fail and a partial score in [0, 1] (docs/design.md §6.1).
 
-Grounding (README §6.1) is checked separately: the share of numbers in the answer that
+Grounding (docs/design.md §6.1) is checked separately: the share of numbers in the answer that
 appear in data the tools returned.
 """
 
@@ -167,7 +167,7 @@ def _score_boolean(answer: str, expected: bool) -> Score:
 def grounding(answer: str, tool_outputs: list[str]) -> tuple[int, int]:
     """(grounded, total) numbers of 2+ digits in the answer found in the tool outputs.
 
-    A deterministic check for numbers and ids (README §6.1); prose grounding needs the
+    A deterministic check for numbers and ids (docs/design.md §6.1); prose grounding needs the
     deferred LLM judge.
     """
     data = {n for output in tool_outputs for n in numbers_in(output)}

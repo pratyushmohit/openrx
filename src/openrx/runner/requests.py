@@ -9,7 +9,7 @@ synchronous, so each call runs in a worker thread: asyncio.gather() in model cod
 then really overlaps calls instead of blocking the event loop.
 
 A rejected call raises RequestError("<code>: <message>"), so model code stops with a
-traceback at the line that made the call (README FR-9). RequestError is a RuntimeError
+traceback at the line that made the call (docs/design.md FR-9). RequestError is a RuntimeError
 because Monty only knows built-in exception types: inside the sandbox a custom class
 would show up as a bare Exception. On success it returns
 {status, data, truncated, notes}, the Response type in the stubs.

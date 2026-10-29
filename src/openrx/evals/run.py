@@ -1,4 +1,4 @@
-"""Run the agent on every task, k times, and record what happened (README §12.2).
+"""Run the agent on every task, k times, and record what happened (docs/design.md §12.2).
 
 Each trial is one call to the agent (`openrx ask`, the same code path) with the bridge
 in replay_or_record mode: data the reference already recorded is replayed, and anything
@@ -23,7 +23,7 @@ from openrx.evals.tasks import Task
 RUNS_DIR = Path(__file__).parents[3] / "results" / "runs"
 
 # Bridge error codes that mean the model called an endpoint or source that doesn't
-# exist in the catalog: the "hallucinated endpoint" metric (README §6.1).
+# exist in the catalog: the "hallucinated endpoint" metric (docs/design.md §6.1).
 HALLUCINATION_CODES = ("unknown_source", "unknown_path")
 
 Ask = Callable[[str], Awaitable[AgentResult]]

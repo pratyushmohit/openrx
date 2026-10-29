@@ -1,4 +1,4 @@
-"""How many tokens OpenRx's tool definitions cost the model (README NFR-1, §6.2).
+"""How many tokens OpenRx's tool definitions cost the model (docs/design.md NFR-1, §6.2).
 
 Counts what the server actually sends: its list_tools output (names, descriptions,
 input schemas, annotations) as JSON, plus the instructions. The budget is 1,500

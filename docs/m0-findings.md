@@ -1,6 +1,6 @@
 # M0 findings
 
-**M0 status: closed (2026-10-27).** Summary against the README §15 scope:
+**M0 status: closed (2026-10-27).** Summary against the docs/design.md §15 scope:
 
 | M0 scope item | Result |
 |---|---|
@@ -14,12 +14,12 @@
 | Ollama tool calling + Monty-compatible code on sample tasks | **Deferred to the end** of the project, with all LLM work |
 
 Exit criteria: this document written; `docs/slos.md` written; plan adjusted (above);
-README §11 risks updated.
+docs/design.md §11 risks updated.
 
 All experiment code was removed after each experiment; it remains in git history
 (commits `95d26d9`, `77ff9e8`, `7eb7305`).
 
-Results of the Milestone 0 experiments (README §15). Each section: the question, what we
+Results of the Milestone 0 experiments (docs/design.md §15). Each section: the question, what we
 did, what we found, and what it means for the design. Numbers are from the reference
 machine: Ryzen 7 9800X3D, 31 GB RAM, RX 9070 XT (16 GB), Windows 11, Docker Desktop
 29.9, Floci 2.3.0.
@@ -39,7 +39,7 @@ inference?
 **Found:**
 - Works end to end. `Converse` answers come from the local model.
 - Token usage (`inputTokens`, `outputTokens`) is passed through, which the efficiency
-  metrics (README §6.2) need.
+  metrics (docs/design.md §6.2) need.
 - qwen3.5 "thinks" before answering: 900–2,000 hidden output tokens and 12–33 s for a
   one-sentence reply. Through Ollama directly with thinking off: 33 tokens, 0.8 s.
 - Floci cannot turn thinking off: `additionalModelRequestFields` is dropped, and
@@ -126,7 +126,7 @@ is dominated by Floci's invoke path, not Monty.
 
 **Date:** 2026-10-27
 
-**Question:** Can code inside one Floci Lambda invoke another Lambda (README §11 risk 3),
+**Question:** Can code inside one Floci Lambda invoke another Lambda (docs/design.md §11 risk 3),
 can that Lambda read Secrets Manager, and what does the hop cost?
 
 **What we did:** Two temporary Lambdas with least-privilege roles:
@@ -160,7 +160,7 @@ invokes of the bridge from inside its container.
   traffic on the `openrx` network was never affected.
 
 **Implication:** No fallback needed: the bridge stays a Lambda. A warm `request()` hop
-costs ~4 ms of the ≤ 30 ms bridge-overhead budget (README §6.4), leaving room for
+costs ~4 ms of the ≤ 30 ms bridge-overhead budget (docs/design.md §6.4), leaving room for
 validation and record/replay. Bridge cold starts (~330 ms) are worth keeping warm.
 
 ---
@@ -170,7 +170,7 @@ validation and record/replay. Bridge cold starts (~330 ms) are worth keeping war
 **Date:** 2026-10-27
 
 **Question:** If the runner tries things its role does not allow, does Floci block them?
-(README §7.2: "observed on Floci" vs "by design on real AWS".)
+(docs/design.md §7.2: "observed on Floci" vs "by design on real AWS".)
 
 **What we did:** Reused the E4 Lambdas. The runner (role: may only invoke the bridge)
 attempted five AWS actions and one network call, first with Floci's default settings,

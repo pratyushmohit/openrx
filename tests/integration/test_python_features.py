@@ -1,4 +1,4 @@
-"""Which Python features model code can use in the runners (README open question 2,
+"""Which Python features model code can use in the runners (docs/design.md open question 2,
 D-015). Runs every snippet in tests/python_features.py in the deployed
 execute-runner. Both directions are checked: supported features must work, and
 unsupported ones must still fail, so a Monty upgrade that adds one shows up here and

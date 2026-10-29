@@ -53,7 +53,7 @@ def test_exactly_two_tools_each_taking_code():
 
     listed = {t.name: t for t in with_client(build_server(FakeRunners()), tools)}
 
-    assert set(listed) == {"search", "execute"}  # README FR-1
+    assert set(listed) == {"search", "execute"}  # docs/design.md FR-1
     for tool in listed.values():
         assert tool.input_schema["required"] == ["code"]
         assert set(tool.input_schema["properties"]) == {"code"}

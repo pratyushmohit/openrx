@@ -1,8 +1,8 @@
-# API key for openFDA, read only by the bridge Lambda (README FR-7).
+# API key for openFDA, read only by the bridge Lambda (docs/design.md FR-7).
 #
 # Terraform creates the secret *container* only. The value is set outside
 # Terraform, because anything Terraform manages is written in plain text to
-# its state file (README NFR-3: no secrets in the repo or state).
+# its state file (docs/design.md NFR-3: no secrets in the repo or state).
 resource "aws_secretsmanager_secret" "openfda_api_key" {
   name        = "openrx/openfda_api_key"
   description = "openFDA API key (optional; raises rate limits)."

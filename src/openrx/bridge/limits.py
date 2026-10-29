@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 
 from openrx.catalog.loader import Catalog
 
-CALL_BUDGET = 50  # README §8.4
+CALL_BUDGET = 50  # docs/design.md §8.4
 BUDGET_TTL_SECONDS = 3600.0  # forget executions not seen for an hour
 MAX_TRACKED_EXECUTIONS = 10_000
 _EXECUTION_ID = re.compile(r"[A-Za-z0-9_-]{1,128}")

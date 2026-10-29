@@ -1,4 +1,4 @@
-"""The eval task suite: schema, loader and lint (README §12.1).
+"""The eval task suite: schema, loader and lint (docs/design.md §12.1).
 
 Tasks live in evals/tasks.yaml. Each has a prompt for the agent and reference code: a
 plain, readable solution in the same sandbox Python the agent writes. Running the

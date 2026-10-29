@@ -1,6 +1,6 @@
 """What the model is told about OpenRx: the server instructions and the two tools.
 
-These are the model's only documentation (README §8.4), and they count against the
+These are the model's only documentation (docs/design.md §8.4), and they count against the
 1,500-token budget for tool definitions (NFR-1), so every line has to earn its place.
 Everything else the model needs is in the catalog, which it reads through search.
 

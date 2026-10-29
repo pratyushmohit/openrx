@@ -1,4 +1,4 @@
-"""Send a request to the public API and return one uniform result (README §8.6).
+"""Send a request to the public API and return one uniform result (docs/design.md §8.6).
 
 - Retries 429 and 5xx answers, and network failures, with growing waits; honours a
   server's Retry-After, up to a cap.

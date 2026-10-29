@@ -1,7 +1,7 @@
 # Architecture
 
 How OpenRx fits together: components and trust zones, the path of one `execute` call,
-and what happens at build time vs run time. The design itself is in the README
+and what happens at build time vs run time. The design itself is in docs/design.md
 (§7–§8); the reasons behind it are in [`decisions.md`](decisions.md); measured numbers
 are in [`m0-findings.md`](m0-findings.md) and [`slos.md`](slos.md).
 
@@ -62,7 +62,7 @@ to the internet; on Floci they do, so Monty is the enforced boundary locally (§
 ## 2. One `execute` call
 
 The model sends code once and gets one small result back. Full API responses stay
-inside the sandbox and the bridge, which is where the token savings come from (README
+inside the sandbox and the bridge, which is where the token savings come from (docs/design.md
 goal G2).
 
 ```mermaid

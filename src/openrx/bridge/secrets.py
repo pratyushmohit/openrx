@@ -1,4 +1,4 @@
-"""Read sources' API keys from Secrets Manager (README FR-7).
+"""Read sources' API keys from Secrets Manager (docs/design.md FR-7).
 
 Only the bridge's IAM role may read these secrets (D-007, E5), and the keys never
 leave the bridge: not in results, errors, notes or logs (NFR-3).

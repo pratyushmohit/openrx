@@ -128,7 +128,7 @@ def test_long_stdout_is_cut_with_a_note():
 def test_tool_result_has_the_readme_shape():
     keys = set(ToolResult().to_dict())
 
-    # README §8.4: {result, stdout, error, traceback, type_errors, truncated,
+    # docs/design.md §8.4: {result, stdout, error, traceback, type_errors, truncated,
     # duration_ms, request_calls, bytes_fetched, bytes_returned}, plus notes.
     assert keys == {
         "result",

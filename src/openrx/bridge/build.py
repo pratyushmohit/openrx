@@ -1,7 +1,7 @@
 """Turn a validated request into the exact HTTP request, and its fixture fingerprint.
 
 Encoding is left to httpx, which sends spaces as "+", booleans as "true"/"false" and
-percent-encodes everything else. Callers write plain values (README guides say so):
+percent-encodes everything else. Callers write plain values (the catalog guides say so):
 a literal "+" is sent as %2B, which openFDA silently treats as no matches.
 """
 
@@ -33,7 +33,7 @@ class OutgoingRequest:
     notes: tuple[str, ...] = ()
 
     def url_for_log(self) -> str:
-        """The full URL with the API key left out, safe to log (README NFR-3)."""
+        """The full URL with the API key left out, safe to log (docs/design.md NFR-3)."""
         shown = {k: v for k, v in self.params.items() if k != self.auth_param}
         return str(httpx.URL(self.url, params=shown))
 

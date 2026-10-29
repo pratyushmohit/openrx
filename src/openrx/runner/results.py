@@ -1,4 +1,4 @@
-"""Turn what sandboxed code produced into the tool result the model sees (README §8.4).
+"""Turn what sandboxed code produced into the tool result the model sees (docs/design.md §8.4).
 
 Only this result enters the model's context, so it is capped (FR-8): about 10k tokens,
 measured as 40,000 characters of JSON because the Lambda has no tokenizer (~4 chars per
@@ -30,7 +30,7 @@ TRUNCATED_HINT = (
 
 @dataclass
 class ToolResult:
-    """What `search` and `execute` return to the model (README §8.4)."""
+    """What `search` and `execute` return to the model (docs/design.md §8.4)."""
 
     result: Any = None
     stdout: str = ""

@@ -8,7 +8,7 @@ state carries from one run to the next. The code's only capabilities are the fun
 passed in: Monty has no filesystem, network, environment or imports beyond its own
 small standard library unless the host mounts them, and nothing is mounted here.
 
-Limits (README §8.4): wall-clock time for the run, memory, recursion depth, and an
+Limits (docs/design.md §8.4): wall-clock time for the run, memory, recursion depth, and an
 outer cap on external calls (Monty's max_suspensions counts every call into the host,
 catalog_* included). The 50-request() budget is counted exactly by the runner's own
 request() wrapper, with the bridge as a backup (D-012).
@@ -40,7 +40,7 @@ from openrx.runner.stubs import Runner, stubs_for
 class Limits:
     """Per-run limits."""
 
-    seconds: float = 60.0  # README §8.4: 60 s wall clock per execute
+    seconds: float = 60.0  # docs/design.md §8.4: 60 s wall clock per execute
     memory_bytes: int = 256 * 1024 * 1024
     recursion_depth: int = 200
     external_calls: int = 200  # every host call, catalog_* included
@@ -123,7 +123,7 @@ class SandboxHost:
 
 
 def error_result(error: MontyError, stdout: str) -> ToolResult:
-    """Map a Monty error to the error fields of a ToolResult (README FR-9)."""
+    """Map a Monty error to the error fields of a ToolResult (docs/design.md FR-9)."""
     result = shape_result(None, stdout)
     if isinstance(error, MontyTypingError):
         result.type_errors = parse_type_errors(error.display())

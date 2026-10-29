@@ -1,4 +1,4 @@
-# The runner Lambdas (README §8.5): where model-written code runs, in Monty
+# The runner Lambdas (docs/design.md §8.5): where model-written code runs, in Monty
 # (D-005). Build their zips first: `make deploy` builds and applies.
 
 locals {
@@ -21,7 +21,7 @@ resource "aws_iam_role" "search_runner" {
 }
 
 # Its only permission: writing its own logs. No data access of any kind
-# (README §8.5: "no AWS permissions"); without this, real AWS drops its logs.
+# (docs/design.md §8.5: "no AWS permissions"); without this, real AWS drops its logs.
 resource "aws_iam_role_policy" "search_runner_logs" {
   name = "own-logs"
   role = aws_iam_role.search_runner.id
@@ -73,7 +73,7 @@ resource "aws_iam_role_policy" "execute_runner" {
     Version = "2012-10-17"
     Statement = [
       {
-        # Its one real permission (README §8.5): request() goes through the bridge.
+        # Its one real permission (docs/design.md §8.5): request() goes through the bridge.
         Sid      = "InvokeBridgeOnly"
         Effect   = "Allow"
         Action   = "lambda:InvokeFunction"

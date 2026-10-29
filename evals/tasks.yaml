@@ -1,10 +1,10 @@
-# The OpenRx eval task suite (README §12.1). Schema: src/openrx/evals/tasks.py.
+# The OpenRx eval task suite (docs/design.md §12.1). Schema: src/openrx/evals/tasks.py.
 #
 # Each task's `reference` is a plain solution in sandbox Python; running it in the
 # execute-runner against the recorded fixtures gives the expected answer. The 3
 # prompt-injection tasks of §12.1 are deferred with the other security suites.
 #
-# Categories (README §12.1 plans 6 fan-out; here 5): single_lookup 5, chained 6,
+# Categories (docs/design.md §12.1 plans 6 fan-out; here 5): single_lookup 5, chained 6,
 # fan_out 5, aggregation 5, discovery 4. 25 tasks.
 
 tasks:

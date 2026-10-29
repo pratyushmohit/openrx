@@ -58,7 +58,7 @@ against resources that no longer exist.
 **Decision:** Option 2.
 
 **Why:** Every session starts from a known-empty account, with no leftovers hiding bugs,
-and it continuously proves that the infra can be built from scratch (README NFR-6).
+and it continuously proves that the infra can be built from scratch (docs/design.md NFR-6).
 Applying on Floci takes seconds, so nothing is lost. Note: the Floci image declares
 `/app/data` as a volume, so `make up` passes `--renew-anon-volumes`; without it compose
 reuses the old container's volume on recreate.
@@ -85,7 +85,7 @@ so those containers can call back to Floci.
 anything holding the socket effectively controls Docker on this machine. Acceptable for
 a local emulator we run ourselves from a pinned image; not something to copy to shared
 or production hosts. Kubernetes would be heavy for a laptop; in-process loses the
-process boundary that the design relies on (README §7.2, layer 2).
+process boundary that the design relies on (docs/design.md §7.2, layer 2).
 
 ---
 
@@ -159,7 +159,7 @@ requested by name instead of by full ARN.
 2. Code and configuration refer to secrets by their full ARN.
 
 **Why:** With enforcement off, a missing or wrong permission would only fail on real
-AWS, the most expensive place to find it, and the least-privilege design (README §7.2,
+AWS, the most expensive place to find it, and the least-privilege design (docs/design.md §7.2,
 layer 3) would never be tested locally. Referencing secrets by ARN avoids the Floci quirk
 and is unambiguous on real AWS too.
 
@@ -261,7 +261,7 @@ in `schema.py` is shared so both use one implementation.
 **Date:** 2026-10-28 · **Status:** Accepted
 
 **Context:** ClinicalTrials.gov publishes an OpenAPI spec, so its catalog entry can be
-generated instead of hand-copied (README FR-16). The spec has no guide, notes or example
+generated instead of hand-copied (docs/design.md FR-16). The spec has no guide, notes or example
 requests, and it lists parameters we don't want to expose (`format`, duplicates).
 
 **Options:**
@@ -343,7 +343,7 @@ throttled calls with jittered waits capped at 2 s, for calls from other runs.
 **Date:** 2026-10-28 · **Status:** Accepted
 
 **Context:** For reproducible evals (NFR-5) the bridge records complete upstream
-responses and plays them back (FR-11). README open question 3: where do they live?
+responses and plays them back (FR-11). docs/design.md open question 3: where do they live?
 
 **Options:**
 1. Packaged into the bridge's zip.
@@ -367,7 +367,7 @@ repo (a `make` target, M5) to survive restarts.
 
 ## D-014: request() is an async external function
 
-**Date:** 2026-10-28 · **Status:** Accepted (README open question 1)
+**Date:** 2026-10-28 · **Status:** Accepted (docs/design.md open question 1)
 
 **Context:** Monty offers two ways for sandboxed code to call host functions: async
 external functions (AsyncMonty, `await request(...)`), or a pause-and-resume loop
@@ -377,7 +377,7 @@ where the host answers each call in turn.
 
 **Why:** measured in the runner Lambda (M3 piece 3, probe with a fake 0.2 s request):
 top-level `await` works, and `asyncio.gather` of three requests took 214 ms instead of
-600 ms, so independent calls really overlap. Fan-out tasks (README CUJ-2) can be
+600 ms, so independent calls really overlap. Fan-out tasks (docs/design.md CUJ-2) can be
 written naturally. The type checker also understands the async stub.
 
 **Cost:** the Lambda handler is synchronous while AsyncMonty's pool belongs to an
@@ -395,7 +395,7 @@ throttle-retry waits. Queued in the runner (D-012 update) they take 46.6 ms.
 
 ## D-015: Document Monty's Python gaps; no helper functions
 
-**Date:** 2026-10-28 · **Status:** Accepted (README open question 2)
+**Date:** 2026-10-28 · **Status:** Accepted (docs/design.md open question 2)
 
 **Context:** M3 ran 66 snippets of everyday Python through the deployed runner. 51
 work; 15 don't: class inheritance (and so `super()` and `enum`), `@property`,
@@ -412,7 +412,7 @@ instead; the tool descriptions (M4) carry a short "not available" line.
 
 **Why:** every gap has a one-line alternative a model can write (`sum(xs) / len(xs)`,
 a lambda instead of `itemgetter`, `sorted(...)[:n]` instead of `heapq`). Helper
-functions would grow the tool definitions, which README goal G2 keeps small, and add
+functions would grow the tool definitions, which docs/design.md goal G2 keeps small, and add
 API surface to maintain. Revisit if evals show models repeatedly tripping on one gap.
 
 **How it stays true:** `tests/python_features.py` records both lists, and the
@@ -425,7 +425,7 @@ feature shows up and this page gets updated.
 
 **Date:** 2026-10-28 · **Status:** Accepted
 
-**Context:** The README planned `langchain-mcp-adapters` to give the LangGraph agent the
+**Context:** The design doc planned `langchain-mcp-adapters` to give the LangGraph agent the
 MCP tools. Every release of it, including the latest (0.3.2), requires the MCP SDK below
 2.0; fastmcp 4 (D-002) depends on MCP SDK 2.3. The two can't be installed together:
 0.3.1 failed to import against SDK 2.3.
@@ -462,7 +462,7 @@ items are listed as known gaps, not pending work.
 **Why:** The owner's call: the core claim (two tools, a code sandbox, a small context
 footprint, measured quality) is built and evaluated without them.
 
-**Cost:** v1 does not meet the README's launch rule that every P0 requirement is
+**Cost:** v1 does not meet the design doc's launch rule (docs/design.md §15) that every P0 requirement is
 verified: NFR-2's escape suite and the secret-exposure check are P0 and untested end to
 end. What does exist: Monty's own isolation (no filesystem, network or imports), the
 resource-abuse and request-abuse tests, and fixtures checked to hold no keys. Anyone

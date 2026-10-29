@@ -1,4 +1,4 @@
-# The bridge Lambda (README §8.6): the only component that holds API keys and
+# The bridge Lambda (docs/design.md §8.6): the only component that holds API keys and
 # calls the public APIs. Build its zip first: `make build LAMBDA=bridge`
 # (or `make deploy`, which builds and applies).
 
