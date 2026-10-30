@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/pratyushmohit/openrx/actions/workflows/ci.yml/badge.svg)](https://github.com/pratyushmohit/openrx/actions/workflows/ci.yml)
 ![Python 3.13](https://img.shields.io/badge/python-3.13-blue)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **An MCP server that lets AI agents answer drug-safety questions by writing code against
 five public FDA/NIH APIs, run in a sandbox, through just two tools.**
@@ -137,3 +138,7 @@ The search-and-execute idea comes from Cloudflare's
 [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp).
 OpenRx implements it in Python on AWS primitives and measures it on a real domain.
 Data from public FDA and NIH APIs; not for medical decisions.
+
+## License
+
+[MIT](LICENSE)

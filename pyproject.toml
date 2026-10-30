@@ -3,6 +3,8 @@ name = "openrx"
 version = "0.1.0"
 description = "MCP server with sandboxed code execution (search + execute) for public FDA/NIH drug data"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.13"
 dependencies = [
     "boto3>=1.43.119",
