@@ -17,6 +17,10 @@ the model. API keys never enter the sandbox.
 Sources: **openFDA** (adverse events, labels, recalls, shortages, NDC),
 **ClinicalTrials.gov**, **PubMed**, **RxNorm** and **DailyMed**, 23 endpoints in all.
 
+<img src="docs/demo.gif" alt="Terminal: openrx ask --trace answers how many interventional obesity trials are recruiting; the agent makes two search calls and one execute call and answers 1,137" width="100%">
+
+<sub>A trial from the published eval run, replayed as <code>openrx ask --trace</code> prints it. The numbers are the recorded ones; the animation is sped up.</sub>
+
 ## Results
 
 Evaluated on 25 multi-step questions × 3 attempts (75 runs) with a local model
