@@ -3,6 +3,7 @@
 [![CI](https://github.com/pratyushmohit/openrx/actions/workflows/ci.yml/badge.svg)](https://github.com/pratyushmohit/openrx/actions/workflows/ci.yml)
 ![Python 3.13](https://img.shields.io/badge/python-3.13-blue)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![MCP server](https://img.shields.io/badge/MCP-server-7c3aed)](https://modelcontextprotocol.io)
 
 **An MCP server that lets AI agents answer drug-safety questions by writing code against
 five public FDA/NIH APIs, run in a sandbox, through just two tools.**
