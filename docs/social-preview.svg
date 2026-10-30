@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" font-family="'Segoe UI', -apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f1b33"/>
+      <stop offset="1" stop-color="#0a1222"/>
+    </linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#8aa0c2"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="13" markerHeight="13" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#5aa2f5"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <circle cx="1120" cy="80" r="260" fill="#2a78d6" opacity="0.10"/>
+
+  <!-- left: pitch -->
+  <text x="72" y="148" font-size="88" font-weight="800" fill="#ffffff" letter-spacing="-2">OpenRx</text>
+  <rect x="76" y="176" width="150" height="34" rx="17" fill="#2a78d6"/>
+  <text x="151" y="199" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">MCP server</text>
+  <text x="72" y="262" font-size="30" font-weight="600" fill="#e6ecf5">AI agents write sandboxed Python</text>
+  <text x="72" y="302" font-size="30" font-weight="600" fill="#e6ecf5">against 5 FDA &amp; NIH drug APIs</text>
+
+  <g>
+    <rect x="72" y="350" width="196" height="120" rx="14" fill="#16243f" stroke="#26385a"/>
+    <text x="92" y="410" font-size="46" font-weight="800" fill="#5aa2f5">2</text>
+    <text x="126" y="410" font-size="20" font-weight="700" fill="#5aa2f5">tools</text>
+    <text x="92" y="446" font-size="17" fill="#b4c2d8">714 tokens total</text>
+
+    <rect x="284" y="350" width="196" height="120" rx="14" fill="#16243f" stroke="#26385a"/>
+    <text x="304" y="410" font-size="46" font-weight="800" fill="#5aa2f5">102×</text>
+    <text x="304" y="446" font-size="17" fill="#b4c2d8">less data to the model</text>
+
+    <rect x="496" y="350" width="196" height="120" rx="14" fill="#16243f" stroke="#26385a"/>
+    <text x="516" y="410" font-size="46" font-weight="800" fill="#5aa2f5">81%</text>
+    <text x="516" y="446" font-size="17" fill="#b4c2d8">self-repair rate</text>
+  </g>
+
+  <text x="72" y="540" font-size="18" fill="#8aa0c2">openFDA · ClinicalTrials.gov · PubMed · RxNorm · DailyMed</text>
+  <text x="72" y="580" font-size="20" font-weight="600" fill="#e6ecf5">github.com/pratyushmohit/openrx</text>
+
+  <!-- right: flow -->
+  <g font-size="17" font-weight="700" text-anchor="middle">
+    <rect x="800" y="64" width="380" height="56" rx="12" fill="#16243f" stroke="#3a5582"/>
+    <text x="990" y="98" fill="#fff">AI agent</text>
+
+    <line x1="990" y1="124" x2="990" y2="152" stroke="#8aa0c2" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="800" y="156" width="380" height="76" rx="12" fill="#16243f" stroke="#2a78d6" stroke-width="2"/>
+    <text x="990" y="184" fill="#fff">OpenRx MCP server</text>
+    <text x="900" y="216" fill="#9cc8ff" font-weight="500" font-family="Consolas, ui-monospace, monospace" font-size="16">search(code)</text>
+    <text x="1080" y="216" fill="#9cc8ff" font-weight="500" font-family="Consolas, ui-monospace, monospace" font-size="16">execute(code)</text>
+
+    <line x1="990" y1="236" x2="990" y2="264" stroke="#8aa0c2" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="800" y="268" width="380" height="80" rx="12" fill="#3a2a10" stroke="#d99a3a"/>
+    <text x="990" y="300" fill="#ffd9a0">Sandbox</text>
+    <text x="990" y="328" fill="#e8c38c" font-weight="500" font-size="15">model-written code · no network, files, imports</text>
+
+    <line x1="990" y1="352" x2="990" y2="400" stroke="#5aa2f5" stroke-width="4" marker-end="url(#ab)"/>
+    <rect x="1004" y="362" width="104" height="26" rx="13" fill="#2a78d6"/>
+    <text x="1056" y="380" fill="#fff" font-family="Consolas, ui-monospace, monospace" font-size="15">request()</text>
+
+    <rect x="800" y="404" width="380" height="80" rx="12" fill="#3a1420" stroke="#e0566a"/>
+    <text x="990" y="436" fill="#ffc2cb">Bridge · holds the API keys</text>
+    <text x="990" y="464" fill="#eaa6b1" font-weight="500" font-size="15">catalog check · budget · rate limits</text>
+
+    <line x1="990" y1="488" x2="990" y2="516" stroke="#8aa0c2" stroke-width="2" marker-end="url(#a)"/>
+
+    <rect x="800" y="520" width="380" height="56" rx="12" fill="#10301f" stroke="#3fa56b"/>
+    <text x="990" y="554" fill="#b6f0cc">5 public FDA / NIH APIs</text>
+  </g>
+</svg>
