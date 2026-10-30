@@ -39,7 +39,9 @@ target ([details](docs/slos.md)).
 
 ## Architecture
 
-<img src="docs/architecture.svg" alt="OpenRx architecture: an AI agent calls the OpenRx MCP server (search and execute tools); model-written code runs in sandboxed Lambda runners whose only way out is request() to a trusted bridge Lambda, which checks the catalog, budget and rate limits, adds the API key from Secrets Manager, and calls five public FDA/NIH APIs or replays S3 fixtures" width="100%">
+<a href="https://raw.githubusercontent.com/pratyushmohit/openrx/main/docs/architecture.svg"><img src="docs/architecture.svg" alt="OpenRx architecture: an AI agent calls the OpenRx MCP server (search and execute tools); model-written code runs in sandboxed Lambda runners whose only way out is request() to a trusted bridge Lambda, which checks the catalog, budget and rate limits, adds the API key from Secrets Manager, and calls five public FDA/NIH APIs or replays S3 fixtures" width="100%"></a>
+
+<sub>Click the diagram to open it full size.</sub>
 
 1. The agent calls `search` with Python to explore the API catalog, then `execute`
    with Python that fetches and processes the data.

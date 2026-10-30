@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1240" width="900" height="1240" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
   <title>OpenRx architecture</title>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 Z" fill="#586170"/>
     </marker>
-    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 Z" fill="#2a78d6"/>
     </marker>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
@@ -13,204 +13,197 @@
   </defs>
 
   <!-- card -->
-  <rect x="0.5" y="0.5" width="1279" height="639" rx="16" fill="#fcfcfb" stroke="#e3e5e8"/>
-  <text x="32" y="46" font-size="22" font-weight="700" fill="#111">OpenRx architecture</text>
-  <text x="32" y="70" font-size="13.5" fill="#586170">Two MCP tools · model-written Python runs in a sandbox · API keys never leave the bridge</text>
+  <rect x="0.5" y="0.5" width="899" height="1239" rx="16" fill="#fcfcfb" stroke="#e3e5e8"/>
+  <text x="32" y="48" font-size="26" font-weight="700" fill="#111">OpenRx architecture</text>
+  <text x="32" y="76" font-size="15.5" fill="#586170">Two MCP tools · model-written Python runs in a sandbox · API keys never leave the bridge</text>
 
   <!-- ============ AI agent ============ -->
   <g filter="url(#shadow)">
-    <rect x="32" y="150" width="190" height="120" rx="12" fill="#fff" stroke="#d5d9df"/>
+    <rect x="32" y="104" width="300" height="100" rx="12" fill="#fff" stroke="#d5d9df"/>
   </g>
-  <g transform="translate(60,182)">
-    <circle r="18" fill="#2a78d6"/>
-    <line x1="0" y1="-12" x2="0" y2="-7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="0" cy="-12.5" r="1.8" fill="#fff"/>
-    <rect x="-9" y="-6" width="18" height="13" rx="3.5" fill="none" stroke="#fff" stroke-width="2"/>
-    <circle cx="-3.6" cy="0.5" r="1.8" fill="#fff"/>
-    <circle cx="3.6" cy="0.5" r="1.8" fill="#fff"/>
+  <g transform="translate(66,138)">
+    <circle r="20" fill="#2a78d6"/>
+    <line x1="0" y1="-13" x2="0" y2="-7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="0" cy="-13.5" r="2" fill="#fff"/>
+    <rect x="-10" y="-6" width="20" height="14" rx="4" fill="none" stroke="#fff" stroke-width="2"/>
+    <circle cx="-4" cy="1" r="2" fill="#fff"/>
+    <circle cx="4" cy="1" r="2" fill="#fff"/>
   </g>
-  <text x="88" y="188" font-size="16" font-weight="700" fill="#111">AI agent</text>
-  <text x="48" y="226" font-size="12.5" fill="#586170">LangGraph reference agent</text>
-  <text x="48" y="246" font-size="12.5" fill="#586170">or any MCP client</text>
+  <text x="98" y="145" font-size="19" font-weight="700" fill="#111">AI agent</text>
+  <text x="52" y="184" font-size="14.5" fill="#586170">LangGraph agent, or any MCP client</text>
 
   <!-- ============ LLM ============ -->
   <g filter="url(#shadow)">
-    <rect x="32" y="370" width="190" height="110" rx="12" fill="#fff" stroke="#d5d9df"/>
+    <rect x="568" y="104" width="300" height="100" rx="12" fill="#fff" stroke="#d5d9df"/>
   </g>
-  <g transform="translate(60,402)">
-    <circle r="18" fill="#2a78d6"/>
-    <path d="M0,-10 L2.6,-2.6 L10,0 L2.6,2.6 L0,10 L-2.6,2.6 L-10,0 L-2.6,-2.6 Z" fill="#fff"/>
+  <g transform="translate(602,138)">
+    <circle r="20" fill="#2a78d6"/>
+    <path d="M0,-11 L2.9,-2.9 L11,0 L2.9,2.9 L0,11 L-2.9,2.9 L-11,0 L-2.9,-2.9 Z" fill="#fff"/>
   </g>
-  <text x="88" y="408" font-size="16" font-weight="700" fill="#111">LLM</text>
-  <text x="48" y="444" font-size="12.5" fill="#586170">Bedrock Converse API</text>
-  <text x="48" y="464" font-size="12.5" fill="#586170">→ Ollama · qwen3.5</text>
+  <text x="634" y="145" font-size="19" font-weight="700" fill="#111">LLM</text>
+  <text x="588" y="184" font-size="14.5" fill="#586170">Bedrock API → Ollama (qwen3.5)</text>
 
   <!-- agent <-> LLM -->
-  <line x1="127" y1="274" x2="127" y2="366" stroke="#586170" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="138" y="316" font-size="11.5" fill="#586170">prompts,</text>
-  <text x="138" y="331" font-size="11.5" fill="#586170">tool calls</text>
+  <line x1="338" y1="154" x2="562" y2="154" stroke="#586170" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="450" y="144" font-size="14" text-anchor="middle" fill="#586170">prompts, tool calls</text>
+
+  <!-- agent <-> server -->
+  <line x1="140" y1="208" x2="140" y2="266" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="152" y="242" font-size="14" font-weight="700" fill="#111">MCP</text>
+  <line x1="240" y1="266" x2="240" y2="208" stroke="#586170" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="252" y="242" font-size="14" fill="#586170">results</text>
 
   <!-- ============ MCP server ============ -->
   <g filter="url(#shadow)">
-    <rect x="300" y="196" width="216" height="210" rx="12" fill="#fff" stroke="#2a78d6" stroke-width="1.5"/>
+    <rect x="32" y="270" width="836" height="116" rx="12" fill="#fff" stroke="#2a78d6" stroke-width="1.6"/>
   </g>
-  <g transform="translate(328,228)">
-    <circle r="18" fill="#2a78d6"/>
-    <rect x="-9" y="-9" width="18" height="7.5" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
-    <rect x="-9" y="1.5" width="18" height="7.5" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
-    <circle cx="-4.5" cy="-5.25" r="1.3" fill="#fff"/>
-    <circle cx="-4.5" cy="5.25" r="1.3" fill="#fff"/>
+  <g transform="translate(66,304)">
+    <circle r="20" fill="#2a78d6"/>
+    <rect x="-10" y="-10" width="20" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+    <rect x="-10" y="2" width="20" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+    <circle cx="-5" cy="-6" r="1.4" fill="#fff"/>
+    <circle cx="-5" cy="6" r="1.4" fill="#fff"/>
   </g>
-  <text x="356" y="224" font-size="11" font-weight="700" fill="#2a78d6" letter-spacing="1">OPENRX</text>
-  <text x="356" y="241" font-size="16" font-weight="700" fill="#111">MCP server</text>
-  <rect x="318" y="272" width="180" height="34" rx="17" fill="#e8f1fc" stroke="#2a78d6"/>
-  <text x="408" y="294" font-size="13.5" text-anchor="middle" fill="#174a8a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">search(code)</text>
-  <rect x="318" y="322" width="180" height="34" rx="17" fill="#e8f1fc" stroke="#2a78d6"/>
-  <text x="408" y="344" font-size="13.5" text-anchor="middle" fill="#174a8a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">execute(code)</text>
-  <text x="408" y="384" font-size="12" text-anchor="middle" fill="#586170">714 tokens of tool definitions</text>
-
-  <!-- agent <-> server -->
-  <line x1="226" y1="222" x2="296" y2="222" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="261" y="212" font-size="12" font-weight="700" text-anchor="middle" fill="#111">MCP</text>
-  <line x1="296" y1="250" x2="226" y2="250" stroke="#586170" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-  <text x="261" y="268" font-size="11" text-anchor="middle" fill="#586170">results</text>
+  <text x="98" y="298" font-size="12" font-weight="700" fill="#2a78d6" letter-spacing="1">OPENRX</text>
+  <text x="98" y="318" font-size="19" font-weight="700" fill="#111">MCP server</text>
+  <text x="848" y="310" font-size="14" text-anchor="end" fill="#586170">714 tokens of tool definitions, in total</text>
+  <rect x="138" y="334" width="220" height="38" rx="19" fill="#e8f1fc" stroke="#2a78d6"/>
+  <text x="248" y="359" font-size="16" text-anchor="middle" fill="#174a8a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">search(code)</text>
+  <rect x="542" y="334" width="220" height="38" rx="19" fill="#e8f1fc" stroke="#2a78d6"/>
+  <text x="652" y="359" font-size="16" text-anchor="middle" fill="#174a8a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">execute(code)</text>
 
   <!-- ============ AWS boundary ============ -->
-  <rect x="556" y="96" width="494" height="504" rx="14" fill="#eef1f6" stroke="#586170" stroke-dasharray="7 5"/>
-  <g transform="translate(578,118)">
-    <path d="M-8,4 C-12,4 -12,-3 -7,-3 C-6,-8 1,-9 3,-4 C7,-6 11,-2 9,2 C11,3 10,4 8,4 Z" fill="#586170"/>
+  <rect x="20" y="430" width="860" height="530" rx="14" fill="#eef1f6" stroke="#586170" stroke-dasharray="7 5"/>
+  <g transform="translate(46,455)">
+    <path d="M-9,5 C-14,5 -14,-3 -8,-3 C-7,-9 1,-10 3,-4 C8,-7 13,-2 10,2 C13,3 12,5 9,5 Z" fill="#586170"/>
   </g>
-  <text x="596" y="123" font-size="13" font-weight="700" fill="#3b4350">AWS Lambda · Floci (local AWS emulator) · IAM enforced</text>
+  <text x="66" y="461" font-size="15" font-weight="700" fill="#3b4350">AWS Lambda · Floci (local AWS emulator) · IAM enforced</text>
 
   <!-- sandbox zone -->
-  <rect x="576" y="140" width="200" height="440" rx="12" fill="#fbf1e1" stroke="#a8640a"/>
-  <text x="592" y="166" font-size="11.5" font-weight="700" fill="#a8640a" letter-spacing="1.2">SANDBOX</text>
-  <text x="592" y="183" font-size="12" fill="#7a4a08">untrusted, model-written code</text>
+  <rect x="40" y="478" width="820" height="194" rx="12" fill="#fbf1e1" stroke="#a8640a"/>
+  <text x="58" y="503" font-size="13" font-weight="700" fill="#a8640a" letter-spacing="1.3">SANDBOX</text>
+  <text x="140" y="503" font-size="14" fill="#7a4a08">untrusted, model-written code</text>
 
   <g filter="url(#shadow)">
-    <rect x="592" y="200" width="160" height="120" rx="10" fill="#fff" stroke="#e2c9a0"/>
+    <rect x="58" y="536" width="380" height="94" rx="10" fill="#fff" stroke="#e2c9a0"/>
   </g>
-  <g transform="translate(618,230)">
-    <circle r="16" fill="#a8640a"/>
-    <path d="M-3,-6 L-8,0 L-3,6 M3,-6 L8,0 L3,6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(92,568)">
+    <circle r="18" fill="#a8640a"/>
+    <path d="M-3.5,-7 L-9,0 L-3.5,7 M3.5,-7 L9,0 L3.5,7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <text x="642" y="235" font-size="14" font-weight="700" fill="#111">search-runner</text>
-  <text x="608" y="272" font-size="12" fill="#586170">Monty interpreter</text>
-  <text x="608" y="292" font-size="12" fill="#586170">+ the API catalog</text>
+  <text x="122" y="574" font-size="17" font-weight="700" fill="#111">search-runner</text>
+  <text x="78" y="612" font-size="14.5" fill="#586170">Monty interpreter + the API catalog</text>
 
   <g filter="url(#shadow)">
-    <rect x="592" y="360" width="160" height="120" rx="10" fill="#fff" stroke="#e2c9a0"/>
+    <rect x="462" y="536" width="380" height="94" rx="10" fill="#fff" stroke="#e2c9a0"/>
   </g>
-  <g transform="translate(618,390)">
-    <circle r="16" fill="#a8640a"/>
-    <path d="M-4,-7 L6,0 L-4,7 Z" fill="#fff"/>
+  <g transform="translate(496,568)">
+    <circle r="18" fill="#a8640a"/>
+    <path d="M-4.5,-8 L7,0 L-4.5,8 Z" fill="#fff"/>
   </g>
-  <text x="642" y="395" font-size="14" font-weight="700" fill="#111">execute-runner</text>
-  <text x="608" y="432" font-size="12" fill="#586170">Monty interpreter</text>
-  <text x="608" y="452" font-size="12" fill="#586170">+ <tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">request()</tspan> only</text>
+  <text x="526" y="574" font-size="17" font-weight="700" fill="#111">execute-runner</text>
+  <text x="482" y="612" font-size="14.5" fill="#586170">Monty interpreter + <tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#174a8a">request()</tspan> only</text>
 
-  <text x="676" y="522" font-size="11.5" text-anchor="middle" fill="#7a4a08">no network · no files · no imports</text>
-  <text x="676" y="540" font-size="11.5" text-anchor="middle" fill="#7a4a08">type-checked · time and memory limits</text>
+  <text x="450" y="656" font-size="14" text-anchor="middle" fill="#7a4a08">no network · no files · no imports · type-checked · time and memory limits</text>
 
-  <!-- server -> runners -->
-  <path d="M498 289 C 540 289, 550 260, 588 260" fill="none" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
-  <path d="M498 339 C 540 339, 550 410, 588 410" fill="none" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
-  <!-- return value -->
-  <path d="M588 456 C 548 456, 520 440, 470 410" fill="none" stroke="#586170" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
-  <text x="408" y="440" font-size="12" text-anchor="middle" fill="#111" font-weight="600">only the return value</text>
-  <text x="408" y="456" font-size="12" text-anchor="middle" fill="#586170">goes back (≤ 10k tokens)</text>
+  <!-- server -> runners, and the return value -->
+  <line x1="248" y1="374" x2="248" y2="532" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="600" y1="374" x2="600" y2="532" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="690" y1="532" x2="690" y2="374" stroke="#586170" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="702" y="406" font-size="14" font-weight="700" fill="#111">only the return value</text>
+  <text x="702" y="424" font-size="13.5" fill="#586170">goes back (≤ 10k tokens)</text>
 
   <!-- trusted zone -->
-  <rect x="806" y="140" width="224" height="440" rx="12" fill="#fbe9eb" stroke="#ad2a3c"/>
-  <text x="822" y="166" font-size="11.5" font-weight="700" fill="#ad2a3c" letter-spacing="1.2">TRUSTED</text>
-  <text x="822" y="183" font-size="12" fill="#7d1e2b">holds the API keys</text>
+  <rect x="40" y="704" width="820" height="236" rx="12" fill="#fbe9eb" stroke="#ad2a3c"/>
+  <text x="58" y="729" font-size="13" font-weight="700" fill="#ad2a3c" letter-spacing="1.3">TRUSTED</text>
+  <text x="140" y="729" font-size="14" fill="#7d1e2b">holds the API keys</text>
 
   <g filter="url(#shadow)">
-    <rect x="830" y="198" width="184" height="60" rx="10" fill="#fff" stroke="#e7b9c0"/>
+    <rect x="58" y="770" width="330" height="66" rx="10" fill="#fff" stroke="#e7b9c0"/>
   </g>
-  <g transform="translate(856,228)">
-    <circle r="16" fill="#ad2a3c"/>
-    <circle cx="-3.5" cy="0" r="4.5" fill="none" stroke="#fff" stroke-width="2"/>
-    <path d="M1,0 L9,0 M6,0 L6,4 M9,0 L9,3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <g transform="translate(92,803)">
+    <circle r="18" fill="#ad2a3c"/>
+    <circle cx="-4" cy="0" r="5" fill="none" stroke="#fff" stroke-width="2.2"/>
+    <path d="M1,0 L10,0 M7,0 L7,4.5 M10,0 L10,3.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
   </g>
-  <text x="880" y="233" font-size="14" font-weight="700" fill="#111">Secrets Manager</text>
+  <text x="122" y="809" font-size="17" font-weight="700" fill="#111">Secrets Manager</text>
 
   <g filter="url(#shadow)">
-    <rect x="830" y="296" width="184" height="168" rx="10" fill="#fff" stroke="#ad2a3c" stroke-width="1.5"/>
+    <rect x="58" y="856" width="330" height="66" rx="10" fill="#fff" stroke="#e7b9c0"/>
   </g>
-  <g transform="translate(856,326)">
-    <circle r="16" fill="#ad2a3c"/>
-    <path d="M0,-9 L7.5,-6 L7.5,0.5 C7.5,5 4,8 0,9.5 C-4,8 -7.5,5 -7.5,0.5 L-7.5,-6 Z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
-    <path d="M-3.5,0 L-0.8,2.8 L3.8,-2.5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(92,889)">
+    <circle r="18" fill="#ad2a3c"/>
+    <ellipse cx="0" cy="-5.5" rx="8.5" ry="3" fill="none" stroke="#fff" stroke-width="2"/>
+    <path d="M-8.5,-5.5 L-6.2,8 C-6.2,10 6.2,10 6.2,8 L8.5,-5.5" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
   </g>
-  <text x="880" y="324" font-size="15" font-weight="700" fill="#111">bridge</text>
-  <text x="880" y="340" font-size="11.5" fill="#586170">Lambda</text>
-  <g font-size="12" fill="#3b4350">
-    <text x="846" y="370"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> endpoint in catalog</text>
-    <text x="846" y="389"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> per-run call budget</text>
-    <text x="846" y="408"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> per-source rate limits</text>
-    <text x="846" y="427"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> adds the API key</text>
-    <text x="846" y="446"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> record / replay</text>
-  </g>
+  <text x="122" y="885" font-size="17" font-weight="700" fill="#111">S3</text>
+  <text x="122" y="906" font-size="14" fill="#586170">recorded API responses (evals)</text>
 
   <g filter="url(#shadow)">
-    <rect x="830" y="502" width="184" height="60" rx="10" fill="#fff" stroke="#e7b9c0"/>
+    <rect x="462" y="770" width="380" height="152" rx="10" fill="#fff" stroke="#ad2a3c" stroke-width="1.6"/>
   </g>
-  <g transform="translate(856,532)">
-    <circle r="16" fill="#ad2a3c"/>
-    <ellipse cx="0" cy="-5" rx="7.5" ry="2.8" fill="none" stroke="#fff" stroke-width="1.8"/>
-    <path d="M-7.5,-5 L-5.5,7 C-5.5,9 5.5,9 5.5,7 L7.5,-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+  <g transform="translate(496,803)">
+    <circle r="18" fill="#ad2a3c"/>
+    <path d="M0,-10 L8.5,-6.8 L8.5,0.6 C8.5,5.6 4.5,9 0,10.6 C-4.5,9 -8.5,5.6 -8.5,0.6 L-8.5,-6.8 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M-4,0 L-1,3.2 L4.2,-2.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <text x="880" y="530" font-size="14" font-weight="700" fill="#111">S3</text>
-  <text x="880" y="547" font-size="11.5" fill="#586170">recorded API fixtures</text>
-
-  <!-- request() : the one way out of the sandbox -->
-  <line x1="754" y1="412" x2="826" y2="412" stroke="#2a78d6" stroke-width="3.5" marker-end="url(#arrow-blue)"/>
-  <rect x="757" y="381" width="66" height="20" rx="10" fill="#2a78d6"/>
-  <text x="790" y="395" font-size="11.5" text-anchor="middle" fill="#fff" font-weight="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">request()</text>
+  <text x="526" y="802" font-size="19" font-weight="700" fill="#111">bridge</text>
+  <text x="526" y="820" font-size="13" fill="#586170">Lambda</text>
+  <g font-size="14" fill="#3b4350">
+    <text x="482" y="852"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> endpoint in catalog</text>
+    <text x="482" y="877"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> per-run call budget</text>
+    <text x="482" y="902"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> per-source rate limits</text>
+    <text x="680" y="852"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> adds the API key</text>
+    <text x="680" y="877"><tspan fill="#2e7d4f" font-weight="700">✓</tspan> record / replay</text>
+  </g>
 
   <!-- bridge -> secrets / s3 -->
-  <line x1="922" y1="294" x2="922" y2="262" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
-  <text x="930" y="283" font-size="11" fill="#586170">read key</text>
-  <line x1="922" y1="466" x2="922" y2="498" stroke="#586170" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="930" y="487" font-size="11" fill="#586170">evals: replay</text>
+  <line x1="458" y1="803" x2="392" y2="803" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="425" y="795" font-size="13" text-anchor="middle" fill="#586170">key</text>
+  <line x1="458" y1="889" x2="392" y2="889" stroke="#586170" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="425" y="881" font-size="13" text-anchor="middle" fill="#586170">replay</text>
+
+  <!-- request(): the sandbox's one way out -->
+  <line x1="652" y1="634" x2="652" y2="764" stroke="#2a78d6" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <rect x="598" y="676" width="108" height="26" rx="13" fill="#2a78d6"/>
+  <text x="652" y="694" font-size="14" text-anchor="middle" fill="#fff" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">request()</text>
+  <text x="716" y="694" font-size="13.5" fill="#174a8a" font-weight="600">the only way out</text>
+
+  <!-- bridge -> APIs -->
+  <line x1="652" y1="926" x2="652" y2="1000" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="620" y="969" width="64" height="22" rx="11" fill="#fff" stroke="#d5d9df"/>
+  <text x="652" y="985" font-size="12.5" text-anchor="middle" fill="#3b4350" font-weight="700">HTTPS</text>
+  <text x="694" y="985" font-size="13.5" fill="#586170">catalogued paths only</text>
 
   <!-- ============ Public APIs ============ -->
   <g filter="url(#shadow)">
-    <rect x="1080" y="196" width="168" height="286" rx="12" fill="#fff" stroke="#d5d9df"/>
+    <rect x="32" y="1004" width="836" height="118" rx="12" fill="#fff" stroke="#d5d9df"/>
   </g>
-  <g transform="translate(1106,228)">
-    <circle r="18" fill="#2e7d4f"/>
-    <circle r="9" fill="none" stroke="#fff" stroke-width="1.8"/>
-    <ellipse rx="4" ry="9" fill="none" stroke="#fff" stroke-width="1.6"/>
-    <line x1="-9" y1="0" x2="9" y2="0" stroke="#fff" stroke-width="1.6"/>
+  <g transform="translate(66,1038)">
+    <circle r="20" fill="#2e7d4f"/>
+    <circle r="10" fill="none" stroke="#fff" stroke-width="2"/>
+    <ellipse rx="4.5" ry="10" fill="none" stroke="#fff" stroke-width="1.7"/>
+    <line x1="-10" y1="0" x2="10" y2="0" stroke="#fff" stroke-width="1.7"/>
   </g>
-  <text x="1132" y="224" font-size="11" font-weight="700" fill="#2e7d4f" letter-spacing="1">FDA · NIH</text>
-  <text x="1132" y="241" font-size="16" font-weight="700" fill="#111">Public APIs</text>
-  <g font-size="12.5" fill="#1f5a39" text-anchor="middle">
-    <rect x="1096" y="266" width="136" height="30" rx="8" fill="#e6f3ec"/>
-    <text x="1164" y="286">openFDA</text>
-    <rect x="1096" y="304" width="136" height="30" rx="8" fill="#e6f3ec"/>
-    <text x="1164" y="324">ClinicalTrials.gov</text>
-    <rect x="1096" y="342" width="136" height="30" rx="8" fill="#e6f3ec"/>
-    <text x="1164" y="362">PubMed</text>
-    <rect x="1096" y="380" width="136" height="30" rx="8" fill="#e6f3ec"/>
-    <text x="1164" y="400">RxNorm</text>
-    <rect x="1096" y="418" width="136" height="30" rx="8" fill="#e6f3ec"/>
-    <text x="1164" y="438">DailyMed</text>
+  <text x="98" y="1032" font-size="12" font-weight="700" fill="#2e7d4f" letter-spacing="1">FDA · NIH</text>
+  <text x="98" y="1052" font-size="19" font-weight="700" fill="#111">Public APIs</text>
+  <text x="250" y="1052" font-size="14" fill="#586170">5 sources, 23 endpoints</text>
+  <g font-size="15" fill="#1f5a39" text-anchor="middle">
+    <rect x="52" y="1070" width="148" height="36" rx="9" fill="#e6f3ec"/>
+    <text x="126" y="1093">openFDA</text>
+    <rect x="214" y="1070" width="148" height="36" rx="9" fill="#e6f3ec"/>
+    <text x="288" y="1093">ClinicalTrials.gov</text>
+    <rect x="376" y="1070" width="148" height="36" rx="9" fill="#e6f3ec"/>
+    <text x="450" y="1093">PubMed</text>
+    <rect x="538" y="1070" width="148" height="36" rx="9" fill="#e6f3ec"/>
+    <text x="612" y="1093">RxNorm</text>
+    <rect x="700" y="1070" width="148" height="36" rx="9" fill="#e6f3ec"/>
+    <text x="774" y="1093">DailyMed</text>
   </g>
-  <text x="1164" y="470" font-size="11.5" text-anchor="middle" fill="#586170">23 endpoints</text>
-
-  <!-- bridge -> APIs -->
-  <line x1="1016" y1="380" x2="1076" y2="380" stroke="#586170" stroke-width="2" marker-end="url(#arrow)"/>
-  <rect x="1024" y="358" width="48" height="17" rx="8.5" fill="#fff" stroke="#d5d9df"/>
-  <text x="1048" y="370.5" font-size="10.5" text-anchor="middle" fill="#3b4350" font-weight="600">HTTPS</text>
-  <text x="1164" y="502" font-size="11.5" text-anchor="middle" fill="#586170">catalogued paths only</text>
 
   <!-- ============ headline number ============ -->
-  <rect x="32" y="520" width="484" height="80" rx="12" fill="#e8f1fc"/>
-  <text x="52" y="552" font-size="26" font-weight="800" fill="#2a78d6">102×</text>
-  <text x="128" y="548" font-size="13" font-weight="700" fill="#111">less data reaches the model than the sandbox fetches</text>
-  <text x="128" y="570" font-size="12" fill="#3b4350">e.g. one question: 5.6 MB of FDA labels fetched → 2.1 KB returned</text>
-  <text x="128" y="588" font-size="12" fill="#3b4350">The agent's code loops, joins and filters where the data is.</text>
+  <rect x="32" y="1142" width="836" height="74" rx="12" fill="#e8f1fc"/>
+  <text x="54" y="1192" font-size="36" font-weight="800" fill="#2a78d6">102×</text>
+  <text x="156" y="1172" font-size="16" font-weight="700" fill="#111">less data reaches the model than the sandbox fetches</text>
+  <text x="156" y="1198" font-size="14.5" fill="#3b4350">e.g. one question: 5.6 MB of FDA labels fetched → 2.1 KB returned to the model</text>
 </svg>
