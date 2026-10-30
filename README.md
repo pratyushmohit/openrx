@@ -39,39 +39,7 @@ target ([details](docs/slos.md)).
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  agent["AI agent<br/>LangGraph · any MCP client"]
-  model["LLM<br/>Bedrock API → Ollama"]
-  server["OpenRx MCP server<br/>tools: search(code), execute(code)"]
-
-  subgraph aws["AWS Lambda (Floci, local AWS emulator) · IAM enforced"]
-    subgraph sandbox["Sandbox: model-written code"]
-      search["search-runner<br/>Monty interpreter + catalog"]
-      execute["execute-runner<br/>Monty interpreter + request()"]
-    end
-    subgraph trusted["Trusted: holds the keys"]
-      bridge["bridge<br/>catalog check · budget · rate limit<br/>API key · record/replay"]
-      secrets["Secrets Manager"]
-      s3["S3: recorded fixtures"]
-    end
-  end
-
-  apis["Public APIs<br/>openFDA · ClinicalTrials.gov<br/>PubMed · RxNorm · DailyMed"]
-
-  agent -- MCP --> server
-  agent --> model
-  server --> search
-  server --> execute
-  execute == "request()" ==> bridge
-  bridge --> secrets
-  bridge --> s3
-  bridge -- "HTTPS, catalogued paths only" --> apis
-
-  style sandbox fill:#fbf1e1,stroke:#a8640a,color:#111
-  style trusted fill:#fbe9eb,stroke:#ad2a3c,color:#111
-  style aws fill:#eef1f6,stroke:#586170,color:#111
-```
+<img src="docs/architecture.svg" alt="OpenRx architecture: an AI agent calls the OpenRx MCP server (search and execute tools); model-written code runs in sandboxed Lambda runners whose only way out is request() to a trusted bridge Lambda, which checks the catalog, budget and rate limits, adds the API key from Secrets Manager, and calls five public FDA/NIH APIs or replays S3 fixtures" width="100%">
 
 1. The agent calls `search` with Python to explore the API catalog, then `execute`
    with Python that fetches and processes the data.
